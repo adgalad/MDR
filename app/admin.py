@@ -6,7 +6,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.utils.translation import gettext, gettext_lazy as _
 from .models import User
-from app.models import *
+import app.models as models
 # Register your models here.
 
 class UserCreationForm(forms.ModelForm):
@@ -93,3 +93,8 @@ class Raffle(admin.ModelAdmin):
     pass
 class AddressGenerated(admin.ModelAdmin):
     pass
+
+admin.site.register(models.Transaction, Transaction)
+admin.site.register(models.RaffleSigner, RaffleSigner)
+admin.site.register(models.Raffle, Raffle)
+admin.site.register(models.AddressGenerated, AddressGenerated)
