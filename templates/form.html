@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{%load humanize %}
+
+{% block content %}
+    <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
+    {% if msg %}
+        {{msg}}
+    {% endif %}
+    {% for message in messages %}
+        <div style="color:red"> {{ message }} </div>
+    {% endfor %}
+    <br>
+    {% block beforeForm %}
+        
+        
+        
+    {% endblock beforeForm %}
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+                
+                {% if field.name == "addressAdmin" %}
+                    <tr>
+                        <td>{{ field.label }}</td>
+                        <td>{{ field }}</td>
+                    </tr>
+                    <tr>
+                        <td>Admin Percetange</td>
+                        <td>10%</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>{% if field.name != "final_message" %} {{ field.label }} {% endif %}</td>
+                        <td>{{ field }}</td>
+                    
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td></td>
+                    <td><div style="color:red"> {{ field.errors }} </div></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>    
+
+    {% block afterForm %}
+        
+        
+        
+    {% endblock afterForm %}
+{% endblock content %}

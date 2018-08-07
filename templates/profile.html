@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+
+{% block content %}
+    <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
+    {% for message in messages %}
+        <div style="color:red"> {{ message }} </div>
+    {% endfor %}
+    <br>
+    <table border="1">
+        <tbody>
+            <tr>
+                <td>
+                    Email
+                </td>
+                <td>
+                    {{request.user.email}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Username
+                </td>
+                <td>
+                    {{request.user.username}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Wallet
+                </td>
+                <td>
+                    {% if request.user.wallet_address %}
+                        {{request.user.wallet_address}}
+                    {% else %}
+                        <a href="{% url 'addWalletAddress' %}">
+                            <button> Add wallet</button>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    {% if request.user.wallet_address %}
+        <a href="{% url 'addWalletAddress' %}">
+            <button> Change wallet address</button>
+        </a>
+    {% endif %}
+    <br><br>
+    <table border="1" style="width: 50%">
+        <thead>
+            <tr>
+                <th>
+                    Transaction ID
+                </th>
+                <th>
+                    Raffle
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Tickets
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tx in request.user.transactions.all %}
+                <tr>
+                    <td>
+                        <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
+                            {{ tx.address }}
+                        </a>
+                    </td>
+                    <td>
+                        <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="{% url 'raffleDetails' tx.raffle.id %}">
+                        {{ tx.raffle }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ tx.amount }}
+                    </td>
+                    <td>
+                        {{ tx.amount|div:tx.raffle.ticketPrice}}
+                    </td>
+                </tr>
+            {% empty %}
+                <i> No transactions </i>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

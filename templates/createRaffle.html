@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+  <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
+  {% for message in messages %}
+    <div style="color:red"> {{ message }} </div>
+  {% endfor %}
+  <br>
+  
+  <form method="post">
+    {% csrf_token %}
+    <div class="container" align="left" style="width: 50%">
+      {% for field in form %}
+        {% if field.name == "isMultisig" %}
+          <div class="row" style="margin-top: 5px; margin-bottom:  15px;">
+            <div class="col-md-4">Maintenance fee</div>
+            <div class="col-md-8">10%</div>
+          </div>
+          <div class="row"> <div class="col-md-12"><hr></div> </div>
+        {% elif field.name == "addressProject" %}
+          <div class="row"> <div class="col-md-12"><hr></div> </div>
+        {% endif %}
+        <div class="row" id="div_{{field.name}}">
+          <div class="col-md-4">{{ field.label }}</div>
+          <div class="col-md-8">{{ field }}</div>
+        </div>
+
+        {% if field.errors %}
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8"><div style="color:red"> {{ field.errors }} </div></div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    Estimated time is: <dt id="date"> </dt>
+    <br>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>   
+
+{% endblock content %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script type="text/javascript">
+    blockTime = parseInt('{{ blockTime }}')
+    count = parseInt('{{ count }}')
+    input = $('#id_blockHeight')
+
+    
+    function estimate(){
+      if (count > input.val()){
+        input.val(count)
+      } else {
+        approxTime = blockTime + (input.val() - count)* (2.6*60) // 2.6 minutes per block
+        date = timeConverter(approxTime)
+        $('#date').html(date)
+      }
+    } 
+
+    function toggleMultisig(){
+      if ($('#id_isMultisig').prop('checked')){
+        $('#div_signsRequired').show()
+        $('#id_signsRequired')
+          .prop('required',true)
+          .prop('disabled',false)
+
+        $('#div_signers').show()
+        $('#id_signers')
+          .prop('required',true)
+          .prop('disabled',false)
+
+        for (var i = 1; i <= 6 ; i++){
+          $('#div_MSpubkey'+String(i)).show()
+          $('#id_MSpubkey'+String(i))
+            .prop('required',true)
+            .prop('disabled',false)
+
+        }
+
+        // $('#div_addressPrize').hide()
+        // $('#id_addressPrize')
+        //   .prop('required',false)
+        //   .prop('disabled',true)
+
+      } else {
+        $('#div_signsRequired').hide()
+        $('#id_signsRequired')
+          .prop('required',false)
+          .prop('disabled',true)
+
+        $('#div_signers').hide()
+        $('#id_signers')
+          .prop('required',false)
+          .prop('disabled',true)
+
+        for (var i = 1; i <= 6 ; i++){
+          $('#div_MSpubkey'+String(i)).hide()
+          $('#id_MSpubkey'+String(i))
+            .prop('required',false)
+            .prop('disabled',true)
+
+        }
+
+        // $('#div_addressPrize').show()
+        // $('#id_addressPrize')
+        //   .prop('required',true)
+        //   .prop('disabled',false)
+
+      }
+    }
+
+    input.change(estimate)
+    prize = $('#id_prizePercentage')
+    project = $('#id_projectPercentage')
+    prize.change(function(){
+      if (prize.val() > 90){
+        prize.val(90)
+      } else if (prize.val() < 0) {
+        prize.val(0)
+      }
+      project.val(90-prize.val())
+    })
+
+    $(document).ready(function(){
+      toggleMultisig()
+      $('#id_isMultisig').change(toggleMultisig)
+      project.change(function(){
+        if (project.val() > 90){
+          project.val(90)
+        } else if (project.val() < 0) {
+          project.val(0)
+        }
+        prize.val(90-project.val())
+      })
+      estimate()
+    })
+
+  </script>
+{% endblock scripts %}

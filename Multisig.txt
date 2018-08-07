@@ -1,0 +1,229 @@
+
+"pubkey": "0211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da3" <- imac
+"pubkey": "0223d56f2a6d08d1885876f36edb0b848fc97ec7d6067f5d380c677af35d4deaa3" <- carlos
+"pubkey": "034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d" <- vicky
+"pubkey": "03f3fc6a2ad5a0200a8e2e2220b9d4c8f546bf1b484eb02ffdfcf3380eb845c2ae" <- mv
+"pubkey": "037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a0" <- javier
+"pubkey": "03a6733fe8a19de1379c0c716d7dc1c2051ef7aa65f09199952a1fc401fee3e815" <- fernando
+
+
+iMac ------->
+{
+  "isvalid": true,
+  "address": "yV4kgzBLsKJaGXb4dZvTeWcWzZyCpbCH9u",
+  "scriptPubKey": "76a9145ff1c91eaf3f184ef84d6d804998d4b69b4cfb8488ac",
+  "ismine": true,
+  "iswatchonly": false,
+  "isscript": false,
+  "pubkey": "0211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da3",
+  "iscompressed": true,
+  "account": "",
+  "timestamp": 1531763041
+}
+cTbi5o4xWS4fH8Cc8jdJoGDwo871tGvefmR7sRNCL2qp7vUJ6AL6
+
+Carlos -------->
+{
+  "isvalid": true,
+  "address": "yNU2TCAVgpNrG7MAX6h1wgxTkACLvhYdM7",
+  "scriptPubKey": "76a914178fa13efcd00644bc38861f0a59516cd4ecb0f388ac",
+  "ismine": true,
+  "iswatchonly": false,
+  "isscript": false,
+  "pubkey": "0223d56f2a6d08d1885876f36edb0b848fc97ec7d6067f5d380c677af35d4deaa3",
+  "iscompressed": true,
+  "account": "",
+  "timestamp": 1531089866
+}
+cRFzpLpYPNBZksWReviLGaKf3YPWkssRomFy7wkkQ648iemvASqS
+
+
+Vicky --------->
+{
+ "isvalid": true,
+ "address": "yYEapm2pUS6iRDaWHce9Tkv3ZKKTCwoGNL",
+ "scriptPubKey": "76a91482b6163e78da2647e960cc5de9a7b159168bf7dc88ac",
+ "ismine": true,
+ "iswatchonly": false,
+ "isscript": false,
+ "pubkey": "034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d",
+ "iscompressed": true,
+ "account": "",
+ "timestamp": 1531228070
+}
+cU5DN49zzD4rG4HKq5wxcuZ7E9oVamXDVWTKZ1XTgvHC6kXWesxE
+
+
+MV -------->
+{
+ "isvalid": true,
+ "address": "yTr2mUgjRYQN7W3uMvAesZLU4ZnAaHaSHE",
+ "scriptPubKey": "76a9145291ac50d019053d45218b352c0d8707dc4be43b88ac",
+ "ismine": true,
+ "iswatchonly": false,
+ "isscript": false,
+ "pubkey": "03f3fc6a2ad5a0200a8e2e2220b9d4c8f546bf1b484eb02ffdfcf3380eb845c2ae",
+ "iscompressed": true,
+ "account": "",
+ "timestamp": 1531859363
+}
+cSnq8r5jqMn3wALxWntfsPR13GezD1oZquzFpZvX7d8tpHKrwaPK
+
+
+
+
+Javier ------>
+{
+ "isvalid": true,
+ "address": "yddnKoy9aTvmzxRC8oS96uJyBBuijWyapZ",
+ "scriptPubKey": "76a914bdf1e224ef4f5b2f3a7bb0a6c90b979e9c4a92e488ac",
+ "ismine": true,
+ "iswatchonly": false,
+ "isscript": false,
+ "pubkey": "037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a0",
+ "iscompressed": true,
+ "account": "MDR Multisign winner wallet",
+ "timestamp": 1531941430
+}
+
+
+
+Fernando ------>
+{
+ "isvalid": true,
+ "address": "yebGFkKhh4ULKSAN5N7fu7mxVdivSB5KA1",
+ "scriptPubKey": "76a914c870137642c2ffb00207baa6d32bd998b53a363588ac",
+ "ismine": true,
+ "iswatchonly": false,
+ "isscript": false,
+ "pubkey": "03a6733fe8a19de1379c0c716d7dc1c2051ef7aa65f09199952a1fc401fee3e815",
+ "iscompressed": true,
+ "account": "",
+ "timestamp": 1531859905
+}
+cREgkrp6wYqSubPMwbypow1mi28aN4b9s1bS6H9kb4Ro9CUExfFu
+
+
+
+
+
+
+
+
+iMac, Vicky, Javier
+{
+  "address": "8xsZDmzV9yZZg9v1Tj15Q628JMtwPE632T",
+  "redeemScript": "52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+}
+
+
+
+
+dash-cli -testnet -rpcuser=carlos -rpcpassword=carlos -rpcconnect="192.168.0.190" createrawtransaction \
+'[
+  {
+    "txid": "e2eac3ad9238775fa75b0815abc78410ba03a574778900d17e8b5b8337b9682b",
+    "vout": 0
+  },
+  {
+    "txid": "20ecda459cebe1ca86d75e3bf2af75628bce03b93aeed9e0bc551467a8b1279c",
+    "vout": 0
+  },
+  {
+    "txid": "d2df43e7f4bc2a8f47fdcc0a6e21fccd77de0589670a414584c198d0fdbbe233",
+    "vout": 1
+  }
+]' '{"yNU2TCAVgpNrG7MAX6h1wgxTkACLvhYdM7":18.0}'
+
+02000000012b68b937835b8b7ed100897774a503ba1084c7ab15085ba75f773892adc3eae20000000000ffffffff0100d2496b000000001976a914178fa13efcd00644bc38861f0a59516cd4ecb0f388ac00000000
+
+
+scriptPub: a914ca61ae37c691d53b85f29dad388f71381b05e0c387
+scriptPub: a914ca61ae37c691d53b85f29dad388f71381b05e0c387
+
+dash-cli -testnet -rpcuser=carlos -rpcpassword=carlos -rpcconnect="192.168.0.190" signrawtransaction '02000000032b68b937835b8b7ed100897774a503ba1084c7ab15085ba75f773892adc3eae20000000000ffffffff9c27b1a8671455bce0d9ee3ab903ce8b6275aff23b5ed786cae1eb9c45daec200000000000ffffffff33e2bbfdd098c18445410a678905de77cdfc216e0accfd478f2abcf4e743dfd20100000000ffffffff0100d2496b000000001976a914178fa13efcd00644bc38861f0a59516cd4ecb0f388ac00000000' '[
+  {
+    "txid": "e2eac3ad9238775fa75b0815abc78410ba03a574778900d17e8b5b8337b9682b",
+    "vout": 0,
+    "scriptPubKey": "a914ca61ae37c691d53b85f29dad388f71381b05e0c387",
+    "redeemScript": "52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+  },
+  {
+    "txid": "20ecda459cebe1ca86d75e3bf2af75628bce03b93aeed9e0bc551467a8b1279c",
+    "vout": 0,
+    "scriptPubKey": "a914ca61ae37c691d53b85f29dad388f71381b05e0c387",
+    "redeemScript": "52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+  },
+  {
+    "txid": "d2df43e7f4bc2a8f47fdcc0a6e21fccd77de0589670a414584c198d0fdbbe233",
+    "vout": 1,
+    "scriptPubKey": "a914ca61ae37c691d53b85f29dad388f71381b05e0c387",
+    "redeemScript": "52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+  }
+]' '["cTbi5o4xWS4fH8Cc8jdJoGDwo871tGvefmR7sRNCL2qp7vUJ6AL6", "cU5DN49zzD4rG4HKq5wxcuZ7E9oVamXDVWTKZ1XTgvHC6kXWesxE"]'
+
+dash-cli -testnet -rpcuser=carlos -rpcpassword=carlos -rpcconnect="192.168.0.190" signrawtransaction '02000000032b68b937835b8b7ed100897774a503ba1084c7ab15085ba75f773892adc3eae200000000b500483045022100b8dc6087cb6a12435c191efd5b44fec2067debe0fd3be3da32219e6beb0989b1022049fe36db6a0acda8356f6af649e7002b278754b8e6e10c21e02a6ca8df638ad5014c6952210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53aeffffffff9c27b1a8671455bce0d9ee3ab903ce8b6275aff23b5ed786cae1eb9c45daec2000000000b5004830450221009e4fb7d86d1aba606732bffa5d44bb116db3e1af15cf40edf4a235b1fa975b3c0220011fb25255714915dd9e8d3de8af256d2bf8d7fd066631958b05808cec23a253014c6952210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53aeffffffff33e2bbfdd098c18445410a678905de77cdfc216e0accfd478f2abcf4e743dfd20000000000ffffffff0100d2496b000000001976a914178fa13efcd00644bc38861f0a59516cd4ecb0f388ac00000000' \
+'[
+  {
+    "txid": "e2eac3ad9238775fa75b0815abc78410ba03a574778900d17e8b5b8337b9682b",
+    "vout": 0,
+    "scriptPubKey": "a914ca61ae37c691d53b85f29dad388f71381b05e0c387",
+    "redeemScript": "52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+  },
+  {
+    "txid": "20ecda459cebe1ca86d75e3bf2af75628bce03b93aeed9e0bc551467a8b1279c",
+    "vout": 0,
+    "scriptPubKey": "a914ca61ae37c691d53b85f29dad388f71381b05e0c387",
+    "redeemScript": "52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+  },
+  {
+    "txid": "d2df43e7f4bc2a8f47fdcc0a6e21fccd77de0589670a414584c198d0fdbbe233",
+    "vout": 0,
+    "scriptPubKey": "76a9144e0c7b9814b0e18e2a5dc993c49fc2e9b318026588ac",
+    "redeemScript": "52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+  }
+]' \
+'["cTbi5o4xWS4fH8Cc8jdJoGDwo871tGvefmR7sRNCL2qp7vUJ6AL6", "cU5DN49zzD4rG4HKq5wxcuZ7E9oVamXDVWTKZ1XTgvHC6kXWesxE"]'
+
+
+
+
+
+{
+  "txid": "1a73b0e837f36c4d0275e6de55f24249b9b3d2d89c575e66d963265fcdbdb6de",
+  "size": 337,
+  "version": 2,
+  "locktime": 0,
+  "vin": [
+    {
+      "txid": "e2eac3ad9238775fa75b0815abc78410ba03a574778900d17e8b5b8337b9682b",
+      "vout": 0,
+      "scriptSig": {
+        "asm": "0 304402206dff74d5df16dff4597926d9e4fa58a2a9f260fd14ca8c165ce1ce4135f2ada302200b4bf0e2f121dd8af08a54163ce531db3e6973d6f78a35d9ce433067a86658ba[ALL] 304402207603ecc353bef639d6cc7618ba9bfef89a043a2a27ed19996a2137465e21223802204d8b3b8b4c69556b5d4e78a814c7d4750f07348610592fb74d47fbf5ce50f50c[ALL] 52210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae",
+        "hex": "0047304402206dff74d5df16dff4597926d9e4fa58a2a9f260fd14ca8c165ce1ce4135f2ada302200b4bf0e2f121dd8af08a54163ce531db3e6973d6f78a35d9ce433067a86658ba0147304402207603ecc353bef639d6cc7618ba9bfef89a043a2a27ed19996a2137465e21223802204d8b3b8b4c69556b5d4e78a814c7d4750f07348610592fb74d47fbf5ce50f50c014c6952210211275ed0740701ac8ccceed30ade7db8fc09e89fbd61b7537bc069846f464da321037b8d51fd5bd0459409286e5a64cea0893084129a1b78a67c913a49c940cb88a021034bd98f7a9eaa839bdf2764ddf65da5f3d9cd6833ec1171e21a6fa79b41ce560d53ae"
+      },
+      "sequence": 4294967295
+    }
+  ],
+  "vout": [
+    {
+      "value": 18.00000000,
+      "valueSat": 1800000000,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "OP_DUP OP_HASH160 178fa13efcd00644bc38861f0a59516cd4ecb0f3 OP_EQUALVERIFY OP_CHECKSIG",
+        "hex": "76a914178fa13efcd00644bc38861f0a59516cd4ecb0f388ac",
+        "reqSigs": 1,
+        "type": "pubkeyhash",
+        "addresses": [
+          "yNU2TCAVgpNrG7MAX6h1wgxTkACLvhYdM7"
+        ]
+      }
+    }
+  ]
+}
+
+eyJ0eGlkIjoiMWE3M2IwZTgzN2YzNmM0ZDAyNzVlNmRlNTVmMjQyNDliOWIzZDJkODljNTc1ZTY2ZDk2MzI2NWZjZGJkYjZkZSIsInNpemUiOjMzNywidmVyc2lvbiI6MiwibG9ja3RpbWUiOjAsInZpbiI6W3sidHhpZCI6ImUyZWFjM2FkOTIzODc3NWZhNzViMDgxNWFiYzc4NDEwYmEwM2E1NzQ3Nzg5MDBkMTdlOGI1YjgzMzdiOTY4MmIiLCJ2b3V0IjowLCJzY3JpcHRTaWciOnsiYXNtIjoiMCAzMDQ0MDIyMDZkZmY3NGQ1ZGYxNmRmZjQ1OTc5MjZkOWU0ZmE1OGEyYTlmMjYwZmQxNGNhOGMxNjVjZTFjZTQxMzVmMmFkYTMwMjIwMGI0YmYwZTJmMTIxZGQ4YWYwOGE1NDE2M2NlNTMxZGIzZTY5NzNkNmY3OGEzNWQ5Y2U0MzMwNjdhODY2NThiYVtBTExdIDMwNDQwMjIwNzYwM2VjYzM1M2JlZjYzOWQ2Y2M3NjE4YmE5YmZlZjg5YTA0M2EyYTI3ZWQxOTk5NmEyMTM3NDY1ZTIxMjIzODAyMjA0ZDhiM2I4YjRjNjk1NTZiNWQ0ZTc4YTgxNGM3ZDQ3NTBmMDczNDg2MTA1OTJmYjc0ZDQ3ZmJmNWNlNTBmNTBjW0FMTF0gNTIyMTAyMTEyNzVlZDA3NDA3MDFhYzhjY2NlZWQzMGFkZTdkYjhmYzA5ZTg5ZmJkNjFiNzUzN2JjMDY5ODQ2ZjQ2NGRhMzIxMDM3YjhkNTFmZDViZDA0NTk0MDkyODZlNWE2NGNlYTA4OTMwODQxMjlhMWI3OGE2N2M5MTNhNDljOTQwY2I4OGEwMjEwMzRiZDk4ZjdhOWVhYTgzOWJkZjI3NjRkZGY2NWRhNWYzZDljZDY4MzNlYzExNzFlMjFhNmZhNzliNDFjZTU2MGQ1M2FlIiwiaGV4IjoiMDA0NzMwNDQwMjIwNmRmZjc0ZDVkZjE2ZGZmNDU5NzkyNmQ5ZTRmYTU4YTJhOWYyNjBmZDE0Y2E4YzE2NWNlMWNlNDEzNWYyYWRhMzAyMjAwYjRiZjBlMmYxMjFkZDhhZjA4YTU0MTYzY2U1MzFkYjNlNjk3M2Q2Zjc4YTM1ZDljZTQzMzA2N2E4NjY1OGJhMDE0NzMwNDQwMjIwNzYwM2VjYzM1M2JlZjYzOWQ2Y2M3NjE4YmE5YmZlZjg5YTA0M2EyYTI3ZWQxOTk5NmEyMTM3NDY1ZTIxMjIzODAyMjA0ZDhiM2I4YjRjNjk1NTZiNWQ0ZTc4YTgxNGM3ZDQ3NTBmMDczNDg2MTA1OTJmYjc0ZDQ3ZmJmNWNlNTBmNTBjMDE0YzY5NTIyMTAyMTEyNzVlZDA3NDA3MDFhYzhjY2NlZWQzMGFkZTdkYjhmYzA5ZTg5ZmJkNjFiNzUzN2JjMDY5ODQ2ZjQ2NGRhMzIxMDM3YjhkNTFmZDViZDA0NTk0MDkyODZlNWE2NGNlYTA4OTMwODQxMjlhMWI3OGE2N2M5MTNhNDljOTQwY2I4OGEwMjEwMzRiZDk4ZjdhOWVhYTgzOWJkZjI3NjRkZGY2NWRhNWYzZDljZDY4MzNlYzExNzFlMjFhNmZhNzliNDFjZTU2MGQ1M2FlIn0sInNlcXVlbmNlIjo0Mjk0OTY3Mjk1fV0sInZvdXQiOlt7InZhbHVlIjoxOCwidmFsdWVTYXQiOjE4MDAwMDAwMDAsIm4iOjAsInNjcmlwdFB1YktleSI6eyJhc20iOiJPUF9EVVAgT1BfSEFTSDE2MCAxNzhmYTEzZWZjZDAwNjQ0YmMzODg2MWYwYTU5NTE2Y2Q0ZWNiMGYzIE9QX0VRVUFMVkVSSUZZIE9QX0NIRUNLU0lHIiwiaGV4IjoiNzZhOTE0MTc4ZmExM2VmY2QwMDY0NGJjMzg4NjFmMGE1OTUxNmNkNGVjYjBmMzg4YWMiLCJyZXFTaWdzIjoxLCJ0eXBlIjoicHVia2V5aGFzaCIsImFkZHJlc3NlcyI6WyJ5TlUyVENBVmdwTnJHN01BWDZoMXdneFRrQUNMdmhZZE03Il19fV19
+
+
+

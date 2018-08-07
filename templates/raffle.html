@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block content %}
+    <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
+    <div align="left" style="width: 60%">
+        <h3>{{raffle.name}}</h3>
+        {% if raffle.isMultisig %}
+        <div class="row">
+            <div class="col-md-4"><b>Prize Address:</b></div>
+            <div class="col-md-8">
+                <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressPrize}}">
+                    {{raffle.addressPrize}}
+                </a> ({{raffle.prizePercentage}}%)
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-4"><b>Beneficiary Address:</b></div> 
+            <div class="col-md-8">
+                <a style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressProject}}">
+                    {{raffle.addressProject}}
+                </a> ({{raffle.projectPercentage}}%)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><b>Block Height:</b></div>
+            <div class="col-md-8">{{raffle.blockHeight}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><b>Approx Time:</b></div>
+            <div class="col-md-8">{{date}} UTC (May vary)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><b>Ticket Price:</b></div>
+            <div class="col-md-8">{{ raffle.ticketPrice | intcomma }} dash</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><b>Nro of tickets:</b></div>
+            <div class="col-md-8">{{ raffle.ticketsSold }}</div>
+        </div>
+        {% if not raffle.transaction %}
+        <div class="row">
+            <div class="col-md-4"><b>Prize:</b></div>
+            <div class="col-md-8">{{ prize | intcomma }} Dash</div>
+        </div>
+        {% endif %}
+        {% if raffle.finished %}
+            {% if raffle.winner %}
+            <div class="row">
+                <div class="col-md-4"><b>Winner:</b></div> 
+                <div class="col-md-8">
+                    {{ raffle.winner }}
+                </div>
+            </div>
+            {% endif %}
+            {% if raffle.winnerAddress %}
+            <div class="row">
+                <div class="col-md-4"><b>Winner Addr:</b></div> 
+                <div class="col-md-8">
+                    <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.winnerAddress}}">
+                            {{ raffle.winnerAddress }}
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% if raffle.transaction %}
+                <div class="row">
+                    <div class="col-md-4"><b>Transaction:</b></div> 
+                    <div class="col-md-8">
+                        <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{raffle.transaction}}">
+                            {{ raffle.transaction }}
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-4"><b>Signs:</b></div> 
+                    <div class="col-md-8">
+                        {{ raffle.getPrivkey | length }} out of {{raffle.signsRequired}}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+        <br>
+        <table border="1" style="width: 50%">
+            <thead>
+                <tr>
+                    <th>
+                        Transaction ID
+                    </th>
+                    <th>
+                        User
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Tickets
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tx in raffle.transactions.all %}
+                    <tr>
+                        <td>
+                            <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
+                                {{ tx.address }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ tx.user }}
+                        </td>
+                        <td>
+                            {{ tx.amount }}
+                        </td>
+                        <td>
+                            {{ tx.amount|div:raffle.ticketPrice}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    {% if not raffle.finished %}
+        <a class="btn btn-primary" href="{% url 'buyTicket' raffle.id %}">Buy Ticket</a>
+    {% elif request.user in raffle.signers.all and not raffle.transaction %}
+        <a class="btn btn-primary" href="{% url 'addPrivkey' raffle.id %}">Sign Transaction</a>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,40 @@
+
+div.header {
+  /*background-color: rgb(0, 141, 228);*/
+}
+
+table {
+  width: 70% !important;
+}
+
+/* Tooltip container */
+.tooltipaba {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltipaba .tooltiptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: white;
+    /*border: gray solid 1px;*/
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+
+}
+.tooltipimg {
+  border: gray solid 1px;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltipaba:hover .tooltiptext {
+    visibility: visible;
+    position: all;
+    bottom: 100%;
+    left: -50%; 
+}

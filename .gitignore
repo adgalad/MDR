@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#custom
+*.sqlite3
+*DS_Store*
+app/migrations/
+staticfiles/

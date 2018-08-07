@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="container" align="left">
+        <p>Welcome to Mega Dash Raffle</p>
+
+        <p>We invite you to play our raffle in benefit of Dash community projects. Your participation will help beneficiaries, by using the 50% of the tickets price to fund their proposals. The other 40% and 10% go to the winner jackpot and to the maintenance and improvement of the platform, respectively. (These percentages may vary between raffles).</p>
+
+        <p>Monthly, there will be many mini raffles (0.01 Dash per ticket), raffles (0.1 Dash per ticket) and a Mega Dash Raffle (0.5 Dash per ticket). These prices may vary as well.</p>
+
+        <p>Sign up and Play now!</p>
+    
+        <h2> Active Raffles </h2>
+        <table border="1" class="table" style="width: 100% !important">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Raffle Address
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for raffle in raffles %}
+                    {% if not raffle.finished %}
+                        <tr>
+                            <td>
+                                    {{raffle.pk}}
+                            </td>
+                            <td>
+                                <a href="{% url 'raffleDetails' raffle.id %}">
+                                    {{raffle.name}}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2> Previous Raffles </h2>
+        <table border="1" class="table" style="width: 100% !important">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Raffle Address
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for raffle in raffles %}
+                    {% if raffle.finished %}
+                        <tr>
+                            <td>
+                                    {{raffle.pk}}
+                            </td>
+                            <td>
+                                <a href="{% url 'raffleDetails' raffle.id %}">
+                                    {{raffle.name}}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><br>
+        <!-- <a href="createRaffle/" class="btn btn-primary"> Create raffle </a><br><br> -->
+    </div>
+{% endblock content %}
+
