@@ -83,3 +83,9 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 
+
+
+class Transaction(admin.ModelAdmin)
+class RaffleSigner(admin.ModelAdmin)
+class Raffle(admin.ModelAdmin)
+class AddressGenerated(admin.ModelAdmin)
