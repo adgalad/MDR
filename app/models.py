@@ -235,7 +235,7 @@ class Raffle(models.Model):
 
     @property
     def finished(self):
-        count = call(['getblockcount'])
+        count = int(call(['getblockcount']))
         return self.blockHeight < count
 
     def createMultisigAddress(self):
