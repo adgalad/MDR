@@ -154,9 +154,9 @@ class Raffle:
 
   @login_required(login_url='/login/')
   def buyTicket(request, id):
-    #if request.user.wallet_address is None:
-    #    messages.error(request, "Before buying a ticket, you've to add a wallet addres in your profile." )
-    #    return redirect(request.META.get('HTTP_REFERER', reverse('index')))
+    if request.user.wallet_address is None:
+       messages.error(request, "Before buying a ticket, you've to add a wallet addres in your profile." )
+       return redirect(reverse("profile"))
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
