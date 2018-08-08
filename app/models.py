@@ -56,12 +56,16 @@ def call(args):
         print("Command: ", ' '.join(command))
         data = check_output(command)
         try:
+            print("string")
             data = json.loads(data)
         except:
             if type(data) == bytes:
+                print("byte")
                 data = data.decode("utf-8")
             else:
+                print("other")
                 data = str(data)
+        print(">>", data)
         return data
     except Exception as e:
         print(e)
