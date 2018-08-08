@@ -62,7 +62,8 @@ def call(args):
         except:
             if type(data) == bytes:
                 print("byte")
-                data = data.decode("utf-8")
+                data = json.loads(data.decode("utf-8"))
+
             else:
                 print("other")
                 data = str(data)
