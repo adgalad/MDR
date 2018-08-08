@@ -440,11 +440,12 @@ class Raffle(models.Model):
                         for vin in rawtx1['vin']:
                             rawtx2 = call(["getrawtransaction", vin['txid'], "1"])
                             for vout in rawtx2['vout']:
-                                address = vout["scriptPubKey"]["addresses"]
-                                txids = call(["getaddresstxids", json.dumps({"addresses":[address]})])
+                                for address in vout["scriptPubKey"]["addresses"]:
+                                    txids = call(["getaddresstxids", json.dumps({"addresses":[address]})])
+                                    if winnerTx.address in txids:
+                                        self.winnerAddress = address
+                                        break
                                 if winnerTx.address in txids:
-                                    self.winnerAddress = address
-                                    break
                             if self.winnerAddress:
                                 break
                         if not self.winnerAddress:
