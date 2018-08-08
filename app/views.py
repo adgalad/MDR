@@ -162,7 +162,7 @@ class Raffle:
     except:
       raffle = None
     if raffle:
-      if request.user:
+      if not request.user.is_anonymous:
         addressGenerated = models.AddressGenerated.objects.filter(user=request.user, raffle=raffle)
         if addressGenerated.exists():
           address = addressGenerated[0].address
