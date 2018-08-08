@@ -55,6 +55,7 @@ def call(args):
 
         print("Command: ", ' '.join(command))
         data = check_output(command)
+        print(">> ", type(data), data)
         try:
             print("string")
             data = json.loads(data)
@@ -65,7 +66,7 @@ def call(args):
             else:
                 print("other")
                 data = str(data)
-        print(">>", data)
+        print(">> ", type(data), data)
         return data
     except Exception as e:
         print(e)
