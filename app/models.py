@@ -446,6 +446,7 @@ class Raffle(models.Model):
                                         self.winnerAddress = address
                                         break
                                 if winnerTx.address in txids:
+                                    break
                             if self.winnerAddress:
                                 break
                         if not self.winnerAddress:
