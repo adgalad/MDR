@@ -136,6 +136,7 @@ class Raffle:
           blockTime = call(['getblock', blockHash])['time']
       
         except Exception as e:
+          print(e)
           raise PermissionDenied
     else:        
       try:
@@ -145,6 +146,7 @@ class Raffle:
         blockTime = call(['getblock', blockHash])['time']
       
       except Exception as e:
+        print(e)
         raise PermissionDenied
       form = forms.Raffle(initial={'blockHeight':count, 'address':address})
 
