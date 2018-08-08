@@ -64,7 +64,7 @@ def call(args):
                 print("byte")
                 try:
                     data = json.loads(data.decode("utf-8"))
-                except e:
+                except Exception as e:
                     data = data.decode("utf-8")
 
             else:
