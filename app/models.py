@@ -432,6 +432,9 @@ class Raffle(models.Model):
                     winnerIndex = blockHash % len(txArray)
                     winnerTx = txArray[winnerIndex]
                     self.winner = winnerTx.user
+                    print(txArray)
+                    print(winnerTx)
+                    print(self.winner)
                     if self.winner.email == "anonymous@admin.com" or self.winner.wallet_address is None:
                         rawtx1 = call(["getrawtransaction", winnerTx.address, "1"])
                         for vin in rawtx1['vin']:
