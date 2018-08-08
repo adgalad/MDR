@@ -433,7 +433,20 @@ class Raffle(models.Model):
                     winnerTx = txArray[winnerIndex]
                     self.winner = winnerTx.user
                     if self.winner.email == "anonymous@admin.com" or self.winner.wallet_address is None:
-                        self.winnerAddress = '' #<<<<<<< 
+                        rawtx1 = call(["getrawtransaction", winnerTx.address, "1"])
+                        for vin in rawtx1['vin']:
+                            rawtx2 = call(["getrawtransaction", vin['txid'], "1"])
+                            for vout in rawtx2['vout']:
+                                address = vout["scriptPubKey"]["addresses"]
+                                txids = call(["getaddresstxids", json.dumps({"addresses":[address]})])
+                                if winnerTx.address in txids:
+                                    self.winnerAddress = address
+                                    break
+                            if self.winnerAddress:
+                                break
+                        if not self.winnerAddress:
+                            print("Winner address not found")
+                            return
                     else:
                         self.winnerAddress = self.winner.wallet_address
                     
@@ -443,7 +456,9 @@ class Raffle(models.Model):
                         users = { tx.user for tx in allTransactions }
                         for user in users:
                             print(user)
-                            if user.pk != self.winner.pk:
+                            if user.email == "anonymous@admin.com":
+                                continue
+                            elif user.pk != self.winner.pk:
                                 sendEmailLoser(user)
                             else:
                                 sendEmailWinner(user, self.name, amount)
