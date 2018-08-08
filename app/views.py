@@ -97,7 +97,6 @@ class User:
     
 
 class Raffle:
-  @login_required(login_url='/login/')
   def details(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
@@ -154,11 +153,10 @@ class Raffle:
 
     return render(request, "createRaffle.html", {'form': form, 'blockTime': blockTime, 'count': count})
 
-  @login_required(login_url='/login/')
   def buyTicket(request, id):
-    if request.user.wallet_address is None:
-       messages.error(request, "Before buying a ticket, you've to add a wallet addres in your profile." )
-       return redirect(reverse("profile"))
+    # if request.user.wallet_address is None:
+    #    messages.error(request, "Before buying a ticket, you've to add a wallet addres in your profile." )
+    #    return redirect(reverse("profile"))
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
