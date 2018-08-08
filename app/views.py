@@ -172,7 +172,7 @@ class Raffle:
           addressGenerated.save()
       else:
         try:
-          anonUser = User.objects.get(email="anonymous@admin.com")
+          anonUser = models.User.objects.get(email="anonymous@admin.com")
         except Exception as e:
           print(e)
           print("Anonymous user doesn't exists.")
