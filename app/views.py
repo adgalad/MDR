@@ -164,23 +164,17 @@ class Raffle:
     except:
       raffle = None
     if raffle:
-      if not request.user.is_anonymous:
-        addressGenerated = models.AddressGenerated.objects.filter(user=request.user, raffle=raffle)
-        if addressGenerated.exists():
-          address = addressGenerated[0].address
-        else:
-          address = call(["getnewaddress"]).replace("\n", "")
-          addressGenerated = models.AddressGenerated(user=request.user, raffle=raffle, address=address)
-          addressGenerated.save()
+      try:
+        user = request.user if not request.user.is_anonymous else models.User.objects.get(email="anonymous@admin.com")
+      except Exception as e:
+        print("Missing Anonymous user")
+        raise PermissionDenied
+      addressGenerated = models.AddressGenerated.objects.filter(user=user, raffle=raffle)
+      if addressGenerated.exists():
+        address = addressGenerated[0].address
       else:
-        try:
-          anonUser = models.User.objects.get(email="anonymous@admin.com")
-        except Exception as e:
-          print(e)
-          print("Anonymous user doesn't exists.")
-          raise PermissionDenied
         address = call(["getnewaddress"]).replace("\n", "")
-        addressGenerated = models.AddressGenerated(user=anonUser, raffle=raffle, address=address)
+        addressGenerated = models.AddressGenerated(user=user, raffle=raffle, address=address)
         addressGenerated.save()
       
     else:
