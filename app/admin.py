@@ -64,7 +64,7 @@ class UserAdmin(BaseUserAdmin):
 
     readonly_fields=('created_at', 'updated_at',)
     fieldsets = (
-        (None                , {'fields': ('email', 'password')}),
+        (None                , {'fields': ('email', 'username', 'password')}),
         (('Permissions')    , {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (('Important dates'), {'fields': ('last_login', 'created_at', 'updated_at')}),
     )
@@ -73,7 +73,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
+            'fields': ('email', 'username' 'password1', 'password2')}
         ),
     )
     search_fields = ('email',)
