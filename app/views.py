@@ -178,8 +178,6 @@ class Raffle:
           print("Anonymous user doesn't exists.")
           raise PermissionDenied
         address = call(["getnewaddress"]).replace("\n", "")
-        addressGenerated = models.AddressGenerated(user=anonUser, raffle=raffle, address=address)
-        addressGenerated.save()
       
     else:
       messages.error(request, "raffle not found.")
