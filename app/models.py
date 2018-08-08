@@ -387,7 +387,7 @@ class Raffle(models.Model):
             prize = call(['getaddressbalance', json.dumps({'addresses':[self.addressPrize]})])['balance']/100000000
             transaction = call(["sendtoaddress",
                                 self.winnerAddress,
-                                str(6.2)
+                                prize if type(prize) == str else str(prize)
                             ])
                     
             if transaction:
