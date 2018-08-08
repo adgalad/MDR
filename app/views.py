@@ -111,7 +111,7 @@ class Raffle:
     except Exception as e:
       raise PermissionDenied
     raffle.getWinner()
-    balance = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['balance']
+    balance = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['received']
     prize = balance/100000000 #<- satoshis
     print(">>", balance, prize)
     if not prize:
@@ -180,6 +180,8 @@ class Raffle:
           print("Anonymous user doesn't exists.")
           raise PermissionDenied
         address = call(["getnewaddress"]).replace("\n", "")
+        addressGenerated = models.AddressGenerated(user=anonUser, raffle=raffle, address=address)
+        addressGenerated.save()
       
     else:
       messages.error(request, "raffle not found.")
