@@ -111,7 +111,9 @@ class Raffle:
     except Exception as e:
       raise PermissionDenied
     raffle.getWinner()
-    prize = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['balance']/100000000 #<- satoshis
+    balance = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['balance']
+    prize = balance/100000000 #<- satoshis
+    print(">>", balance, prize)
     if not prize:
       prize = 0
 
