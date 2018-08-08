@@ -48,12 +48,14 @@ class User:
     if request.method == "POST":
       form = forms.SignUp(request.POST)
       if form.is_valid():
+        print(form.cleaned_data)
         form.save()
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password1')
         user = authenticate(username=email, password=password)
         if user is not None:
-          return redirect(reverse('login'))
+          login_auth(request, user)
+          return redirect(reverse('index'))
     else:
       form = forms.SignUp()
     
@@ -162,13 +164,23 @@ class Raffle:
     except:
       raffle = None
     if raffle:
-      
-      addressGenerated = models.AddressGenerated.objects.filter(user=request.user, raffle=raffle)
-      if addressGenerated.exists():
-        address = addressGenerated[0].address
+      if request.user:
+        addressGenerated = models.AddressGenerated.objects.filter(user=request.user, raffle=raffle)
+        if addressGenerated.exists():
+          address = addressGenerated[0].address
+        else:
+          address = call(["getnewaddress"]).replace("\n", "")
+          addressGenerated = models.AddressGenerated(user=request.user, raffle=raffle, address=address)
+          addressGenerated.save()
       else:
+        try:
+          anonUser = User.objects.get(email="anonymous@admin.com")
+        except Exception as e:
+          print(e)
+          print("Anonymous user doesn't exists.")
+          raise PermissionDenied
         address = call(["getnewaddress"]).replace("\n", "")
-        addressGenerated = models.AddressGenerated(user=request.user, raffle=raffle, address=address)
+        addressGenerated = models.AddressGenerated(user=anonUser, raffle=raffle, address=address)
         addressGenerated.save()
       
     else:

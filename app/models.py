@@ -55,22 +55,13 @@ def call(args):
 
         print("Command: ", ' '.join(command))
         data = check_output(command)
-        print(">> ", type(data), data)
         try:
-            print("string")
-            data = json.loads(data)
+            data = json.loads(data.decode("utf-8"))
         except:
             if type(data) == bytes:
-                print("byte")
-                try:
-                    data = json.loads(data.decode("utf-8"))
-                except Exception as e:
-                    data = data.decode("utf-8")
-
+                data = data.decode("utf-8")
             else:
-                print("other")
                 data = str(data)
-        print(">> ", type(data), data)
         return data
     except Exception as e:
         print(e)
@@ -426,21 +417,25 @@ class Raffle(models.Model):
         self.save()
 
         if count >= self.blockHeight:
-            users = []
+            txArray = []
             
             for tx in allTransactions:
                 for i in range(0, tx.boughtTicket):
-                    users.append(tx.user)
+                    txArray.append(tx)
             
-            if users:
-                random.shuffle(users)
+            if txArray:
+                random.shuffle(txArray)
                 data = call(["getblockhash", str(self.blockHeight)])
             
                 if data is not None:
                     blockHash = int(data, 16)
-                    winnerIndex = blockHash % len(users)
-                    self.winner = users[winnerIndex]
-                    self.winnerAddress = self.winner.wallet_address
+                    winnerIndex = blockHash % len(txArray)
+                    winnerTx = txArray[winnerIndex]
+                    self.winner = winnerTx.user
+                    if self.winner.email == "anonymous@admin.com" or self.winner.wallet_address is None:
+                        self.winnerAddress = '' #<<<<<<< 
+                    else:
+                        self.winnerAddress = self.winner.wallet_address
                     
                     self.save()
                     amount  = self.__send()
