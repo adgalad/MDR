@@ -179,7 +179,7 @@ class Raffle(models.Model):
     type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
     type = models.CharField(choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type")
     isMultisig = models.BooleanField(default=False, verbose_name=" Multisign Prize address")
-    signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(2)])
+    signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
     MSpubkey1 = models.CharField(verbose_name="Multisig Public Key 1", max_length=67, blank=True, null=True)
     MSpubkey2 = models.CharField(verbose_name="Multisig Public Key 2", max_length=67, blank=True, null=True)
     MSpubkey3 = models.CharField(verbose_name="Multisig Public Key 3", max_length=67, blank=True, null=True)
