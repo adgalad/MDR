@@ -110,14 +110,15 @@ class Raffle:
 
     except Exception as e:
       raise PermissionDenied
-    raffle.getWinner()
     balance = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['received']
     prize = balance/100000000 #<- satoshis
     print(">>", balance, prize)
-    if not prize:
+    if not prize or prize < 0:
       prize = 0
-
-    date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
+    if self.winnerAddress:
+      date = datetime.datetime.fromtimestamp(blockTime)
+    else:
+      date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
     return render(request, "raffle.html", {"raffle":raffle, 'date':date, 'prize': prize})
 
   @login_required(login_url='/login/')

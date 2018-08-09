@@ -8,7 +8,7 @@ import app.models as models
 
 class Command(BaseCommand):
 
-    DELAY = 1*60
+    DELAY = 10
 
     def handle(self, *args, **options):
         while(True):
