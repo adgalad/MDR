@@ -128,7 +128,12 @@ class Raffle:
         raffle = form.save()
         raffle.owner = request.user
         if not raffle.isMultisig:
-          raffle.addressPrize = call(['getnewaddress']).replace('\n','')
+          address = call(['getnewaddress']).replace('\n','')
+          raffle.MSpubkey1 = address
+          raffle.signsRequired = 1
+          raffle.isMultisig = True
+          raffle.privkey1 = call(['dumpprivkey', address]).replace('\n','')
+          raffle.createMultisigAddress()
         raffle.save()
         return redirect(raffle)
       else:

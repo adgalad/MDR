@@ -404,6 +404,7 @@ class Raffle(models.Model):
             else:
                 print("1))))")
                 self.__send()
+                return
         data = call(["getblockcount"])
         count = int(data) if data else 0
         self.getTransactions()
