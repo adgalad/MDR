@@ -29,7 +29,8 @@
         
         function requestQR(){
             var n = parseInt($("#numberTickets").val())
-            if (isNaN(n) || n <= 0){
+            
+            if (isNaN(n) || !Number.isInteger(n) || n <= 0){
                 n = 1
                 $("#numberTickets").val(n)
             }
