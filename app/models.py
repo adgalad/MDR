@@ -212,9 +212,9 @@ class Raffle(models.Model):
     @property
     def isMultisigned(self):
         for i in range(1,7):
-            if not getattr(self,"MSpubkey"+str(i)):
-                return False
-        return True
+            if getattr(self,"MSpubkey"+str(i)):
+                return True
+        return False
 
     def getMSpubkey(self):
         keys = []
