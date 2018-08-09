@@ -116,7 +116,7 @@ class Raffle(forms.ModelForm):
     def clean_ticketPrice(self):
         if self.cleaned_data['ticketPrice'] < 0.00000001:
             raise forms.ValidationError(
-                    "The amount most be greater than 0.00000001 Dashs"
+                    "The amount most be greater than 0.00000001 tDash"
                 )
         return self.cleaned_data['ticketPrice']
 
