@@ -13,7 +13,7 @@ from app.models import call
 def validateAddress(address):
     data = call(['validateaddress', address])
     if data:
-        print('Validate: ', data['isvalid'])
+        #print('Validate: ', data['isvalid'])
         return data['isvalid']
     return False
 

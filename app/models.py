@@ -53,7 +53,7 @@ def call(args):
                 (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else []) +
                  ["-testnet"] + args)
 
-        print("Command: ", ' '.join(command))
+        #print("Command: ", ' '.join(command))
         data = check_output(command)
         try:
             data = json.loads(data.decode("utf-8"))
@@ -64,7 +64,7 @@ def call(args):
                 data = str(data)
         return data
     except Exception as e:
-        print(e)
+        #print(e)
         return None
 
 class MyUserManager(BaseUserManager):
@@ -197,7 +197,7 @@ class Raffle(models.Model):
     MSredeemScript = models.CharField(verbose_name="Multisig Redeem Script", max_length=100, blank=True, null=True)
     
     def save(self, *args, **kwargs):
-        print(self.isMultisigned)
+        #print(self.isMultisigned)
         if not self.addressPrize and self.isMultisigned:
             self.createMultisigAddress()
 
@@ -317,9 +317,9 @@ class Raffle(models.Model):
 
 
     def __signMultisignedTransaction(self):
-        print(">>>>>>>>>>")
+        #print(">>>>>>>>>>")
         if self.nPrivkey() >= self.signsRequired:
-            print("1: ", self.nPrivkey() >= self.signsRequired)
+            #print("1: ", self.nPrivkey() >= self.signsRequired)
             txs = call(["getaddresstxids", json.dumps({"addresses":[self.addressPrize]})])
             if txs is None:
                 return -1
@@ -335,8 +335,8 @@ class Raffle(models.Model):
                     return -1
     
                 for _vout in rawTx['vout']:
-                    print(">>", _vout)
-                    print(_vout['scriptPubKey']['type'] == 'scripthash', self.addressPrize in _vout['scriptPubKey']['addresses'])
+                    #print(">>", _vout)
+                    #print(_vout['scriptPubKey']['type'] == 'scripthash', self.addressPrize in _vout['scriptPubKey']['addresses'])
                     if _vout['scriptPubKey']['type'] == 'scripthash' and self.addressPrize in _vout['scriptPubKey']['addresses']:
                         scriptPubKey = _vout['scriptPubKey']['hex']
                         vout = _vout['n']
@@ -380,7 +380,7 @@ class Raffle(models.Model):
             return -1
 
     def __send(self):
-        print("2))))    ", self.isMultisigned)
+        #print("2))))    ", self.isMultisigned)
         if self.isMultisigned:
             return self.__signMultisignedTransaction()
         else:
@@ -397,12 +397,12 @@ class Raffle(models.Model):
         return -1
 
     def getWinner(self):
-        print("Winner: ", self.winnerAddress, self.transaction)
+        #print("Winner: ", self.winnerAddress, self.transaction)
         if self.winnerAddress:
             if self.transaction:
                 return self.winnerAddress
             else:
-                print("1))))")
+                #print("1))))")
                 self.__send()
                 return
         data = call(["getblockcount"])
@@ -448,7 +448,7 @@ class Raffle(models.Model):
                             if self.winnerAddress:
                                 break
                         if not self.winnerAddress:
-                            print("Winner address not found")
+                            #print("Winner address not found")
                             return
                     else:
                         self.winnerAddress = self.winner.wallet_address
@@ -458,7 +458,7 @@ class Raffle(models.Model):
                     if self.transaction:
                         users = { tx.user for tx in allTransactions }
                         for user in users:
-                            print(user)
+                            #print(user)
                             if user.email == "anonymous@admin.com":
                                 continue
                             elif user.pk != self.winner.pk:
