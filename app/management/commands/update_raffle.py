@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         while(True):
-            raffles = models.Raffle.object.filter(transaction__isnull=True)
+            raffles = models.Raffle.objects.filter(transaction__isnull=True)
             for raffle in raffles:
                 print(raffle.name)
                 raffle.getWinner()
