@@ -84,13 +84,15 @@
             {% endif %}
         {% endif %}
         <small>* Tokens sent to the prize address or the beneficiary address will count as donations and won't be returned.</small>
-        <br><br>
-        {% if not raffle.finished %}
-            <a class="btn btn-primary" href="{% url 'buyTicket' raffle.id %}">Buy Ticket</a>
-        {% elif request.user in raffle.signers.all and not raffle.transaction %}
-            <a class="btn btn-primary" href="{% url 'addPrivkey' raffle.id %}">Sign Transaction</a>
-        {% endif %}
-        <br>
+    </div>
+    <br><br>
+    {% if not raffle.finished %}
+        <a class="btn btn-primary" href="{% url 'buyTicket' raffle.id %}">Buy Ticket</a>
+    {% elif request.user in raffle.signers.all and not raffle.transaction %}
+        <a class="btn btn-primary" href="{% url 'addPrivkey' raffle.id %}">Sign Transaction</a>
+    {% endif %}
+    <br>
+    <div align="left" style="width: 60%">
         <table border="1" class="table" style="width: 50% !important">
             <thead>
                 <tr>
