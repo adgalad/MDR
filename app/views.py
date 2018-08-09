@@ -48,7 +48,7 @@ class User:
     if request.method == "POST":
       form = forms.SignUp(request.POST)
       if form.is_valid():
-        print(form.cleaned_data)
+        #print(form.cleaned_data)
         form.save()
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password1')
@@ -112,7 +112,7 @@ class Raffle:
       raise PermissionDenied
     balance = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['received']
     prize = balance/100000000 #<- satoshis
-    print(">>", balance, prize)
+    #print(">>", balance, prize)
     if not prize or prize < 0:
       prize = 0
     if raffle.winnerAddress:
@@ -145,7 +145,7 @@ class Raffle:
           blockTime = call(['getblock', blockHash])['time']
       
         except Exception as e:
-          print(e)
+          #print(e)
           raise PermissionDenied
     else:        
       try:
@@ -155,7 +155,7 @@ class Raffle:
         blockTime = call(['getblock', blockHash])['time']
       
       except Exception as e:
-        print(e)
+        #print(e)
         raise PermissionDenied
       form = forms.Raffle(initial={'blockHeight':count, 'address':address})
 
@@ -173,7 +173,7 @@ class Raffle:
       try:
         user = request.user if not request.user.is_anonymous else models.User.objects.get(email="anonymous@admin.com")
       except Exception as e:
-        print("Missing Anonymous user")
+        #print("Missing Anonymous user")
         raise PermissionDenied
       addressGenerated = models.AddressGenerated.objects.filter(user=user, raffle=raffle)
       if addressGenerated.exists():

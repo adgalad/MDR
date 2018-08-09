@@ -14,9 +14,9 @@ class Command(BaseCommand):
         while(True):
             raffles = models.Raffle.objects.filter(transaction__isnull=True)
             for raffle in raffles:
-                print(raffle.name)
+                #print(raffle.name)
                 raffle.getWinner()
-            print('-------- Delay %d seconds --------'%self.DELAY)
+            #print('-------- Delay %d seconds --------'%self.DELAY)
             time.sleep(self.DELAY)
 
 
