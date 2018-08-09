@@ -7,7 +7,7 @@
         <div style="color:red"> {{ message }} </div>
     {% endfor %}
     <br>
-    Ticket price: {{ raffle.ticketPrice }} Dash 
+    Ticket price: {{ raffle.ticketPrice }} tDash 
     <br><br>
     How many tickets do you want to buy?<br>
     <input id="numberTickets" type="number" value="1" onchange="requestQR()">
@@ -32,7 +32,7 @@
             var dashuri = "dash:" + address + "?amount=" + String(n*price) + "&label=Payment"
             document.getElementById("image").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+dashuri
             document.getElementById("link").href = dashuri
-            document.getElementById("address").innerHTML = 'Or send ' +String(n*price) + ' Dash to {{address}}'
+            document.getElementById("address").innerHTML = 'Or send ' +String(n*price) + ' tDash to {{address}}'
         }
 
         requestQR()
