@@ -133,6 +133,7 @@ class Raffle:
           raffle.signsRequired = 1
           raffle.isMultisig = True
           raffle.privkey1 = call(['dumpprivkey', address]).replace('\n','')
+          raffle.save()
           raffle.createMultisigAddress()
         raffle.save()
         return redirect(raffle)
