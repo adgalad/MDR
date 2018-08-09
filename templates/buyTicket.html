@@ -26,13 +26,18 @@
         const price = {{ raffle.ticketPrice }}
         const address = "{{address}}"
 
+        
         function requestQR(){
             var n = parseInt(document.getElementById("numberTickets").value)
+            if (isNaN(n) || n <= 0){
+                n = 1
+            }
+            
             console.log(address)
             var dashuri = "dash:" + address + "?amount=" + String(n*price) + "&label=Payment"
             document.getElementById("image").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+dashuri
             document.getElementById("link").href = dashuri
-            document.getElementById("address").innerHTML = 'Or send ' +String(n*price) + ' tDash to {{address}}'
+            document.getElementById("address").innerHTML = 'Or send ' + String((n*price).toFixed(3)) + ' tDash to {{address}}'
         }
 
         requestQR()
