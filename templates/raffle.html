@@ -8,20 +8,20 @@
         <h3>{{raffle.name}}</h3>
         {% if raffle.isMultisigned %}
         <div class="row">
-            <div class="col-md-4"><b>Prize Address*:</b></div>
+            <div class="col-md-4"><b>Prize Address:</b></div>
             <div class="col-md-8">
                 <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressPrize}}">
                     {{raffle.addressPrize}}
-                </a> ({{raffle.prizePercentage}}%)
+                </a> ({{raffle.prizePercentage}}%) <b>*</b>
             </div>
         </div>
         {% endif %}
         <div class="row">
-            <div class="col-md-4"><b>Beneficiary Address*:</b></div> 
+            <div class="col-md-4"><b>Beneficiary Address:</b></div> 
             <div class="col-md-8">
                 <a style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressProject}}">
                     {{raffle.addressProject}}
-                </a> ({{raffle.projectPercentage}}%)
+                </a> ({{raffle.projectPercentage}}%) <b>*</b>
             </div>
         </div>
         <div class="row">
@@ -83,8 +83,8 @@
                 </div>
             {% endif %}
         {% endif %}
-        <small>*: Tokens sent to the prize address and the beneficiary will count as donations and won't be returned.</small>
-        <br>
+        <small>* Tokens sent to the prize address and the beneficiary will count as donations and won't be returned.</small>
+        <br><br><Br>
         <table border="1" class="table" style="width: 50% !important">
             <thead>
                 <tr>
