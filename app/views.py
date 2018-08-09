@@ -131,7 +131,6 @@ class Raffle:
           address = call(['getnewaddress']).replace('\n','')
           raffle.MSpubkey1 = address
           raffle.signsRequired = 1
-          raffle.isMultisigned = True
           raffle.privkey1 = call(['dumpprivkey', address]).replace('\n','')
           raffle.save()
           raffle.createMultisigAddress()
