@@ -115,7 +115,7 @@ class Raffle:
     print(">>", balance, prize)
     if not prize or prize < 0:
       prize = 0
-    if self.winnerAddress:
+    if raffle.winnerAddress:
       date = datetime.datetime.fromtimestamp(blockTime)
     else:
       date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
