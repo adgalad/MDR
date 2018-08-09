@@ -30,7 +30,8 @@
         function requestQR(){
             var n = parseInt($("#numberTickets").val())
             if (isNaN(n) || n <= 0){
-                $("#numberTickets").val(1)
+                n = 1
+                $("#numberTickets").val(n)
             }
             
             console.log(address)
