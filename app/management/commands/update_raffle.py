@@ -16,7 +16,7 @@ class Command(BaseCommand):
             for raffle in raffles:
                 print(raffle.name)
                 raffle.getWinner()
-            print('-------- Delay ' + self.DELAY + ' seconds --------')
+            print('-------- Delay %d seconds --------'%self.DELAY)
             time.sleep(self.DELAY)
 
 
