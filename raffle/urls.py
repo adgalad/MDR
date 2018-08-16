@@ -22,12 +22,13 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^$', views.index, name="index"),
+    url(r'^help/$', views.help, name="help"),
 
     # Raffle URLs
     url(r'^createRaffle/$', views.Raffle.createRaffle, name="createRaffle"),
     url(r'^raffle/(?P<id>\w+)$', views.Raffle.details, name="raffleDetails"),
     url(r'^buyTicket/(?P<id>\w+)$', views.Raffle.buyTicket, name="buyTicket"),
-    url(r'^addPrivkey/(?P<id>\w+)$', views.Raffle.addPrivkey, name="addPrivkey"),
+    url(r'^addPrivkey/(?P<id>\w+)$', views.Raffle.addPrivkey, name="addPrivkey"), 
 
     url(r'^login/$', views.User.login, name="login"),
     url(r'^signup/$', views.User.signup, name="signup"),

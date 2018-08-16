@@ -1,6 +1,7 @@
 import json
 import random
 import threading
+import datetime
 
 from subprocess import check_output 
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -11,40 +12,39 @@ from django.core.mail import send_mail
 from raffle.settings import DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL
 # Create your models here.
 
-class EmailThread(threading.Thread):
-    def __init__(self, subject, message, html_message, recipient_list):
-        self.subject = subject
-        self.message = message
-        self.recipient_list = recipient_list
-        self.html_message = html_message
-        threading.Thread.__init__(self)
+# class EmailThread(threading.Thread):
+#     def __init__(self, subject, message, html_message, recipient_list):
+#         self.subject = subject
+#         self.message = message
+#         self.recipient_list = recipient_list
+#         self.html_message = html_message
+#         threading.Thread.__init__(self)
 
-    def run (self):
-        send_mail(subject=self.subject,
-                  message=self.message,
-                  html_message=self.html_message,
-                  from_email=DEFAULT_FROM_EMAIL,
-                  recipient_list=self.recipient_list)
+#     def run (self):
+#         send_mail(subject=self.subject,
+#                   message=self.message,
+#                   html_message=self.html_message,
+#                   from_email=DEFAULT_FROM_EMAIL,
+#                   recipient_list=self.recipient_list)
 
-def sendEmailLoser(user):
-    plain_message = "You didn't win the raffle."
-    html_message = "You didn't win the raffle."
-    EmailThread(subject="Verificación de correo electrónico",
-                  message=plain_message,
-                  html_message=html_message,
-                  recipient_list=[user.email]).start()
+# def sendEmailLoser(user):
+#     plain_message = "You didn't win the raffle."
+#     html_message = "You didn't win the raffle."
+#     EmailThread(subject="Verificación de correo electrónico",
+#                   message=plain_message,
+#                   html_message=html_message,
+#                   recipient_list=[user.email]).start()
 
-def sendEmailWinner(user, name, amount):
-    plain_message = "You won the <b> name <b> raffle. The prize is " + str(amount)
-    html_message  = "You won the <b> name <b> raffle. The prize is " + str(amount)
-    EmailThread(subject="Verificación de correo electrónico",
-                message=plain_message,
-                html_message=html_message,
-                recipient_list=[user.email]).start()
+# def sendEmailWinner(user, name, amount):
+#     plain_message = "You won the <b> name <b> raffle. The prize is " + str(amount)
+#     html_message  = "You won the <b> name <b> raffle. The prize is " + str(amount)
+#     EmailThread(subject="Verificación de correo electrónico",
+#                 message=plain_message,
+#                 html_message=html_message,
+#                 recipient_list=[user.email]).start()
 
 
 def call(args):
-
     try:
         command = ([DASH_CLI] +
                 (["-rpcconnect="+RPC_SERVER] if RPC_SERVER else []) +
@@ -72,19 +72,19 @@ class MyUserManager(BaseUserManager):
     A custom user manager to deal with emails as unique identifiers for auth
     instead of usernames. The default that's used is "UserManager"
     """
-    def _create_user(self, email, password, **extra_fields):
+    def _create_user(self, username, password, **extra_fields):
         """
-        Creates and saves a User with the given email and password.
+        Creates and saves a User with the given username and password.
         """
-        if not email:
-            raise ValueError('The Email must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        if not username:
+            raise ValueError('The username must be set')
+        # username = self.normalize_username(username)
+        user = self.model(username=username, **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, username, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -93,7 +93,7 @@ class MyUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(username, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -112,7 +112,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
     
-    email = models.EmailField(unique=True, null=True)
+    # email = models.EmailField(unique=True, null=True)
     is_superuser = models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')
     username     = models.CharField(unique=True, max_length=64, verbose_name='Username')
     verified     = models.BooleanField(default=False)
@@ -124,15 +124,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     final_message = models.CharField(null=True, unique=True, max_length=128, verbose_name='Message')
 
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     objects = MyUserManager()
 
 
     def __str__(self):
         return self.username
 
-    def get_username(self):
-        return self.email
 
     def get_short_name(self):
         return self.username
@@ -151,10 +149,15 @@ class Transaction(models.Model):
     raffle = models.ForeignKey("Raffle", related_name="transactions")
     blockHeight = models.IntegerField(verbose_name="Block Height")
     boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
-    
     def __str__(self):
         return self.address
 
+    @property
+    def getDate(self):
+        rawTransaction =call(["getrawtransaction", self.address,"1"])
+        timestamp = rawTransaction['time']
+        return datetime.datetime.fromtimestamp(timestamp)
+     
 class RaffleSigner(models.Model):
     user = models.ForeignKey(User)
     raffle = models.ForeignKey("Raffle")
@@ -233,6 +236,17 @@ class Raffle(models.Model):
                 keys.append(key)
         return keys
 
+    @property
+    def getDate(self):
+        count = int(call(["getblockcount"]))
+        blockHash = call(['getblockhash', str(count)])
+        blockTime = call(['getblock', blockHash])['time']
+
+        if self.winnerAddress:
+          date = datetime.datetime.fromtimestamp(blockTime)
+        else:
+          date = datetime.datetime.fromtimestamp(blockTime + (self.blockHeight-count) * (2.6*60))
+        return date
     @property
     def finished(self):
         count = int(call(['getblockcount']))
@@ -455,16 +469,16 @@ class Raffle(models.Model):
                     
                     self.save()
                     amount  = self.__send()
-                    if self.transaction:
-                        users = { tx.user for tx in allTransactions }
-                        for user in users:
-                            #print(user)
-                            if user.email == "anonymous@admin.com":
-                                continue
-                            elif user.pk != self.winner.pk:
-                                sendEmailLoser(user)
-                            else:
-                                sendEmailWinner(user, self.name, amount)
+                    # if self.transaction:
+                        # users = { tx.user for tx in allTransactions }
+                        # for user in users:
+                        #     #print(user)
+                        #     if user.email == "anonymous@admin.com":
+                        #         continue
+                        #     elif user.pk != self.winner.pk:
+                        #         sendEmailLoser(user)
+                        #     else:
+                        #         sendEmailWinner(user, self.name, amount)
 
 
 class AddressGenerated(models.Model):

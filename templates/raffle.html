@@ -17,7 +17,7 @@
         </div>
         {% endif %}
         <div class="row">
-            <div class="col-md-4"><b>Beneficiary Address:</b></div> 
+            <div class="col-md-4"><b>Beneficiary Project Address:</b></div> 
             <div class="col-md-8">
                 <a style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressProject}}">
                     {{raffle.addressProject}}
@@ -37,12 +37,12 @@
             <div class="col-md-8">{{ raffle.ticketPrice | intcomma }} tDash</div>
         </div>
         <div class="row">
-            <div class="col-md-4"><b>Nro of tickets:</b></div>
+            <div class="col-md-4"><b>Nro of tickets sold:</b></div>
             <div class="col-md-8">{{ raffle.ticketsSold }}</div>
         </div>
         {% if not raffle.transaction %}
         <div class="row">
-            <div class="col-md-4"><b>Prize:</b></div>
+            <div class="col-md-4"><b>Prize Jackpot:</b></div>
             <div class="col-md-8">{{ prize }} tDash (updated after the transaction is confirmed) </div> 
         </div>
         {% endif %}
@@ -83,7 +83,7 @@
                 </div>
             {% endif %}
         {% endif %}
-        <small>* Tokens sent to the prize address or the beneficiary address will count as donations and won't be returned.</small>
+        <small>* Dash sent to these address will count as donations and won't be returned.</small>
     </div>
     <br>
     {% if not raffle.finished %}
@@ -92,9 +92,10 @@
         <a class="btn btn-primary" href="{% url 'addPrivkey' raffle.id %}">Sign Transaction</a>
     {% endif %}
     <br><br>
-    <div align="left" style="width: 60%">
+    <h2> Tickets Sold </h2>
+    <div align="center" style="width: 60%">
         <table border="1" class="table" style="width: 50% !important">
-            <thead>
+            <thead id="table">
                 <tr>
                     <th>
                         Transaction ID
@@ -111,6 +112,7 @@
                 </tr>
             </thead>
             <tbody>
+            {% if raffle.transactions.all %}
                 {% for tx in raffle.transactions.all %}
                     <tr>
                         <td>
@@ -129,6 +131,13 @@
                         </td>
                     </tr>
                 {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="4" align="center">
+                    The raffle has no tickets sold
+                </td>
+            </tr>
+            {% endif %}
             </tbody>
         </table>
     </div>

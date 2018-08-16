@@ -20,6 +20,8 @@
             crossorigin="anonymous">
       <!-- Common Style -->
       <link href="/static/css/common.css" rel="stylesheet">
+      <link href="/static/css/accordion.css" rel="stylesheet">
+      <link href="/static/css/styles.css" rel="stylesheet">
     {% endblock style%}
 </head>
 
@@ -28,7 +30,9 @@
 <body>
     <div class="header">
       <div class="row" style="margin-bottom: 30px;">
-        <div class="col-md-4"> 
+        <div class="col-md-4">
+          <div align="center" style="margin: 30px;">
+          </div> 
         </div>
         <div class="col-md-4"> 
           <div align="center"> 
@@ -36,12 +40,16 @@
           </div>
         </div>
         <div class="col-md-4"> 
-          <div align="right" style="margin: 30px;"> 
+          <div align="right" style="margin: 30px;">
             {% if request.user.is_authenticated %}
+            <p><b>Hello {{user.username}}</b></p>
+            <span id="help" onclick="return abrir_modal('{% url 'help' %}')"><i class="fa fa-question-circle"></i>Help/Rules</span>
                 <a class="btn btn-primary" href='{% url "profile" %}'> Profile</a>
 
                 <a class="btn btn-primary" href='{% url "logout" %}'> Logout </a>
             {% else %}
+            <p><b>Anonymous</b></p>
+            <span id="help"  onclick="return abrir_modal('{% url 'help' %}')"><i class="fa fa-question-circle"></i>Help/Rules</span>
                 <a class="btn btn-primary" href='{% url "login"  %}'> Login </a>
 
                 <a class="btn btn-primary" href='{% url "signup" %}'> Sign Up </a>
@@ -55,10 +63,26 @@
 
         {% endblock content %}
     </div>
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
 </body>
 {% block scripts %}
     <script src="/static/js/common.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
 {% endblock scripts %}
 </html>
+
+<script type="text/javascript">
+  function abrir_modal(url)
+    {
+      console.log(url)
+      $('#popup').load(url, function()
+      {
+        $(this).modal('show');
+      });
+      return false;
+    }
+</script>

@@ -10,7 +10,7 @@
     Ticket price: {{ raffle.ticketPrice }} tDash 
     <br><br>
     How many tickets do you want to buy?<br>
-    <input id="numberTickets" type="number" value="1" onchange="requestQR()">
+    <input id="numberTickets" type="number" value="1" onkeyup="requestQR()" onchange="requestQR()">
     <br><br>
     <a id="link" href="">
         <img id="image" href="#">

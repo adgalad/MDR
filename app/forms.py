@@ -122,7 +122,7 @@ class Raffle(forms.ModelForm):
 
 class Login(forms.Form):
     
-    email = forms.EmailField(required=True, label="Email")
+    username = forms.CharField(required=True, label="Username")
     password = forms.CharField(widget=forms.PasswordInput, required=True, label="Password")
 
     def __init__(self, *args, **kwargs):
@@ -130,23 +130,18 @@ class Login(forms.Form):
         for i in self.fields:
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
-    def clean_email(self):
-        return self.cleaned_data['email'].lower()
-
 
 class SignUp(UserCreationForm):
 
     class Meta():
         model = models.User
-        fields = ("email", "username")
+        fields = ("username",)
     
     def __init__(self, *args, **kwargs):
         super(SignUp, self).__init__(*args, **kwargs)
         for i in self.fields:
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
-    def clean_email(self):
-        return self.cleaned_data['email'].lower()
 
 class AddWalletAddress(forms.ModelForm):
 

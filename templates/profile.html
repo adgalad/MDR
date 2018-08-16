@@ -7,49 +7,17 @@
         <div style="color:red"> {{ message }} </div>
     {% endfor %}
     <br>
-    <table border="1" class="table">
-        <tbody>
-            <tr>
-                <td>
-                    Email
-                </td>
-                <td>
-                    {{request.user.email}}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Username
-                </td>
-                <td>
-                    {{request.user.username}}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Wallet
-                </td>
-                <td>
-                    {% if request.user.wallet_address %}
-                        {{request.user.wallet_address}}
-                    {% else %}
-                        <a href="{% url 'addWalletAddress' %}">
-                            <button> Add wallet</button>
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+   
     <br>
     {% if request.user.wallet_address %}
         <a href="{% url 'addWalletAddress' %}">
             <button> Change wallet address</button>
         </a>
+    <br>
     {% endif %}
-    <br><br>
-    <table border="1" class="table" style="width: 50%">
-        <thead>
+    <h2> Your Transactions </h2>
+    <table border="1" class="table table-hover" style="width: 50%">
+        <thead id="table">
             <tr>
                 <th>
                     Transaction ID
@@ -62,6 +30,9 @@
                 </th>
                 <th>
                     Tickets
+                </th>
+                <th>
+                    Transaction date
                 </th>
             </tr>
         </thead>
@@ -84,10 +55,16 @@
                     <td>
                         {{ tx.amount|div:tx.raffle.ticketPrice}}
                     </td>
+                    <td>
+                        {{ tx.getDate }}
+                    </td>
                 </tr>
             {% empty %}
-                <i> No transactions </i>
+            <tr>
+                <td colspan="5"> No transactions </td>
+            <tr>
             {% endfor %}
         </tbody>
     </table>
+
 {% endblock content %}

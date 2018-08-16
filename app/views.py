@@ -16,24 +16,30 @@ from app import models, forms
 from app.models import call
 # Create your views here.
 
+from raffle.settings import DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL
+
 
 def index(request):
+  #print(DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL)
   raffles = models.Raffle.objects.all()
   return render(request, "index.xhtml", {"raffles":raffles})
+
+def help(request):
+    return render(request, "help.html")  
 
 class User:
   def login(request):
     if request.method == "POST":
       form = forms.Login(request.POST)
       if form.is_valid():
-        email = form.cleaned_data.get('email')
+        username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
-        user = authenticate(username=email, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)
           return redirect(request.GET.get('next',reverse('index')))
         else:
-          messages.error(request, "Bad email or password.")
+          messages.error(request, "Bad username or password.")
           
     else:
       form = forms.Login()
@@ -50,9 +56,9 @@ class User:
       if form.is_valid():
         #print(form.cleaned_data)
         form.save()
-        email = form.cleaned_data.get('email')
+        username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password1')
-        user = authenticate(username=email, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)
           return redirect(reverse('index'))
@@ -93,33 +99,32 @@ class User:
     return render(request, "addWalletAddress.html", {'form': form})
 
   def profile(request):
-    return render(request, "profile.html")    
+    return render(request, "profile.html")  
     
-
 class Raffle:
   def details(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
       raffle = None
-    try:
-      count = int(call(["getblockcount"]))
-      address = call(["getnewaddress"])
-      blockHash = call(['getblockhash', str(count)])
-      blockTime = call(['getblock', blockHash])['time']
+    # try:
+    #   count = int(call(["getblockcount"]))
+    #   address = call(["getnewaddress"])
+    #   blockHash = call(['getblockhash', str(count)])
+    #   blockTime = call(['getblock', blockHash])['time']
 
-    except Exception as e:
-      raise PermissionDenied
+    # except Exception as e:
+    #   raise PermissionDenied
     balance = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['received']
     prize = balance/100000000 #<- satoshis
     #print(">>", balance, prize)
     if not prize or prize < 0:
       prize = 0
-    if raffle.winnerAddress:
-      date = datetime.datetime.fromtimestamp(blockTime)
-    else:
-      date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
-    return render(request, "raffle.html", {"raffle":raffle, 'date':date, 'prize': prize})
+    # if raffle.winnerAddress:
+    #   date = datetime.datetime.fromtimestamp(blockTime)
+    # else:
+    #   date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
+    return render(request, "raffle.html", {"raffle":raffle, 'date':raffle.getDate, 'prize': prize})
 
   @login_required(login_url='/login/')
   def createRaffle(request):
@@ -209,15 +214,3 @@ class Raffle:
       form = forms.AddPrivkey()
 
     return render(request, "form.html", {'form': form, "msg":msg}) 
-
-
-
-
-
-
-
-
-
-
-
-

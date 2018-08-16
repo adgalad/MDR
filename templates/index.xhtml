@@ -5,35 +5,61 @@
     <div class="container" align="left">
         <p>Welcome to Mega Dash Raffle</p>
 
-        <p>We invite you to play our raffle in benefit of Dash community projects. Your participation will help beneficiaries, by using the 50% of the tickets price to fund their proposals. The other 40% and 10% go to the winner jackpot and to the maintenance and improvement of the platform, respectively. (These percentages may vary between raffles).</p>
+        <p>We invite everyone to BUY tickets on these raffles to benefit projects for the Dash network.</p>
 
-        <p>Monthly, there will be many mini raffles (0.01 tDash per ticket), raffles (0.05 tDash per ticket) and a Mega Dash Raffle (0.1 tDash per ticket). These prices may vary as well.</p>
+        <p>For each ticket you buy, the value paid will be distributed (in % that may vary) to three wallets:</p>
 
-        <p>Play now!</p>
-    
+        <ul>
+            <li>Jackpot for the raffle prize (40%)</li>
+            <li>Beneficiary project (50%)</li>
+            <li>Administration of the raffle system (10%)</li>
+        </ul>
+        <p>Monthly, several raffle modalities will be created with different prices per ticket:</p>
+        <ul>
+            <li>Weekly: Mini Dash Raffles (0.01 tDash) ideal for projects that seek funds to bring their proposals to Dash Boost</li> 
+            <li>Biweekly: Dash Raffles (0.1 tDash): for projects seeking funds to bring their proposals to Dash Central</li>
+            <li>Monthly: Mega Dash Raffle (0.5 tDash): for projects authorized by Dash DAO that need funds to continue activities</li>   
+        </ul>
+       
         <h2> Active Raffles </h2>
-        <table border="1" class="table" style="width: 100% !important">
-            <thead>
+        <table border="1" class="table table-hover" style="width: 100% !important;cursor:pointer;">
+            <thead id="table">
                 <tr>
-                    <th>
+                    <th style="text-align:center">
                         #
                     </th>
                     <th>
                         Raffle Description
+                    </th>
+                    <th>
+                        Total of tickets sold
+                    </th>
+                    <th>
+                        Ticket Price
+                    </th>
+                    <th>                    
+                        Approximate date of raffle drawing
                     </th>
                 </tr>
             </thead>
             <tbody>
                 {% for raffle in raffles %}
                     {% if not raffle.finished %}
-                        <tr>
-                            <td>
+                        <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
+                            <td align="center">
                                     {{raffle.pk}}
                             </td>
                             <td>
-                                <a href="{% url 'raffleDetails' raffle.id %}">
                                     {{raffle.name}}
-                                </a>
+                            </td>
+                            <td>
+                                {{raffle.ticketsSold}}
+                            </td>
+                            <td>
+                                {{raffle.ticketPrice}}
+                            </td>
+                            <td>
+                                {{ raffle.getDate}}
                             </td>
                         </tr>
                     {% endif %}
@@ -41,29 +67,45 @@
             </tbody>
         </table>
 
-        <h2> Previous Raffles </h2>
-        <table border="1" class="table" style="width: 100% !important">
-            <thead>
+        <h2> Past Raffles </h2>
+        <table border="1" class="table table-hover" style="width: 100% !important;cursor:pointer;">
+            <thead id="table">
                 <tr>
-                    <th>
+                    <th style="text-align:center">
                         #
                     </th>
                     <th>
                         Raffle Description
+                    </th>
+                    <th>
+                        Total of tickets sold
+                    </th>
+                    <th>
+                        Ticket Price
+                    </th>
+                    <th>
+                       Approximate date of raffle drawing
                     </th>
                 </tr>
             </thead>
             <tbody>
                 {% for raffle in raffles %}
                     {% if raffle.finished %}
-                        <tr>
-                            <td>
+                        <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
+                            <td align="center">
                                     {{raffle.pk}}
                             </td>
                             <td>
-                                <a href="{% url 'raffleDetails' raffle.id %}">
                                     {{raffle.name}}
-                                </a>
+                            </td>
+                           <td>
+                                {{raffle.ticketsSold}}
+                            </td>
+                            <td>
+                                {{raffle.ticketPrice}}
+                            </td>
+                            <td>
+                                {{ raffle.getDate}}
                             </td>
                         </tr>
                     {% endif %}
@@ -73,5 +115,6 @@
         <br><br>
         <!-- <a href="createRaffle/" class="btn btn-primary"> Create raffle </a><br><br> -->
     </div>
+ 
 {% endblock content %}
 
