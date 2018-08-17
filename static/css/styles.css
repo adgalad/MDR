@@ -1,4 +1,13 @@
 #table {
-	background-color:#007bff;
+	background-color:#008de4;
 	color:white
+}
+
+body{
+	background:#fff;
+	font-family: 'Montserrat', sans-serif;
+}
+.description{
+    width: 40%;
+    overflow: hidden;
 }

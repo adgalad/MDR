@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Tajawal');
-
 section{
-	padding: 30px 0;
+  padding: 30px 0;
 }
 #text{
     color:#007bff;
@@ -17,20 +15,20 @@ section{
     text-decoration: none !important;
     font-size: 16px;
     font-weight: bold;
-	padding-left: 25px;
+    padding-left: 25px;
 }
 
 #accordion-style-1 .card-body {
-    border-top: 2px solid #007bff;
+    border-top: 2px solid #008de4;
     text-align: justify;
 }
 
 #accordion-style-1 .card-header .btn.collapsed #main{
-	display:none;
+  display:none;
 }
 
 #accordion-style-1 .card-header .btn #main{
-	background: #007bff;
+  background: #008de4;
     padding: 7px 6px;
     color: #ffffff;
     width: 35px;
@@ -40,7 +38,7 @@ section{
     top: 10px;
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
-	display:block;
+  display:block;
 }
 
 #help{
