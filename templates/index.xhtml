@@ -38,7 +38,7 @@
                         Ticket Price
                     </th>
                     <th>                    
-                        Approximate date of raffle drawing
+                        Date of raffle drawing (approx)
                     </th>
                 </tr>
             </thead>
@@ -46,19 +46,19 @@
                 {% for raffle in raffles %}
                     {% if not raffle.finished %}
                         <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
-                            <td align="center">
+                            <td align="center" style="width:5%">
                                     {{raffle.pk}}
                             </td>
-                            <td class = "description">
+                            <td style="width:35%">
                                     {{raffle.name}}
                             </td>
-                            <td>
+                           <td style="width:20%">
                                 {{raffle.ticketsSold}}
                             </td>
-                            <td>
+                            <td style="width:15%">
                                 {{raffle.ticketPrice}}
                             </td>
-                            <td>
+                            <td style="width:25%">
                                 {{ raffle.getDate}}
                             </td>
                         </tr>
@@ -92,19 +92,19 @@
                 {% for raffle in raffles %}
                     {% if raffle.finished %}
                         <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
-                            <td align="center">
+                            <td align="center" style="width:5%">
                                     {{raffle.pk}}
                             </td>
-                            <td class = "description">
+                            <td style="width:35%">
                                     {{raffle.name}}
                             </td>
-                           <td>
+                           <td style="width:20%">
                                 {{raffle.ticketsSold}}
                             </td>
-                            <td>
+                            <td style="width:15%">
                                 {{raffle.ticketPrice}}
                             </td>
-                            <td>
+                            <td style="width:25%">
                                 {{ raffle.getDate}}
                             </td>
                         </tr>
