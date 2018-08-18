@@ -176,7 +176,7 @@ class Raffle:
       raffle = None
     if raffle:
       try:
-        user = request.user if not request.user.is_anonymous else models.User.objects.get(email="anonymous@admin.com")
+        user = request.user if not request.user.is_anonymous else models.User.objects.get(username="Anonymous")
       except Exception as e:
         #print("Missing Anonymous user")
         raise PermissionDenied
