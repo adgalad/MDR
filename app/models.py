@@ -149,8 +149,9 @@ class Transaction(models.Model):
     raffle = models.ForeignKey("Raffle", related_name="transactions")
     blockHeight = models.IntegerField(verbose_name="Block Height")
     boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
+    
     def __str__(self):
-        return self.address
+        return str((self.user, self.address))
 
     @property
     def getDate(self):
@@ -260,13 +261,14 @@ class Raffle(models.Model):
 
     def getTransactions(self):
         for ag in self.addresses.all():
-            print(ag)
+            if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print(ag)
             txs = call(["getaddresstxids", json.dumps({"addresses":[ag.address]})])
                 
             if txs is None:
                 continue
 
             for i in txs:
+                if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print(txs)
                 if Transaction.objects.filter(address=i).exists():
                     continue
 
