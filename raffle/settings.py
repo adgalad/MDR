@@ -31,7 +31,7 @@ RPC_USER=os.environ.get('RPC_USER', "")
 RPC_PASSWORD=os.environ.get('RPC_PASSWORD', "")
 RPC_SERVER=os.environ.get('RPC_SERVER', "")
 RPC_PORT=os.environ.get('RPC_PORT', "")
-DASH_CLI=os.environ.get('DASH_CLI', "~/dash/builddash/dash/src/dash-cli")
+DASH_CLI=os.environ.get('DASH_CLI', "dash-cli")
 
 # Application definition
 

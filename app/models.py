@@ -53,7 +53,7 @@ def call(args):
                 (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else []) +
                  ["-testnet"] + args)
 
-        print("Command: ", ' '.join(command))
+        # print("Command: ", ' '.join(command))
         data = check_output(command)
         try:
             data = json.loads(data.decode("utf-8"))
@@ -261,14 +261,11 @@ class Raffle(models.Model):
 
     def getTransactions(self):
         for ag in self.addresses.all():
-            if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print(ag)
             txs = call(["getaddresstxids", json.dumps({"addresses":[ag.address]})])
-            if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print("TXS> ", txs)
             if txs is None:
                 continue
 
             for i in txs:
-                if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print(i)
                 if Transaction.objects.filter(address=i).exists():
                     continue
 
