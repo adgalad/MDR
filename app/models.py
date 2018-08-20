@@ -53,7 +53,7 @@ def call(args):
                 (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else []) +
                  ["-testnet"] + args)
 
-        #print("Command: ", ' '.join(command))
+        # print("Command: ", ' '.join(command))
         data = check_output(command)
         try:
             data = json.loads(data.decode("utf-8"))
@@ -149,8 +149,9 @@ class Transaction(models.Model):
     raffle = models.ForeignKey("Raffle", related_name="transactions")
     blockHeight = models.IntegerField(verbose_name="Block Height")
     boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
+    
     def __str__(self):
-        return self.address
+        return str((self.user, self.address))
 
     @property
     def getDate(self):
@@ -261,7 +262,6 @@ class Raffle(models.Model):
     def getTransactions(self):
         for ag in self.addresses.all():
             txs = call(["getaddresstxids", json.dumps({"addresses":[ag.address]})])
-                
             if txs is None:
                 continue
 
@@ -424,7 +424,6 @@ class Raffle(models.Model):
         self.getTransactions()
         tickets = 0
         allTransactions = self.transactions.all()
-        
         for tx in allTransactions:
             tickets += tx.boughtTicket
 
@@ -487,5 +486,6 @@ class AddressGenerated(models.Model):
     address = models.CharField(unique=True, max_length=64, verbose_name='Address')
 
 
-
+    def __str__(self):
+        return str((self.user, self.address))
 
