@@ -260,6 +260,7 @@ class Raffle(models.Model):
 
     def getTransactions(self):
         for ag in self.addresses.all():
+            print(ag)
             txs = call(["getaddresstxids", json.dumps({"addresses":[ag.address]})])
                 
             if txs is None:
@@ -412,6 +413,7 @@ class Raffle(models.Model):
 
     def getWinner(self):
         #print("Winner: ", self.winnerAddress, self.transaction)
+        print("Aqui")
         if self.winnerAddress:
             if self.transaction:
                 return self.winnerAddress
@@ -424,7 +426,6 @@ class Raffle(models.Model):
         self.getTransactions()
         tickets = 0
         allTransactions = self.transactions.all()
-        
         for tx in allTransactions:
             tickets += tx.boughtTicket
 
@@ -487,5 +488,6 @@ class AddressGenerated(models.Model):
     address = models.CharField(unique=True, max_length=64, verbose_name='Address')
 
 
-
+    def __str__(self):
+        return str((self.user, self.address))
 
