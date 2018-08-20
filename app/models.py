@@ -263,12 +263,12 @@ class Raffle(models.Model):
         for ag in self.addresses.all():
             if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print(ag)
             txs = call(["getaddresstxids", json.dumps({"addresses":[ag.address]})])
-                
+            if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print("TXS> ", txs)
             if txs is None:
                 continue
 
             for i in txs:
-                if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print(txs)
+                if ag.address == 'yPQcdUfVFyHjeVfTNCCjdHYyqR2z6ae6Wf': print(i)
                 if Transaction.objects.filter(address=i).exists():
                     continue
 
@@ -415,7 +415,6 @@ class Raffle(models.Model):
 
     def getWinner(self):
         #print("Winner: ", self.winnerAddress, self.transaction)
-        print("Aqui")
         if self.winnerAddress:
             if self.transaction:
                 return self.winnerAddress
