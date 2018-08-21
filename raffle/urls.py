@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from app import views
 
 urlpatterns = [
@@ -36,4 +36,4 @@ urlpatterns = [
 
     url(r'^addWalletAddress/$', views.User.addWalletAddress, name="addWalletAddress"),
     url(r'^profile/$', views.User.profile, name="profile"),
-]
+] + staticfiles_urlpatterns()
