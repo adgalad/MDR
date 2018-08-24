@@ -53,7 +53,7 @@ def call(args):
                 (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else []) +
                  ["-testnet"] + args)
 
-        # print("Command: ", ' '.join(command))
+        #print("Command: ", ' '.join(command))
         data = check_output(command)
         try:
             data = json.loads(data.decode("utf-8"))
