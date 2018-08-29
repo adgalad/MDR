@@ -55,6 +55,7 @@
         input.val(count)
       } else {
         approxTime = blockTime + (input.val() - count)* (2.6*60) // 2.6 minutes per block
+        console.log(approxTime)
         date = timeConverter(approxTime)
         $('#date').html(date)
       }

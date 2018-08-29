@@ -177,6 +177,7 @@ class Raffle(models.Model):
     winner = models.ForeignKey(User, blank=True, null=True, related_name="rafflesWon")
     owner = models.ForeignKey(User, related_name="ownsRaffles", blank=True, null=True)
     winnerAddress = models.CharField(verbose_name="Winner Address", max_length=100, blank=True, null=True)
+    totalPrize = models.DecimalField(verbose_name="totalPrize", max_digits=20, decimal_places=6, blank=True, null=True)
     transaction = models.CharField(verbose_name="Transaction", max_length=100, blank=True, null=True)
     signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers", related_name="signs")
     type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
@@ -469,6 +470,8 @@ class Raffle(models.Model):
                     
                     self.save()
                     amount  = self.__send()
+                    self.totalPrize = amount
+                    self.save()
                     # if self.transaction:
                         # users = { tx.user for tx in allTransactions }
                         # for user in users:
