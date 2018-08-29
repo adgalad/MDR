@@ -46,6 +46,12 @@
             <div class="col-md-8">{{ prize }} tDash (updated after the transaction is confirmed) </div> 
         </div>
         {% endif %}
+        {% if raffle.transaction %}
+        <div class="row">
+            <div class="col-md-4"><b>Paid Jackpot:</b></div>
+            <div class="col-md-8">raffle.totalPrize</div> 
+        </div>
+        {% endif %}
         {% if raffle.finished %}
             {% if raffle.winner %}
             <div class="row">
