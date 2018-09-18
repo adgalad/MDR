@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
 from app import models, forms
-from app.models import call
+from app.models import Dash
 # Create your views here.
 
 from raffle.settings import DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL
@@ -75,9 +75,9 @@ class User:
       if form.is_valid():
         address = form.cleaned_data['wallet_address']
         signature = form.cleaned_data['signature']
-        final_message = form.cleaned_data['final_message']
-        if request.user.message == final_message:
-          if call(["verifymessage", address, signature, final_message]):
+        finalMessage = form.cleaned_data['final_message']
+        if request.user.message == finalMessage:
+          if Dash.verifymessage(address, signature, finalMessage):
             form.save()
             return redirect(reverse('profile'))
           else:
@@ -108,14 +108,14 @@ class Raffle:
     except:
       raffle = None
     # try:
-    #   count = int(call(["getblockcount"]))
-    #   address = call(["getnewaddress"])
-    #   blockHash = call(['getblockhash', str(count)])
-    #   blockTime = call(['getblock', blockHash])['time']
+    #   count = Dash.getblockcount()
+    #   address = Dash.getnewaddress()
+    #   blockHash = Dash.getblockhash(count)
+    #   blockTime = Dash.getblock(blockHash)['time']
 
     # except Exception as e:
     #   raise PermissionDenied
-    balance = call(['getaddressbalance', json.dumps({'addresses':[raffle.addressPrize]})])['received']
+    balance = Dash.getaddressbalance([raffle.addressPrize])['received']
     prize = balance/100000000 #<- satoshis
     #print(">>", balance, prize)
     if not prize or prize < 0:
@@ -134,30 +134,30 @@ class Raffle:
         raffle = form.save()
         raffle.owner = request.user
         if not raffle.isMultisig:
-          address = call(['getnewaddress']).replace('\n','')
+          address = Dash.getnewaddress()
           raffle.MSpubkey1 = address
           raffle.signsRequired = 1
-          raffle.privkey1 = call(['dumpprivkey', address]).replace('\n','')
+          raffle.privkey1 = Dash.dumpprivkey(address)
           raffle.save()
           raffle.createMultisigAddress()
         raffle.save()
         return redirect(raffle)
       else:
         try:
-          count = int(call(["getblockcount"]))
-          address = call(["getnewaddress"])
-          blockHash = call(['getblockhash', str(count)])
-          blockTime = call(['getblock', blockHash])['time']
+          count = Dash.getblockcount()
+          address = Dash.getnewaddress()
+          blockHash = Dash.getblockhash(count)
+          blockTime = Dash.getblock(blockHash)['time']
       
         except Exception as e:
           #print(e)
           raise PermissionDenied
     else:        
       try:
-        count = int(call(["getblockcount"]))
-        address = call(["getnewaddress"])
-        blockHash = call(['getblockhash', str(count)])
-        blockTime = call(['getblock', blockHash])['time']
+        count = Dash.getblockcount()
+        address = Dash.getnewaddress()
+        blockHash = Dash.getblockhash(count)
+        blockTime = Dash.getblock(blockHash)['time']
       
       except Exception as e:
         #print(e)
@@ -184,7 +184,7 @@ class Raffle:
       if addressGenerated.exists():
         address = addressGenerated[0].address
       else:
-        address = call(["getnewaddress"]).replace("\n", "")
+        address = Dash.getnewaddress().replace("\n", "")
         addressGenerated = models.AddressGenerated(user=user, raffle=raffle, address=address)
         addressGenerated.save()
       

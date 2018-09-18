@@ -1,5 +1,5 @@
 
-div.header {
+div.mdr_navbar {
   /*background-color: rgb(0, 141, 228);*/
 }
 
@@ -7,6 +7,10 @@ table {
   width: 70% !important;
 }
 
+body {
+    font-family: 'Montserrat', sans-serif;
+    /*font-size: 400px !important;*/
+}
 /* Tooltip container */
 .tooltipaba {
     position: relative;
@@ -37,4 +41,42 @@ table {
     position: all;
     bottom: 100%;
     left: -50%; 
+}
+
+.navbar {
+    z-index: -1;
+    background-color: #187ada;
+    -webkit-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75);
+}
+
+header {
+  /*text-align: center;*/
+  background-color: white;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  transition: top 0.2s ease-in-out;
+}
+
+header.header-up {
+  top: -105px;
+}
+
+header .brand {
+  width: 100%;
+  height: 105px;
+  line-height: 50px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+header .brand .logo {
+  cursor: pointer;
+  width: 100%;
+  /*height: 20px;*/
+  display: inline-block;
+  vertical-align: middle;
 }

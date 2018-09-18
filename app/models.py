@@ -44,28 +44,80 @@ from raffle.settings import DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWO
 #                 recipient_list=[user.email]).start()
 
 
-def call(args):
-  try:
-    command = ([DASH_CLI] +
+class Dash:
+  command = ([DASH_CLI] +
         (["-rpcconnect="+RPC_SERVER] if RPC_SERVER else []) +
         (["-rpcport="+RPC_PORT] if RPC_PORT else []) +
         (["-rpcuser="+RPC_USER] if RPC_USER else []) +
         (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else []) +
-         ["-testnet"] + args)
+         ["-testnet"])
 
-    #print("Command: ", ' '.join(command))
-    data = check_output(command)
+  def createrawtransaction(output, addressAmount):
+    return Dash.call(["createrawtransaction",json.dumps(output), json.dumps(addressAmount)])
+  
+  def createmultisig(signsRequired, pubkeys):
+    return Dash.call(["createmultisig", str(signsRequired), json.dumps(pubkeys)])
+
+  def dumpprivkey(address):
+    return Dash.call(["dumpprivkey", address]).replace('\n','')    
+
+  def getaddresstxids(addresses):
+    return Dash.call(["getaddresstxids", json.dumps({"addresses":addresses})])
+
+  def getaddressbalance(addresses):
+    return Dash.call(["getaddressbalance",json.dumps({'addresses':addresses})])
+
+  def getblock(blockHash):
+    return {'time':5515236123}
+    return Dash.call(["getblock", blockHash])
+
+  def getblockcount():
+    count = Dash.call(['getblockcount'])
+    return int(count) if count else 0
+
+  def getblockhash(count):
+    return Dash.call(["getblockhash", str(count)])
+  
+  def getnewaddress():
+    return Dash.call(["getnewaddress"]).replace('\n','')
+
+  def getrawtransaction(address, parsed=1):
+    return Dash.call(["getrawtransaction", address, parsed])
+
+  def sendrawtransaction(hexadecimalValue, allowhighfees=False, instantsend=False, bypasslimits=False):
+    return Dash.call(["sendrawtransaction",hexadecimalValue, allowhighfees, instantsend, bypasslimits])  
+  
+  def sendtoaddress(address, amount):
+    return Dash.call(["sendtoaddress", address, str(amount)])
+
+  def signrawtransaction(transaction, output, privkeys):
+    return Dash.call(["signrawtransaction",transaction, json.dumps(output), json.dumps(privkeys)])  
+
+  def validateaddress(address):
+    return Dash.call(['validateaddress', address])
+
+  def verifymessage(address, signature, finalMessage):
+    return Dash.call(["verifymessage", address, signature, finalMessage])
+
+  
+
+  
+
+  def call(args):
     try:
-      data = json.loads(data.decode("utf-8"))
-    except:
-      if type(data) == bytes:
-        data = data.decode("utf-8")
-      else:
-        data = str(data)
-    return data
-  except Exception as e:
-    #print(e)
-    return None
+      #print("Command: ", ' '.join(command))
+      data = check_output(Dash.command + args)
+      try:
+        data = json.loads(data.decode("utf-8"))
+      except:
+        if type(data) == bytes:
+          data = data.decode("utf-8")
+        else:
+          data = str(data)
+      return data
+    except Exception as e:
+      #print(e)
+      return None
 
 class MyUserManager(BaseUserManager):
   """
@@ -155,7 +207,7 @@ class Transaction(models.Model):
 
   @property
   def getDate(self):
-    rawTransaction =call(["getrawtransaction", self.address,"1"])
+    rawTransaction = Dash.getrawtransaction(self.address)
     timestamp = rawTransaction['time']
     return datetime.datetime.fromtimestamp(timestamp)
    
@@ -243,29 +295,29 @@ class Raffle(models.Model):
     
     if self.winnerAddress:
       count = self.blockHeight
-      blockHash = call(['getblockhash', str(count)])
-      blockTime = call(['getblock', blockHash])['time']
+      blockHash = Dash.getblockhash(count)
+      blockTime = Dash.getblock(blockHash)['time']
       date = datetime.datetime.fromtimestamp(blockTime)
     else:
-      count = int(call(["getblockcount"]))
-      blockHash = call(['getblockhash', str(count)])
-      blockTime = call(['getblock', blockHash])['time']
+      count = Dash.getblockcount()
+      blockHash = Dash.getblockhash(count)
+      blockTime = Dash.getblock(blockHash)['time']
       date = datetime.datetime.fromtimestamp(blockTime + (self.blockHeight-count) * (2.6*60))
     return date
   @property
   def finished(self):
-    count = int(call(['getblockcount']))
+    count = Dash.getblockcount()
     return self.blockHeight < count
 
   def createMultisigAddress(self):
     if self.isMultisigned:
-      data = call(['createmultisig', str(self.signsRequired), json.dumps(self.getMSpubkey())])
+      data = Dash.createmultisig(str(self.signsRequired), json.dumps(self.getMSpubkey()))
       self.addressPrize = data['address']
       self.MSredeemScript = data['redeemScript']
 
   def getTransactions(self):
     for ag in self.addresses.all():
-      txs = call(["getaddresstxids", json.dumps({"addresses":[ag.address]})])
+      txs = Dash.getaddresstxids([ag.address])
       if txs is None:
         continue
 
@@ -273,7 +325,7 @@ class Raffle(models.Model):
         if Transaction.objects.filter(address=i).exists():
           continue
 
-        txRaw = call(["getrawtransaction", i, "1"])
+        txRaw = Dash.getrawtransaction(i)
         if txRaw is None:
           continue
 
@@ -338,7 +390,7 @@ class Raffle(models.Model):
     #print(">>>>>>>>>>")
     if self.nPrivkey() >= self.signsRequired:
       #print("1: ", self.nPrivkey() >= self.signsRequired)
-      txs = call(["getaddresstxids", json.dumps({"addresses":[self.addressPrize]})])
+      txs = Dash.getaddresstxids([self.addressPrize])
       if txs is None:
         return -1
 
@@ -348,7 +400,7 @@ class Raffle(models.Model):
       outputs1 = []
       outputs2 = []
       for tx in txs:
-        rawTx = call(['getrawtransaction', tx, "1"])
+        rawTx = Dash.getrawtransaction(tx)
         if rawTx is None:
           return -1
   
@@ -372,14 +424,14 @@ class Raffle(models.Model):
                  "scriptPubKey": scriptPubKey,
                  "redeemScript": self.MSredeemScript})
       
-      prize = call(['getaddressbalance', json.dumps({'addresses':[self.addressPrize]})])['balance']/100000000
+      prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
       toAddress = {self.winnerAddress: round(prize-fee,6)}
-      transaction = call(['createrawtransaction', json.dumps(outputs1), json.dumps(toAddress)])
+      transaction = Dash.createrawtransaction(outputs1, toAddress)
       if transaction is None:
         return -1
 
 
-      sign = call(['signrawtransaction', transaction.replace('\n',''), json.dumps(outputs2), json.dumps(self.getPrivkey)])
+      sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, self.getPrivkey)
       if not sign or not "complete" in sign:
         return -1
 
@@ -388,7 +440,7 @@ class Raffle(models.Model):
       
       hex = sign['hex']
 
-      transaction = call(['sendrawtransaction', sign['hex'], "true", "false", "false" ])
+      transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
       if transaction:
         self.transaction = transaction
         self.save()
@@ -402,11 +454,8 @@ class Raffle(models.Model):
     if self.isMultisigned:
       return self.__signMultisignedTransaction()
     else:
-      prize = call(['getaddressbalance', json.dumps({'addresses':[self.addressPrize]})])['balance']/100000000
-      transaction = call(["sendtoaddress",
-                self.winnerAddress,
-                prize if type(prize) == str else str(prize)
-              ])
+      prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
+      transaction = Dash.sendtoaddress(self.winnerAddress, prize if type(prize) == str else str(prize))
           
       if transaction:
         self.transaction = transaction
@@ -423,8 +472,7 @@ class Raffle(models.Model):
         #print("1))))")
         self.__send()
         return
-    data = call(["getblockcount"])
-    count = int(data) if data else 0
+    count = Dash.getblockcount()
     self.getTransactions()
     tickets = 0
     allTransactions = self.transactions.all()
@@ -443,7 +491,7 @@ class Raffle(models.Model):
       
       if txArray:
         random.shuffle(txArray)
-        data = call(["getblockhash", str(self.blockHeight)])
+        data = Dash.getblockhash(self.blockHeight)
       
         if data is not None:
           blockHash = int(data, 16)
@@ -451,12 +499,12 @@ class Raffle(models.Model):
           winnerTx = txArray[winnerIndex]
           self.winner = winnerTx.user
           if self.winner.username == "Anonymous" or self.winner.wallet_address is None:
-            rawtx1 = call(["getrawtransaction", winnerTx.address, "1"])
+            rawtx1 = Dash.getrawtransaction(winnerTx.address)
             for vin in rawtx1['vin']:
-              rawtx2 = call(["getrawtransaction", vin['txid'], "1"])
+              rawtx2 = Dash.getrawtransaction(vin['txid'])
               for vout in rawtx2['vout']:
                 for address in vout["scriptPubKey"]["addresses"]:
-                  txids = call(["getaddresstxids", json.dumps({"addresses":[address]})])
+                  txids = Dash.getaddresstxids([address])
                   if winnerTx.address in txids:
                     self.winnerAddress = address
                     break

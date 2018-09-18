@@ -4,14 +4,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 from app import models
-from app.models import call
+from app.models import Dash
 
 # class FromControl(forms.From):
 #     def __init__(self, arg):
 #         super(FromControl, self).__init__()
 #         self.fields
 def validateAddress(address):
-    data = call(['validateaddress', address])
+    data = Dash.validateaddress(address)
     if data:
         #print('Validate: ', data['isvalid'])
         return data['isvalid']
@@ -53,7 +53,7 @@ class Raffle(forms.ModelForm):
 
     def clean_address(self):
         address = self.cleaned_data['address']
-        data = call(["validateaddress", address])
+        data = Dash.validateaddress(address)
         if not data['isvalid']:
             raise forms.ValidationError(
                     '%s is not a valid address.'% address
@@ -62,7 +62,7 @@ class Raffle(forms.ModelForm):
 
     def clean_blockHeight(self):
         blockHeight = self.cleaned_data['blockHeight']
-        count = int(call(["getblockcount"]))
+        count = Dash.getblockcount()
         if count > blockHeight:
             raise forms.ValidationError(
                     'The block %d already exists.' % blockHeight

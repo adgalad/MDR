@@ -29,37 +29,47 @@
   
 
 <body>
-    <div class="header">
-      <div class="row" style="margin-bottom: 30px;">
-        <div class="col-md-4">
-          <div align="center" style="margin: 30px;">
-          </div> 
-        </div>
-        <div class="col-md-4"> 
-          <div align="center"> 
-            <img src="/static/img/logo.png" style="width: 200px;">
+  <header>
+       <div class="brand" style="z-index: 1000; background-color: white">
+        <span class="logo">
+          <div class="row" style="width: 100%">
+            <div class="col-md-4 col-sm-4 col-xs-1"> </div>
+            <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
+              <!-- <img src="/static/img/1.2.png" width="60px" > -->
+              <img src="/static/img/logo.png" width="200px" >
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-1"> </div>
+          </div>
+          
+        </span>
+      </div>
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">
+              <i class="fa fa-home"></i> 
+              <b>Home</b>
+              <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-item nav-link" href="#">
+              <b>Features</b>
+            </a>
+            <a class="nav-item nav-link" href="#">
+              <b>Pricing</b>
+            </a>
+            <a class="nav-item nav-link disabled" href="#">
+              <b>Disabled</b>
+            </a>
           </div>
         </div>
-        <div class="col-md-4"> 
-          <div align="right" style="margin: 30px;">
-            {% if request.user.is_authenticated %}
-            <p><b>Hello {{user.username}}</b></p>
-            <span id="help" onclick="return abrir_modal('{% url 'help' %}')"><i class="fa fa-question-circle"></i>Help/Rules</span>
-                <a class="btn btn-primary" href='{% url "profile" %}'> Profile</a>
+      </nav>
+  </header>
 
-                <a class="btn btn-primary" href='{% url "logout" %}'> Logout </a>
-            {% else %}
-            <p><b>Anonymous</b></p>
-            <span id="help"  onclick="return abrir_modal('{% url 'help' %}')"><i class="fa fa-question-circle"></i>Help/Rules</span>
-                <a class="btn btn-primary" href='{% url "login"  %}'> Login </a>
-
-                <a class="btn btn-primary" href='{% url "signup" %}'> Sign Up </a>
-            {% endif %}
-        </div>
-        </div>
-      </div>
-    </div>
-    <div align="center">
+    <div align="center" style="margin-top: 230px;">
         {% block content %}
 
         {% endblock content %}
@@ -69,10 +79,11 @@
 </div>
 </body>
 {% block scripts %}
-    <script src="/static/js/common.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <script src="/static/js/common.js"></script>
 {% endblock scripts %}
 </html>
 
