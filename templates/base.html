@@ -26,47 +26,57 @@
     {% endblock style%}
 </head>
 
-  
 
 <body>
   <header>
-       <div class="brand" style="z-index: 1000; background-color: white">
+       <div class="brand" style="z-index: 1000; background-color: #343a40">
         <span class="logo">
           <div class="row" style="width: 100%">
             <div class="col-md-4 col-sm-4 col-xs-1"> </div>
             <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
               <!-- <img src="/static/img/1.2.png" width="60px" > -->
-              <img src="/static/img/logo.png" width="200px" >
+              <img src="/static/img/logo_blanco.png" width="200px" style="margin-top: 0px" >
             </div>
             <div class="col-md-4 col-sm-4 col-xs-1"> </div>
           </div>
           
         </span>
       </div>
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">
-              <i class="fa fa-home"></i> 
-              <b>Home</b>
-              <span class="sr-only">(current)</span>
-            </a>
-            <a class="nav-item nav-link" href="#">
-              <b>Features</b>
-            </a>
-            <a class="nav-item nav-link" href="#">
-              <b>Pricing</b>
-            </a>
-            <a class="nav-item nav-link disabled" href="#">
-              <b>Disabled</b>
-            </a>
-          </div>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Left</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="//codeply.com">Codeply</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+            </ul>
         </div>
-      </nav>
+        
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Right</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
   </header>
 
     <div align="center" style="margin-top: 230px;">

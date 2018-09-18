@@ -39,11 +39,14 @@ function hasScrolled() {
   if (st > lastScrollTop && st > navbarHeight) {
     // Scroll Down
     $('header').removeClass('header-down').addClass('header-up');
+    // $('.logo-img').empty()
+    // $('.logo-img').append('<img src="/static/img/logo_blanco.png">')
   } else {
     // Scroll Up
     console.log(st, $(window).height(), $(document).height(), st <= 10)
     if (st <= 50) {
       $('header').removeClass('header-up').addClass('header-down');
+      // $('.logo-img').empty()
     }
   }
 
