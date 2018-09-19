@@ -27,39 +27,45 @@
                    <div class="row" align="center">
                         <div class="col-12 mx-auto">
                            <div class="accordion" id="accordionExample">
-                                <form method="post" action="{%url 'login' %}">
+                                <form method="post" action="{%url 'signup' %}">
                                             {% csrf_token %}
                                     <div class="container" style="z-index:-1;">
-                                        <h3 id="text" style="text-align:center;margin-bottom:15px;">MegadashRaffle</h3>
+                                        <h3 id="text" style="text-align:center;">SingUp</h3>
                                         <div class="omb_login">
-                                                <div class="col-xs-12 col-sm-12">   
-                                                    <div class="input-group">
+                                                <div class="col-xs-12 col-sm-12"> 
+                                                 
+                                                    <div class="input-group" style="margin-top:10px; margin-bottom:15px;">
                                                         <span class="input-group-text"><i class="fa fa-user"></i></span>
                                                         <input type="text" class="form-control" name="username" placeholder="username" id="id_username">
-                                                    </div>
-                                                    <br>              
-                                                    <div class="input-group" style="margin-bottom:10px;">
+                                                    </div>              
+                                                    <div class="input-group" style="margin-bottom:15px;">
                                                         <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                                                        <input  type="password" class="form-control" name="password" placeholder="Password" id="id_password">
+                                                        <input  type="password" class="form-control" name="password1" placeholder="Password" id="id_password1">
                                                     </div>
-                                                    {% for message in messages %}
+                                                    <div class="input-group" style="margin-bottom:15px;">
+                                                        <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                                        <input  type="password" class="form-control" name="password2" placeholder="Password confirmation" id="id_password2">
+                                                    </div>
+                                                {% for field in form %} 
+                                                    {% if field.errors %} 
                                                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                      {{ message }} 
+                                                      {{ field.errors }}
                                                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                       </button>
                                                     </div>
-                                                    {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
                                                 </div>
 
                                             <div class="col-xs-12 col-sm-12">
                                                 <p class="omb_forgotPwd">
-                                                    <a href="#">Forgot password?</a>
+                                                  Already have a user? <a href="/login/">login</a>
                                                 </p>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="col-sm-6">
-                                                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="botton">Login</button>
+                                                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="botton">Submit</button>
                                                 </div>
                                             </div>     
                                         </div>

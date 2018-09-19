@@ -94,18 +94,19 @@
                   </div>
               </li>
               &nbsp;&nbsp;
-
             {% else %}
-              <li class="nav-item {%block login%} {% endblock login%}">
-                  <a class="nav-link" href="{% url 'login' %}">
-                    Log In
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link {%block signup%} {% endblock signup%}" href="#">
-                    Sign Up
-                  </a>
-              </li>
+            <li class="nav-item {%block login%} {% endblock login%}">
+                    <a class="nav-link" onclick="return abrir_modal('/login/?modal=1')">
+                      <i class="fa fa-user"></i>
+                      <b>Log In</b>
+                    </a>
+                </li>
+                <li class="nav-item {%block signup%} {% endblock signup%}">
+                    <a class="nav-link" onclick="return abrir_modal('/signup/?modal=1')">
+                      <i class="fa fa-book"></i>
+                      <b>Sign Up</b>
+                    </a>
+                </li>
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link {%block rules%} {% endblock rules%}" href="#"
