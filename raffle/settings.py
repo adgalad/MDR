@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'mathfilters',
     'app',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -128,7 +129,7 @@ USE_TZ = True
 #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 #STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = '/staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -137,6 +138,8 @@ STATICFILES_DIRS = (
 
 # Directorio de templates y de statics.
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+CKEDITOR_BASEPATH = os.path.join(STATIC_URL, "ckeditor/ckeditor/")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{%load humanize %}
+
+{% block content %}
+    {% if msg %}
+        {{msg}}
+    {% endif %}
+    {% for message in messages %}
+        <div style="color:red"> {{ message }} </div>
+    {% endfor %}
+    <br>
+    {% block beforeForm %}  {% endblock beforeForm %}
+
+    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+        <a data-edit="bold"></a>
+    </div> 
+    <div id="editor" class="lead" data-placeholder="This is a basic example with no toolbars."></div>
+        
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+    
+
+    {% block afterForm %}  {% endblock afterForm %}
+{% endblock content %}
+
+{% block scripts %}
+    {{block.super}}
+    {{form.media}}
+{% endblock scripts%}

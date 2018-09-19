@@ -44,17 +44,17 @@
 
 {% block scripts %}
   {{ block.super }}
+  {{ form.media }}
   <script type="text/javascript">
     blockTime = parseInt('{{ blockTime }}')
     count = parseInt('{{ count }}')
     input = $('#id_blockHeight')
 
-    
     function estimate(){
       if (count > input.val()){
         input.val(count)
       } else {
-        approxTime = blockTime + (input.val() - count)* (2.6*60) // 2.6 minutes per block
+        approxTime = blockTime + (input.val() - count) * (2.6*60) // 2.6 minutes per block
         console.log(approxTime)
         date = timeConverter(approxTime)
         $('#date').html(date)

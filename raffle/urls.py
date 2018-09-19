@@ -36,4 +36,5 @@ urlpatterns = [
 
     url(r'^addWalletAddress/$', views.User.addWalletAddress, name="addWalletAddress"),
     url(r'^profile/$', views.User.profile, name="profile"),
+
 ] + staticfiles_urlpatterns()

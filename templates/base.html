@@ -35,51 +35,71 @@
             <div class="col-md-4 col-sm-4 col-xs-1"> </div>
             <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
               <!-- <img src="/static/img/1.2.png" width="60px" > -->
-              <img src="/static/img/logo_blanco.png" width="200px" style="margin-top: 0px" >
+              <a href="{% url 'index' %}">
+                <img src="/static/img/logo_blanco.png" width="200px" style="margin-top: 10px" >
+              </a>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-1"> </div>
           </div>
           
         </span>
       </div>
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" style="width: 50% !important">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Left</a>
+                <li class="nav-item {%block home%} {% endblock home%}">
+                    <a class="nav-link" href="{% url 'index' %}">
+                      <i class="fa fa-home"></i>
+                      <b>Home</b>
+                    </a>
+                </li>
+                <li class="nav-item {%block search%} {% endblock search%}">
+                    <a class="nav-link" href="#">
+                      <b>Search Raffles</b>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="//codeply.com">Codeply</a>
+                    <a class="nav-link" href="#">
+                      <b>Create a Raffle</b>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">
+                      <b>Contact us</b>
+                    </a>
                 </li>
             </ul>
         </div>
         
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="width: 50% !important">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Right</a>
+                <li class="nav-item {%block login%} {% endblock login%}">
+                    <a class="nav-link" href="#">
+                      <i class="fa fa-user"></i>
+                      <b>Log In</b>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link {%block signup%} {% endblock signup%}" href="#">
+                      <i class="fa fa-book"></i>
+                      <b>Sign Up</b>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {%block rules%} {% endblock rules%}" href="#">
+                      <i class="fa fa-question"></i>
+                      <b>Rules/Help</b>
+                    </a>
                 </li>
             </ul>
         </div>
     </nav>
   </header>
 
-    <div align="center" style="margin-top: 230px;">
+    <div align="center" style="margin-top: 180px;">
         {% block content %}
 
         {% endblock content %}

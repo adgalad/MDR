@@ -27,6 +27,7 @@ def index(request):
 def help(request):
     return render(request, "help.html")  
 
+
 class User:
   def login(request):
     if request.method == "POST":
@@ -144,20 +145,24 @@ class Raffle:
         return redirect(raffle)
       else:
         try:
-          count = Dash.getblockcount()
-          address = Dash.getnewaddress()
-          blockHash = Dash.getblockhash(count)
-          blockTime = Dash.getblock(blockHash)['time']
+          # count = Dash.getblockcount()
+          # address = Dash.getnewaddress()
+          # blockHash = Dash.getblockhash(count)
+          # blockTime = Dash.getblock(blockHash)['time']
+          count = 112#Dash.getblockcount()
+          address = 'xasdasdax3'#Dash.getnewaddress()
+          # blockHash = Dash.getblockhash(count)
+          blockTime = 123#Dash.getblock(blockHash)['time']
       
         except Exception as e:
           #print(e)
           raise PermissionDenied
     else:        
       try:
-        count = Dash.getblockcount()
-        address = Dash.getnewaddress()
-        blockHash = Dash.getblockhash(count)
-        blockTime = Dash.getblock(blockHash)['time']
+        count = 112#Dash.getblockcount()
+        address = 'xasdasdax3'#Dash.getnewaddress()
+        # blockHash = Dash.getblockhash(count)
+        blockTime = 123#Dash.getblock(blockHash)['time']
       
       except Exception as e:
         #print(e)

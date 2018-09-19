@@ -2,7 +2,6 @@
 {%load humanize %}
 
 {% block content %}
-    <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
     {% if msg %}
         {{msg}}
     {% endif %}
@@ -12,8 +11,7 @@
     <br>
     {% block beforeForm %}
         
-        
-        
+
     {% endblock beforeForm %}
     <form method="post">
         {% csrf_token %}

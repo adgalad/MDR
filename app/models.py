@@ -10,6 +10,8 @@ from django.db import models
 from django.core.mail import send_mail
 
 from raffle.settings import DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL
+
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 # class EmailThread(threading.Thread):
@@ -65,6 +67,7 @@ class Dash:
     return Dash.call(["getaddresstxids", json.dumps({"addresses":addresses})])
 
   def getaddressbalance(addresses):
+    return {'received':100}
     return Dash.call(["getaddressbalance",json.dumps({'addresses':addresses})])
 
   def getblock(blockHash):
@@ -220,6 +223,8 @@ class RaffleSigner(models.Model):
     
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
+  description = RichTextField()
+  # thumbnail_url = models.CharField(verbose_name="Thumbnail URL", blank=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
   addressProject = models.CharField(verbose_name="Beneficiary Address", max_length=100)
   prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=40.0)

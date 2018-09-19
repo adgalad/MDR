@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from app import models
 from app.models import Dash
 
+
+
 # class FromControl(forms.From):
 #     def __init__(self, arg):
 #         super(FromControl, self).__init__()
@@ -25,6 +27,7 @@ class AddPrivkey(forms.Form):
         self.fields['privkey'].widget.attrs.update({'class' : 'form-control'})
 
 
+
 class Raffle(forms.ModelForm):
     class Meta:
         model = models.Raffle
@@ -42,7 +45,8 @@ class Raffle(forms.ModelForm):
                   'addressProject',
                   'projectPercentage',
                   'ticketPrice',
-                  'blockHeight')
+                  'blockHeight',
+                  'description')
     
 
     def __init__(self, *args, **kwargs):
