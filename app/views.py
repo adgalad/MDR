@@ -44,8 +44,13 @@ class User:
           
     else:
       form = forms.Login()
-    
-    return render(request, "login.html", {'form': form})    
+   
+    if request.GET.get('modal') == '1':
+      base = 'empty.html'
+    else:
+      base = 'base.html'
+    print(base)
+    return render(request, "login.html", {'form': form, 'base':base})    
 
   def logout(request):
     logout_auth(request)
@@ -65,8 +70,12 @@ class User:
           return redirect(reverse('index'))
     else:
       form = forms.SignUp()
+    if request.GET.get('modal') == '1':
+      base = 'empty.html'
+    else:
+      base = 'base.html'
     
-    return render(request, "form.html", {'form': form})
+    return render(request, "SingUp.html", {'form': form, 'base':base})
 
   @login_required(login_url='/login/')
   def addWalletAddress(request):

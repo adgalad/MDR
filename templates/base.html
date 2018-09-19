@@ -75,21 +75,21 @@
         </div>
         
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="width: 50% !important">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto" style="cursor:pointer;">
                 <li class="nav-item {%block login%} {% endblock login%}">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" onclick="return abrir_modal('/login/?modal=1')">
                       <i class="fa fa-user"></i>
                       <b>Log In</b>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {%block signup%} {% endblock signup%}" href="#">
+                    <a class="nav-link" onclick="return abrir_modal('/signup/?modal=1')">
                       <i class="fa fa-book"></i>
                       <b>Sign Up</b>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {%block rules%} {% endblock rules%}" href="#">
+                    <a class="nav-link {%block rules%} {% endblock rules%}" onclick="return abrir_modal('/help/')">
                       <i class="fa fa-question"></i>
                       <b>Rules/Help</b>
                     </a>
@@ -104,7 +104,7 @@
 
         {% endblock content %}
     </div>
-<div id="popup" class="modal fade" role="dialog">
+<div id="popup" class="modal fade shadow" role="dialog">
 
 </div>
 </body>
