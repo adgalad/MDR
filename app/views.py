@@ -45,7 +45,7 @@ class User:
     else:
       form = forms.Login()
     
-    return render(request, "form.html", {'form': form})    
+    return render(request, "login.html", {'form': form})    
 
   def logout(request):
     logout_auth(request)

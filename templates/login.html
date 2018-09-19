@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{%load humanize %}
+
+{% block content %}
+    {% if msg %}
+        {{msg}}
+    {% endif %}
+    
+    <br>
+    {% block beforeForm %}
+        
+        
+        
+    {% endblock beforeForm %}
+    <form method="post">
+        {% csrf_token %}
+<div class="container" style="z-index:-1;">
+ 
+    <div class="omb_login">
+        <h3 class="omb_authTitle">Login</h3>
+        <div class="row omb_row-sm-offset-3">
+            <div class="col-xs-12 col-sm-6">   
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        <input type="text" class="form-control" name="username" placeholder="username" id="id_username">
+                    </div>
+                    <br>              
+                    <div class="input-group" style="margin-bottom:10px;">
+                        <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                        <input  type="password" class="form-control" name="password" placeholder="Password" id="id_password">
+                    </div>
+                    {% for message in messages %}
+                    <div class="alert alert-warning" role="alert">
+                      {{ message }} 
+                    </div>
+                    {% endfor %}
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            </div>
+        </div>
+        <div class="row omb_row-sm-offset-3">
+            <div class="col-xs-12 col-sm-3">
+               <!--  <label class="checkbox">
+                    <input type="checkbox" value="remember-me">Remember Me
+                </label> -->
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <p class="omb_forgotPwd">
+                    <a href="#">Forgot password?</a>
+                </p>
+            </div>
+        </div>          
+    </div>
+</div>
+        <br>
+        <br>
+    </form>    
+
+    {% block afterForm %}
+        
+        
+        
+    {% endblock afterForm %}
+{% endblock content %}
