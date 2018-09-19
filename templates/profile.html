@@ -2,7 +2,6 @@
 {% load mathfilters %}
 
 {% block content %}
-    <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
     {% for message in messages %}
         <div style="color:red"> {{ message }} </div>
     {% endfor %}
@@ -36,6 +35,7 @@
                 </th>
             </tr>
         </thead>
+
         <tbody>
             {% for tx in request.user.transactions.all %}
                 <tr>

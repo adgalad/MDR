@@ -2,120 +2,176 @@
 
 {% block home %} active {% endblock home %}
 
+{% block style %}
+  {{block.super}}
+  <link rel="stylesheet" href="/static/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="/static/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+{% endblock style %}
+
 {% block content %}
+  <section id="WhatsMDR">
     <div class="container" align="left">
-        <p>Welcome to Mega Dash Raffle</p>
+      <h2>Welcome to Mega Dash Raffle</h2>
 
-        <p>We invite everyone to BUY tickets on these raffles to benefit projects for the Dash network.</p>
+      <p>We invite everyone to BUY tickets on these raffles to benefit projects for the Dash network.</p>
 
-        <p>For each ticket you buy, the value paid will be distributed (in % that may vary) to three wallets:</p>
+      <p>For each ticket you buy, the value paid will be distributed (in % that may vary) to three wallets:</p>
 
-        <ul>
-            <li>Jackpot for the raffle prize (40%)</li>
-            <li>Beneficiary project (50%)</li>
-            <li>Administration of the raffle system (10%)</li>
-        </ul>
-        <p>Monthly, several raffle modalities will be created with different prices per ticket:</p>
-        <ul>
-            <li>Weekly: Mini Dash Raffles (0.01 tDash) ideal for projects that seek funds to bring their proposals to Dash Boost</li> 
-            <li>Biweekly: Dash Raffles (0.1 tDash): for projects seeking funds to bring their proposals to Dash Central</li>
-            <li>Monthly: Mega Dash Raffle (0.5 tDash): for projects authorized by Dash DAO that need funds to continue activities</li>   
-        </ul>
-       
-        <h2> Active Raffles </h2>
-        <table border="1" class="table table-hover" style="width: 100% !important;cursor:pointer;">
-            <thead id="table">
-                <tr>
-                    <th style="text-align:center">
-                        #
-                    </th>
-                    <th>
-                        Raffle Description
-                    </th>
-                    <th>
-                        Total of tickets sold
-                    </th>
-                    <th>
-                        Ticket Price
-                    </th>
-                    <th>                    
-                        Date of raffle drawing (approx)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for raffle in raffles %}
-                    {% if not raffle.finished %}
-                        <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
-                            <td align="center" style="width:5%">
-                                    {{raffle.pk}}
-                            </td>
-                            <td style="width:35%">
-                                    {{raffle.name}}
-                            </td>
-                           <td style="width:20%">
-                                {{raffle.ticketsSold}}
-                            </td>
-                            <td style="width:15%">
-                                {{raffle.ticketPrice}}
-                            </td>
-                            <td style="width:25%">
-                                {{ raffle.getDate }}
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h2> Past Raffles </h2>
-        <table border="1" class="table table-hover" style="width: 100% !important;cursor:pointer;">
-            <thead id="table">
-                <tr>
-                    <th style="text-align:center">
-                        #
-                    </th>
-                    <th>
-                        Raffle Description
-                    </th>
-                    <th>
-                        Total of tickets sold
-                    </th>
-                    <th>
-                        Ticket Price
-                    </th>
-                    <th>
-                    Date of raffle drawing (approx)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for raffle in raffles %}
-                    {% if raffle.finished %}
-                        <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
-                            <td align="center" style="width:5%">
-                                    {{raffle.pk}}
-                            </td>
-                            <td style="width:35%">
-                                    {{raffle.name}}
-                            </td>
-                           <td style="width:20%">
-                                {{raffle.ticketsSold}}
-                            </td>
-                            <td style="width:15%">
-                                {{raffle.ticketPrice}}
-                            </td>
-                            <td style="width:25%">
-                                {{ raffle.getDate}}
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-        <br><br>
-        <!-- <a href="createRaffle/" class="btn btn-primary"> Create raffle </a><br><br> -->
+      <ul>
+        <li>Jackpot for the raffle prize (40%)</li>
+        <li>Beneficiary project (50%)</li>
+        <li>Administration of the raffle system (10%)</li>
+      </ul>
+      <p>Monthly, several raffle modalities will be created with different prices per ticket:</p>
+      <ul>
+        <li>Weekly: Mini Dash Raffles (0.01 tDash) ideal for projects that seek funds to bring their proposals to Dash Boost</li> 
+        <li>Biweekly: Dash Raffles (0.1 tDash): for projects seeking funds to bring their proposals to Dash Central</li>
+        <li>Monthly: Mega Dash Raffle (0.5 tDash): for projects authorized by Dash DAO that need funds to continue activities</li>   
+      </ul>
     </div>
+  </section>
+  <section id="featured" class="shadow bg">
+    <div class="container" align="left">
+      <h2> Featured Raffles </h2>
+      <p>These are our most active raffles</p>
+      <div class="owl-carousel owl-theme">
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+        <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
+      </div>
+    </div>
+  </section>
+  <section >
+    <div class="container" align="left">
+
+      <h2> Active Raffles </h2>
+      <table border="1" class="table table-hover" style="width: 100% !important;cursor:pointer;">
+        <thead id="table">
+          <tr>
+            <th style="text-align:center">
+              #
+            </th>
+            <th>
+              Raffle Description
+            </th>
+            <th>
+              Total of tickets sold
+            </th>
+            <th>
+              Ticket Price
+            </th>
+            <th>                    
+              Date of raffle drawing (approx)
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for raffle in raffles %}
+            {% if not raffle.finished %}
+              <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
+                <td align="center" style="width:5%">
+                    {{raffle.pk}}
+                </td>
+                <td style="width:35%">
+                    {{raffle.name}}
+                </td>
+                 <td style="width:20%">
+                  {{raffle.ticketsSold}}
+                </td>
+                <td style="width:15%">
+                  {{raffle.ticketPrice}}
+                </td>
+                <td style="width:25%">
+                  {{ raffle.getDate }}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h2> Past Raffles </h2>
+      <table border="1" class="table table-hover" style="width: 100% !important;cursor:pointer;">
+        <thead id="table">
+          <tr>
+            <th style="text-align:center">
+              #
+            </th>
+            <th>
+              Raffle Description
+            </th>
+            <th>
+              Total of tickets sold
+            </th>
+            <th>
+              Ticket Price
+            </th>
+            <th>
+            Date of raffle drawing (approx)
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for raffle in raffles %}
+            {% if raffle.finished %}
+              <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
+                <td align="center" style="width:5%">
+                    {{raffle.pk}}
+                </td>
+                <td style="width:35%">
+                    {{raffle.name}}
+                </td>
+                 <td style="width:20%">
+                  {{raffle.ticketsSold}}
+                </td>
+                <td style="width:15%">
+                  {{raffle.ticketPrice}}
+                </td>
+                <td style="width:25%">
+                  {{ raffle.getDate}}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      <br><br>
+      <!-- <a href="createRaffle/" class="btn btn-primary"> Create raffle </a><br><br> -->
+    </div>
+  </section>
  
 {% endblock content %}
 
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="../static/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+  <script type="text/javascript">
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        dots:false,
+        margin:10,
+        responsiveClass:true,
+        autoplay:true,
+        autoplayTimeout:7000,
+        autoplaySpeed:3000,
+        autoplayHoverPause:true,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:3,
+            },
+            1000:{
+                items:5,
+            }
+        }
+      })
+  </script>
+{% endblock scripts %}

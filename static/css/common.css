@@ -1,4 +1,20 @@
 
+.dropdown-item { color: white; }
+
+.dropdown-item:focus, .dropdown-item:hover {
+  color: white;
+  background-color: #0e77dd;
+}
+
+.blue-link:hover {
+  color: #0e77dd !important;
+  text-decoration: none !important;
+}
+
+a.blue-link {
+  transition: color 0.3s ease-in-out;
+}
+
 div.mdr_navbar {
   /*background-color: rgb(0, 141, 228);*/
 }
@@ -16,6 +32,11 @@ body {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.bg {
+  background-color: #343a40 !important;
+  color: white;
 }
 
 /* Tooltip text */
@@ -46,13 +67,17 @@ body {
 .navbar {
     z-index: -1;
     background-color: #656565;
-    -webkit-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75);
-    box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75);
 }
 
+.shadow {
+  -webkit-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75) !important;
+  -moz-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75) !important;
+  box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75) !important;
+}
 
-
+div.item {
+  background-color: white;
+}
 
 header {
   /*text-align: center;*/
@@ -63,6 +88,7 @@ header {
   position: fixed;
   top: 0;
   transition: top 0.2s ease-in-out;
+  font-family: 'Montserrat:400,800i', sans-serif;
 }
 
 header.header-up{
