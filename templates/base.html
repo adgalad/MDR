@@ -25,8 +25,6 @@
       <!-- Common Style -->
       <link href="/static/css/common.css" rel="stylesheet">
       <link href="/static/css/accordion.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="/static/css/select2.min.css">
-      <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
     {% endblock style%}
 </head>
 
@@ -35,7 +33,7 @@
   <div id="popup" class="modal fade" role="dialog"></div>
   <div id="container">
   <header>
-    <div class="brand bg" style="z-index: 1000;">
+    <div class="brand bg-dark" style="z-index: 1000;">
       <span class="logo">
         <div class="row" style="width: 100%">
           <div class="col-md-4 col-sm-4 col-xs-1"> </div>
@@ -50,7 +48,7 @@
         
       </span>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -82,7 +80,7 @@
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Hello,  <b>{{ user.username }} </b>
                   </a>
-                  <div class="dropdown-menu bg" aria-labelledby="navbarDropdownMenuLink">
+                  <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{% url 'profile' %}">
                       <i class="fa fa-user"></i>&nbsp; My Profile
                     </a>
@@ -99,13 +97,12 @@
             <li class="nav-item {%block login%} {% endblock login%}">
                     <a class="nav-link" onclick="return abrir_modal('/login/?modal=1')">
                       <i class="fa fa-user"></i>
-                      <b>Log In</b>
+                      Log In
                     </a>
                 </li>
                 <li class="nav-item {%block signup%} {% endblock signup%}">
                     <a class="nav-link" onclick="return abrir_modal('/signup/?modal=1')">
-                      <i class="fa fa-book"></i>
-                      <b>Sign Up</b>
+                      Sign Up
                     </a>
                 </li>
             {% endif %}
@@ -121,14 +118,14 @@
     </nav>
   </header>
 
-    <div id="body" align="center" style="margin-top: 150px;">
+    <div id="body" align="center" style="margin-top: 80px;">
         {% block content %}
-
+            
         {% endblock content %}
     </div>
 
 
-  <footer class="footer bg">
+  <footer class="footer bg-dark">
 
       <div class="container">
       <ul class="foote_bottom_ul_amrc" align='center'>
@@ -162,8 +159,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
   <script src="/static/js/common.js"></script>
-  <script src="/static/js/bootstrap-select.js"></script>
-  <script src="/static/js/select2.min.js"></script>
+  
   <script type="text/javascript">
 
     function abrir_modal(url)

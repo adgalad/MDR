@@ -6,31 +6,31 @@
   {{block.super}}
   <link rel="stylesheet" href="/static/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="/static/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+  <!-- <link rel="stylesheet" href="/static/css/reset.css"> <!-- CSS reset --> -->
+  <link rel="stylesheet" href="/static/css/animation.css"> <!-- Resource style -->
+  <script src="/static/js/modernizr.js"></script> <!-- Modernizr -->
 {% endblock style %}
 
 {% block content %}
-  <section id="WhatsMDR">
-    <div class="container" align="left">
-      <h2>Welcome to Mega Dash Raffle</h2>
-
-      <p>We invite everyone to BUY tickets on these raffles to benefit projects for the Dash network.</p>
-
-      <p>For each ticket you buy, the value paid will be distributed (in % that may vary) to three wallets:</p>
-
-      <ul>
-        <li>Jackpot for the raffle prize (40%)</li>
-        <li>Beneficiary project (50%)</li>
-        <li>Administration of the raffle system (10%)</li>
-      </ul>
-      <p>Monthly, several raffle modalities will be created with different prices per ticket:</p>
-      <ul>
-        <li>Weekly: Mini Dash Raffles (0.01 tDash) ideal for projects that seek funds to bring their proposals to Dash Boost</li> 
-        <li>Biweekly: Dash Raffles (0.1 tDash): for projects seeking funds to bring their proposals to Dash Central</li>
-        <li>Monthly: Mega Dash Raffle (0.5 tDash): for projects authorized by Dash DAO that need funds to continue activities</li>   
-      </ul>
+  <section id="banner" style=" z-index:-1;">
+    <div class="banner-container">
+          <img style="width: 100%; min-height: 400px;height: 100%" src="/static/img/banner.png">
+          <div class="centered cd-intro-content mask">
+            <div style="margin-top:10%; margin-bottom: 10%">
+              <h1 data-content="Welcome to Mega Dash Raffle">
+                <span>Welcome to <br>Mega Dash Raffle</span>
+              </h1>
+              <div class="action-wrapper">
+                <p>
+                  <a href="#0" class="btn btn-success cd-btn main-action">Go to Raffles</a>
+                </p>
+              </div>
+            </div>
+          </div>
     </div>
+    
   </section>
-  <section id="featured" class="shadow bg">
+  <section id="featured" >
     <div class="container" align="left">
       <h2> Featured Raffles </h2>
       <p>These are our most active raffles</p>
@@ -44,33 +44,25 @@
         <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
         <div class="item"><h4><img width="100px" src="../static/img/1.2.png"></h4></div>
       </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4"></div>
+          <div class="col-md-4" align="center">
+            <button class="btn btn-primary">See all raffles</button>
+          </div>
+        <div class="col-md-4"></div> 
+      </div>
+      <br>
+
     </div>
   </section>
-  <section >
+  <section class="bg" style="z-index: -1">
     <div class="container" align="left">
+      <br>
+      <h2> Last transactions </h2>
+      <table border="1" class="table table-striped table-borderless table-hover" style=" width: 100% !important;cursor:pointer;">
 
-      <h2> Active Raffles </h2>
-      <table border="1" class="table table-hover" style="width: 100% !important;cursor:pointer;">
-        <thead id="table">
-          <tr>
-            <th style="text-align:center">
-              #
-            </th>
-            <th>
-              Raffle Description
-            </th>
-            <th>
-              Total of tickets sold
-            </th>
-            <th>
-              Ticket Price
-            </th>
-            <th>                    
-              Date of raffle drawing (approx)
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+        <tbody style="border-color: ">
           {% for raffle in raffles %}
             {% if not raffle.finished %}
               <tr onclick="document.location='{% url "raffleDetails" raffle.id %}';">
@@ -150,7 +142,8 @@
 
 {% block scripts %}
   {{ block.super }}
-  <script src="/static/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+  <script src="../static/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+  <script src="/static/js/main.js"></script> <!-- Resource jQuery -->
   <script type="text/javascript">
     $('.owl-carousel').owlCarousel({
         loop:true,
@@ -163,13 +156,13 @@
         autoplayHoverPause:true,
         responsive:{
             0:{
-                items:1,
+                items:3,
             },
             600:{
                 items:3,
             },
             1000:{
-                items:5,
+                items:4,
             }
         }
       })

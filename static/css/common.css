@@ -3,10 +3,18 @@
   color:white
 }
 
-body{
-  background:#fff;
-  font-family: 'Montserrat', sans-serif;
+.btn-primary {
+  color: #fff;
+  background-color: #0e77dd;
+  border-color: #007bff;
 }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ebeeee !important;
+    /*font-size: 400px !important;*/
+}
+
 .description{
     width: 40%;
     overflow: hidden;
@@ -95,6 +103,48 @@ footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
   top: -0.6em;
   margin-left: -1.5em;
   background-color: white;
+  width: 3em;
+  text-align: center;
+}     
+
+.omb_login .omb_loginForm .input-group.i {
+  width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
+}
+
+  
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+    margin-top:10px;
+  }   
+}
+
+
+.omb_login .omb_loginOr {
+  position: relative;
+  font-size: 1.5em;
+  color: #aaa;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+  background-color: #cdcdcd;
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -0.6em;
+  margin-left: -1.5em;
+  background-color: white;
   width: 6em;
   text-align: center;
 }     
@@ -138,10 +188,6 @@ table {
   width: 70% !important;
 }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    /*font-size: 400px !important;*/
-}
 /* Tooltip container */
 .tooltipaba {
     position: relative;
@@ -150,8 +196,13 @@ body {
 }
 
 .bg {
+  background-color: white !important;
+  color: black !important;
+}
+
+.bg-dark {
   background-color: #343a40 !important;
-  color: white;
+  color: white !important;
 }
 
 /* Tooltip text */
@@ -185,9 +236,9 @@ body {
 }
 
 .shadow {
-  -webkit-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75) !important;
-  -moz-box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75) !important;
-  box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.75) !important;
+  -webkit-box-shadow: 2px 10px 19px -3px rgba(0,0,0,0.23);
+  -moz-box-shadow: 2px 10px 19px -3px rgba(0,0,0,0.23);
+  box-shadow: 2px 10px 19px -3px rgba(0,0,0,0.23);
 }
 
 div.item {
@@ -228,6 +279,55 @@ header .brand .logo {
   /*height: 20px;*/
   display: inline-block;
   vertical-align: middle;
+}
+
+
+.percent {
+    line-height: 110px;
+    z-index: 2;
+    font-size: 18px
+}
+
+.percent:after {
+    content: 'days';
+    margin-left: .1em;
+    font-size: .8em
+}
+.chart, .percent {
+    display: inline-block
+}
+
+.chart {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center
+}
+
+.chart canvas {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.angular .chart {
+    margin-top: 0
+}
+
+
+.banner-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.centered {
+    position: absolute;
+    top:40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 

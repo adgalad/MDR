@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load humanize %}
 
+
+{% block style %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="/static/css/select2.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
+{% endblock style %}
+
 {% block content %}
   {% for message in messages %}
     <div style="color:red"> {{ message }} </div>
@@ -168,6 +175,10 @@
 {% block scripts %}
   {{ block.super }}
   {{ form.media }}
+  
+  <script src="/static/js/bootstrap-select.js"></script>
+  <script src="/static/js/select2.min.js"></script>
+
   <script type="text/javascript">
 
     blockTime = parseInt('{{ blockTime }}')
