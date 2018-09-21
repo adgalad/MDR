@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load humanize %}
 
+
+{% block style %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="/static/css/select2.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
+{% endblock style %}
+
 {% block content %}
   <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
   {% for message in messages %}
@@ -45,6 +52,10 @@
 {% block scripts %}
   {{ block.super }}
   {{ form.media }}
+  
+  <script src="/static/js/bootstrap-select.js"></script>
+  <script src="/static/js/select2.min.js"></script>
+
   <script type="text/javascript">
     blockTime = parseInt('{{ blockTime }}')
     count = parseInt('{{ count }}')
