@@ -112,6 +112,11 @@ class User:
     return render(request, "profile.html")  
     
 class Raffle:
+  def active(request):
+    count = Dash.getblockcount()
+    activeRaffles = models.Raffle.objects.all()
+    return render(request, "raffles.html", {'activeRaffles': activeRaffles})    
+
   def details(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
