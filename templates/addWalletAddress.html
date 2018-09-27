@@ -1,5 +1,5 @@
-{% extends "form.html" %}
-
+{% extends "modalForm.html" %}
+{% block form %}
 {% block style %}
   {{block.super}}
   <style type="text/css">
@@ -10,93 +10,142 @@
     }
   </style>
 {% endblock %}
+    {% block beforeForm %}
+        
+    {% endblock beforeForm %}
 
-{% block beforeForm %}
-    <div align="center" style="margin-left: 15%; margin-right: 15%">
-        You need to create a signed message with your DashCore QT wallet in order to continue. To create it, follow the next steps:
-        <div align="left" class="row" style="margin-left: 6%;">
-          <div class="col-md-10 inst">
-            - Open DashCore QT wallet on your local machine and select “sign message” in the file menu.
-          </div>
-          <div class="col-md-10 inst">
-            - <div class="tooltipaba">
-                <b>Enter</b>
-                <span class="tooltiptext">
-                  <img class="tooltipimg" src="/static/img/enterAddress.png" width="500px">
-                </span>
-              </div>  
-            your wallet address into the first field or 
-            <div class="tooltipaba">
-              <b>create</b>
-              <span class="tooltiptext">
-                <img class="tooltipimg" src="/static/img/createAddress.png" width="500px">
-              </span>
-            </div> 
-            a new one with the button next to the field.
+<div class="modal-dialog modal-lg" style="z-index:1500;margin-bottom:-10px;max-width:1000px !important;">
+  <div class="modal-content {% if request.GET.modal != '1'%} shadow {%endif%}">
+    <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+       <div class="container-fluid bg-gray" id="accordion-style-1">
+           <div class="container">
+                <section>
+                   <div class="row" align="center">
+                        <div class="col-12 mx-auto">
+                           <div class="accordion" id="accordionExample">
+                              <h3 id="text">Add Wallet</h3>
+                                  <div align="justify" style="padding:15px 15px 0px 15px;">
+                                      You need to create a signed message with your DashCore QT wallet in order to continue. To create it, follow the next steps:
+                                      <div align="left" class="row" style="margin-left: 3%;">
+                                        <div class="col-md-12 inst">
+                                          - Open DashCore QT wallet on your local machine and select “sign message” in the file menu.
+                                        </div>
+                                        <div class="col-md-12 inst">
+                                          - <div class="tooltipaba" data-placement="bottom">
+                                              <b>Enter</b>
+                                              <span class="tooltiptext">
+                                                <img class="tooltipimg" src="/static/img/enterAddress.png" width="500px">
+                                              </span>
+                                            </div>  
+                                          your wallet address into the first field or 
+                                          <div class="tooltipaba">
+                                            <b>create</b>
+                                            <span class="tooltiptext">
+                                              <img class="tooltipimg" src="/static/img/createAddress.png" width="500px">
+                                            </span>
+                                          </div> 
+                                          a new one with the button next to the field.
+                                          </div>
+                                          
+                                        <div class="col-md-12 inst">
+                                          - Take the verification message provide below and paste it into the 
+                                          <div class="tooltipaba">
+                                            <b>next field and click “sign message”</b>
+                                            <span class="tooltiptext">
+                                              <img class="tooltipimg" src="/static/img/signMessage.png" width="500px">
+                                            </span>
+                                          </div> 
+                                          
+                                        </div>
+                                        <div class="col-md-12 inst">
+                                          - Take your 
+                                          <div class="tooltipaba">
+                                            <b>wallet address</b>
+                                            <span class="tooltiptext">
+                                              <img class="tooltipimg" src="/static/img/copySignedMessage.png" width="500px">
+                                            </span>
+                                          </div> 
+                                          and the
+                                          <div class="tooltipaba">
+                                            <b>signature</b>
+                                            <span class="tooltiptext">
+                                              <img class="tooltipimg" src="/static/img/copySignedMessage.png" width="500px">
+                                            </span>
+                                          </div> 
+                                          and paste them in the labelled fields below.
+                                        </div>
+                                        <div class="col-md-12 inst">
+                                          - Click the submit button.
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="row">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-6" style=" border: 1px black solid; height: 40px;font-size:13px;padding-top:7px;">
+                                      {{ form.final_message.value }}
+                                    </div>
+                                    <div class="col-md-4" align="left">
+                                      <button onclick="copy()" class="btn btn-primary">Copy verification message</button>
+                                    </div>
+                                  </div>
+                                  <br>
+                                <form method="post" action="" style="padding:10px 0px 0px 0px;">
+                                    <div class="container" style="z-index:-1;">
+                                        <div class="omb_login">
+                                              <div class="wrap-input100 validate-input">
+                                                <input class="input100 has-val" type="text" name="wallet_address" required="" id="id_wallet_address">
+                                                <span class="focus-input100" data-placeholder="Wallet Address"></span>
+                                              </div>  
+                                               <div class="wrap-input100 validate-input" data-validate="Enter Signature">
+                                                  <input class="input100 has-val" type="text" name="signature" required="" id="id_signature">
+                                                  <span class="focus-input100" data-placeholder="Signature"></span>
+                                               </div>      
+                                              {% for message in messages %}
+                                              <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top:-15px;">
+                                                {{ message }} 
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              {% endfor %}
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-9">
+                                                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="botton">Submit</button>
+                                                </div>
+                                            </div>     
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-            
-          <div class="col-md-10 inst">
-            - Take the verification message provide below and paste it into the 
-            <div class="tooltipaba">
-              <b>next field and click “sign message”</b>
-              <span class="tooltiptext">
-                <img class="tooltipimg" src="/static/img/signMessage.png" width="500px">
-              </span>
-            </div> 
-            
-          </div>
-          <div class="col-md-10 inst">
-            - Take your 
-            <div class="tooltipaba">
-              <b>wallet address</b>
-              <span class="tooltiptext">
-                <img class="tooltipimg" src="/static/img/copySignedMessage.png" width="500px">
-              </span>
-            </div> 
-            and the
-            <div class="tooltipaba">
-              <b>signature</b>
-              <span class="tooltiptext">
-                <img class="tooltipimg" src="/static/img/copySignedMessage.png" width="500px">
-              </span>
-            </div> 
-            and paste them in the labelled fields below.
-          </div>
-          <div class="col-md-10 inst">
-            - Click the submit button.
-          </div>
         </div>
     </div>
-    
-    <div class="row">
-      <div class="col-md-3">
-      </div>
-      <div class="col-md-4" style=" border: 1px black solid; height: 40px;">
-        {{ form.final_message.value }}
-      </div>
-      <div class="col-md-4" align="left">
-        <button onclick="copy()" class="btn btn-primary">Copy verification message</button>
-      </div>
-    </div>
+  </div>
+</div>
     <br><br>
     
-    
-        
-{% endblock beforeForm %}
 
-{% block scripts %}
-  {{ block.super }}
-  <script type="text/javascript">
-      function copy() {
-       /* Get the text field */
-        var copyText = document.getElementById("id_final_message");
 
-        const el = document.createElement('textarea');
-        el.value = copyText.value;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-      }
-  </script>
-{% endblock scripts %}
+  {% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        function copy() {
+         /* Get the text field */
+          var copyText = document.getElementById("id_final_message");
+
+          const el = document.createElement('textarea');
+          el.value = copyText.value;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+        }
+    </script>
+  {% endblock scripts %}
+{% endblock form%}

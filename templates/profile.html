@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "form.html" %}
 {% load mathfilters %}
 
 {% block content %}
@@ -6,7 +6,7 @@
         <div style="color:red"> {{ message }} </div>
     {% endfor %}
     <br>
-   
+    <br>
     <br>
     {% if request.user.wallet_address %}
         <a href="{% url 'addWalletAddress' %}">
@@ -14,57 +14,113 @@
         </a>
     <br>
     {% endif %}
-    <h2> Your Transactions </h2>
-    <table border="1" class="table table-hover" style="width: 50%">
-        <thead id="table">
-            <tr>
-                <th>
-                    Transaction ID
-                </th>
-                <th>
-                    Raffle
-                </th>
-                <th>
-                    Amount
-                </th>
-                <th>
-                    Tickets
-                </th>
-                <th>
-                    Transaction date
-                </th>
-            </tr>
-        </thead>
 
-        <tbody>
-            {% for tx in request.user.transactions.all %}
-                <tr>
-                    <td>
-                        <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
-                            {{ tx.address }}
+<div class="container">
+    <div class="container-contact100" style="width: 100%;min-height: 20vh !important;">
+        <div class="wrap-contact100" style="padding: 30px 0px 30px 0px">
+            <div align="left">
+                <div class="row">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-4"><b><h2>My Profile</h2></b></div>
+                <div class="col-sm-3"></div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-1"><b>Wallet:</b></div>
+                    <div class="col-sm-3" style="padding-left:30px">yjPtP7yAYkKd1a63gf3xpttu74Joa5MpZV</div>
+                    <div class="col-sm-4">
+                        
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-1"><b>Username:</b></div>
+                        <div class="col-sm-4" style="padding-left:30px">{{request.user.username}}</div>
+                        <div class="col-sm-3"></div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-1"><b>Email:</b></div>
+                    <div class="col-sm-3" style="padding-left:30px">fernando.salas2102@gmail.com</div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4"></div>   
+                    <div class="col-sm-2" style="margin-top:20px;"><a class="btn btn-primary" style="text-decoration:none" href="#"
+                           onclick="return abrir_modal('{% url 'addWalletAddress' %}')">Edit Wallet&nbsp;&nbsp;
+                          <i class="fa fa-wallet"></i></a></div> 
+                    <div class="col-sm-2" style="margin-top:20px;">  
+                    <a class="btn btn-primary" style="text-decoration:none" href="#"
+                           onclick="return abrir_modal('{% url 'editProfile' %}')">Edit Profile&nbsp;&nbsp;
+                          <i class="fa fa-user-edit"></i>
                         </a>
-                    </td>
-                    <td>
-                        <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="{% url 'raffleDetails' tx.raffle.id %}">
-                        {{ tx.raffle }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ tx.amount }}
-                    </td>
-                    <td>
-                        {{ tx.amount|div:tx.raffle.ticketPrice}}
-                    </td>
-                    <td>
-                        {{ tx.getDate }}
-                    </td>
-                </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5"> No transactions </td>
-            <tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <br>
+    <h2> Your Transactions </h2>
+
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                    <div class="table">
+
+                        <div class="rowtable header">
+                            <div class="cell" style="width:15%">
+                                Transaction ID
+                            </div>
+                            <div class="cell" style="width:35%">
+                                Raffle
+                            </div>
+                            <div class="cell" style="width:15%">
+                                Amount
+                            </div>
+                            <div class="cell" style="width:5%">
+                                Tickets
+                            </div>
+                            <div class="cell" style="width:20%">
+                                Transaction date
+                            </div>
+                        </div>
+                    {% for tx in request.user.transactions.all %}
+                        <div class="rowtable">
+                            <div class="cell" data-title="Full Name">
+                                <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
+                                {{ tx.address }}
+                                </a>
+                            </div>
+                            <div class="cell" data-title="Age">
+                                <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="{% url 'raffleDetails' tx.raffle.id %}">
+                                {{ tx.raffle }}
+                                </a>
+                            </div>
+                            <div class="cell" data-title="Job Title">
+                                {{ tx.amount }}
+                            </div>
+                            <div class="cell" data-title="Location">
+                                {{ tx.amount|div:tx.raffle.ticketPrice}}
+                            </div>
+                            <div class="cell">
+                                {{ tx.getDate }}
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="rowtable" style="display:contents !important;">
+                                No transactions
+                        </div>
+                    {% endfor %}
+                        
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}

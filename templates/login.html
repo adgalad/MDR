@@ -1,14 +1,12 @@
-
-{% extends base %}
+{% extends "form.html" %}
 
 {%load humanize %}
 
-{% block content %}
+{% block form %}
     {% if msg %}
         {{msg}}
     {% endif %}
-    
-    <br>
+<br>
     {% block beforeForm %}
         
         
@@ -30,35 +28,35 @@
                                 <form method="post" action="{%url 'login' %}">
                                             {% csrf_token %}
                                     <div class="container" style="z-index:-1;">
-                                        <h3 id="text" style="text-align:center;margin-bottom:15px;">MegadashRaffle</h3>
+                                        <h3 id="text" style="margin-bottom:25px;">Login</h3>
                                         <div class="omb_login">
-                                                <div class="col-xs-12 col-sm-12">   
-                                                    <div class="input-group">
-                                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                                        <input type="text" class="form-control" name="username" placeholder="username" id="id_username">
-                                                    </div>
-                                                    <br>              
-                                                    <div class="input-group" style="margin-bottom:10px;">
-                                                        <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                                                        <input  type="password" class="form-control" name="password" placeholder="Password" id="id_password">
-                                                    </div>
-                                                    {% for message in messages %}
-                                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                      {{ message }} 
-                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                      </button>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
+                                              <div class="wrap-input100 validate-input">
+                                                <input class="input100" type="text" name="username" required="" id="id_username">
+                                                <span class="focus-input100" data-placeholder="Username"></span>
+                                              </div>  
+                                               <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                                  <span class="btn-show-pass">
+                                                    <i class="fa fa-eye"></i>
+                                                  </span>
+                                                  <input class="input100" type="password" name="password" required="" id="id_password">
+                                                  <span class="focus-input100" data-placeholder="Password"></span>
+                                               </div>      
+                                              {% for message in messages %}
+                                              <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top:-15px;">
+                                                {{ message }} 
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              {% endfor %}
 
-                                            <div class="col-xs-12 col-sm-12">
+                                            <div class="col-xs-12 col-sm-12" style="margin-top:-20px;">
                                                 <p class="omb_forgotPwd">
                                                     <a href="#">Forgot password?</a>
                                                 </p>
                                             </div>
                                             <div class="col-sm-12">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-9">
                                                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="botton">Login</button>
                                                 </div>
                                             </div>     
@@ -80,4 +78,4 @@
         
         
     {% endblock afterForm %}
-{% endblock content %}
+{% endblock form %}

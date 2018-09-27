@@ -10,51 +10,46 @@
     <br>
     {% block beforeForm %}
         
-        
-        
     {% endblock beforeForm %}
 
-<div class="modal-dialog modal-md">
+<div class="modal-dialog modal-md" style="z-index:1500;">
   <div class="modal-content {% if request.GET.modal != '1'%} shadow {%endif%}">
     <div class="modal-body">
-    {% if request.GET.modal == '1'%}
         <button type="button" class="close" data-dismiss="modal">x</button>
-    {% endif %}
        <div class="container-fluid bg-gray" id="accordion-style-1">
            <div class="container">
                 <section>
                    <div class="row" align="center">
                         <div class="col-12 mx-auto">
                            <div class="accordion" id="accordionExample">
-                                <form method="post" action="{%url 'signup' %}">
+                                <form method="post" action="{%url 'editProfile' %}">
                                             {% csrf_token %}
                                     <div class="container" style="z-index:-1;">
-                                        <h3 id="text" style="margin-bottom:25px;"">SingUp</h3>
+                                        <h3 id="text" style="margin-bottom:25px;"">Edit Profile</h3>
                                         <div class="omb_login">
                                             <div class="col-xs-12 col-sm-12"> 
                                                 <div class="wrap-input100 validate-input">
-                                                    <input class="input100" type="text" name="username" required="" id="id_username">
+                                                    <input class="input100 has-val" type="text" name="username" required="" id="id_username">
                                                     <span class="focus-input100" data-placeholder="Username"></span>
                                                 </div>
                                                 <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-                                                  <input class="input100" type="text" name="email" id="id_email">
+                                                  <input class="input100 has-val" type="text" name="email" id="id_email">
                                                   <span class="focus-input100" data-placeholder="Email"></span>
                                                 </div>  
-                                                   <div class="wrap-input100 validate-input" data-validate="Enter password">
-                                                      <span class="btn-show-pass">
-                                                        <i class="fa fa-eye"></i>
-                                                      </span>
-                                                      <input class="input100" type="password" name="password1" id="id_password1">
-                                                      <span class="focus-input100" data-placeholder="Password"></span>
-                                                   </div>
-
-                                                   <div class="wrap-input100 validate-input" data-validate="Enter password">
-                                                      <span class="btn-show-pass">
-                                                        <i class="fa fa-eye"></i>
-                                                      </span>
-                                                      <input class="input100" type="password" name="password2" id="id_password2">
-                                                      <span class="focus-input100" data-placeholder="Password Confirmation"></span>
-                                                   </div>
+                                                 <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                                    <span class="btn-show-pass">
+                                                      <i class="fa fa-eye"></i>
+                                                    </span>
+                                                    <input class="input100 has-val" type="password" name="password1" id="id_password1">
+                                                    <span class="focus-input100" data-placeholder="Password Confirmation"></span>
+                                                 </div>
+                                                 <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                                    <span class="btn-show-pass">
+                                                      <i class="fa fa-eye"></i>
+                                                    </span>
+                                                    <input class="input100 has-val" type="password" name="password2" id="id_password2">
+                                                    <span class="focus-input100" data-placeholder="Password Confirmation"></span>
+                                                 </div>
                                                 {% for field in form %} 
                                                     {% if field.errors %} 
                                                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -66,12 +61,6 @@
                                                     {% endif %}
                                                 {% endfor %}
                                                 </div>
-
-                                            <div class="col-xs-12 col-sm-12" style="margin-top:-20px;">
-                                                <p class="omb_forgotPwd">
-                                                  Already have a user? <a href="/login/">login</a>
-                                                </p>
-                                            </div>
                                             <div class="col-sm-12">
                                                 <div class="col-sm-6">
                                                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="botton">Submit</button>
@@ -89,10 +78,24 @@
     </div>
   </div>
 </div>    
+<script type="text/javascript">
 
+     $(document).ready(function(){
+      username = 'fernando158'
+      email = 'fernando.salas2102@gmail.com'
+      password1 = 'sbg2017'
+      password2 = 'sbg2017'
+      document.getElementById("id_username").value = username
+      document.getElementById("id_email").value = email
+      document.getElementById("id_password1").value = password1
+      document.getElementById("id_password2").value = password2       
+      })
+
+</script>
     {% block afterForm %}
         
         
         
     {% endblock afterForm %}
+
 {% endblock form %}

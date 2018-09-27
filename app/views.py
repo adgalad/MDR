@@ -77,6 +77,19 @@ class User:
     
     return render(request, "SingUp.html", {'form': form, 'base':base})
 
+  def editProfile(request):
+    if request.method == "POST":
+      form = forms.editProfile(request.POST)
+      if form.is_valid():
+        #print(form.cleaned_data)
+        form.save()
+        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password1')
+    else:
+      form = forms.editProfile()
+    return render(request, "editProfile.html", {'form': form})
+
   @login_required(login_url='/login/')
   def addWalletAddress(request):
     message = "Raffle Confirm Wallet %s" %str(datetime.datetime.now())

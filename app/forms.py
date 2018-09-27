@@ -146,6 +146,17 @@ class SignUp(UserCreationForm):
         for i in self.fields:
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
+class editProfile(forms.Form):
+
+    class Meta():
+        model = models.User
+        fields = ("username",)
+    
+    def __init__(self, *args, **kwargs):
+        super(editProfile, self).__init__(*args, **kwargs)
+        for i in self.fields:
+            self.fields[i].widget.attrs.update({'class' : 'form-control'})
+
 
 class AddWalletAddress(forms.ModelForm):
 
