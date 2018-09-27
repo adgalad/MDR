@@ -1,248 +1,21 @@
 import json
 import random
-import threading
 import datetime
 
-from subprocess import check_output 
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from django.core.mail import send_mail
-
-from raffle.settings import DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL
-
 from ckeditor.fields import RichTextField
-# Create your models here.
 
+from app.dash import Dash
+from app.models.User import User
+from app.models.models import Transaction
+    
 rafflePrice = {
   'Mini Raffle':0.01,
   'Raffle': 0.05,
-  'Mega Raffle':0.1
+  'Mega Raffle': 0.1
 }
 
-class EmailThread(threading.Thread):
-    def __init__(self, subject, message, html_message, recipient_list):
-        self.subject = subject
-        self.message = message
-        self.recipient_list = recipient_list
-        self.html_message = html_message
-        threading.Thread.__init__(self)
-
-    def run (self):
-        send_mail(subject=self.subject,
-                  message=self.message,
-                  html_message=self.html_message,
-                  from_email=DEFAULT_FROM_EMAIL,
-                  recipient_list=self.recipient_list)
-
-def sendEmailLoser(user):
-    plain_message = "You didn't win the raffle."
-    html_message = "You didn't win the raffle."
-    EmailThread(subject="Verificación de correo electrónico",
-                  message=plain_message,
-                  html_message=html_message,
-                  recipient_list=[user.email]).start()
-
-def sendEmailWinner(user, name, amount):
-    plain_message = "You won the <b> name <b> raffle. The prize is " + str(amount)
-    html_message  = "You won the <b> name <b> raffle. The prize is " + str(amount)
-    EmailThread(subject="Verificación de correo electrónico",
-                message=plain_message,
-                html_message=html_message,
-                recipient_list=[user.email]).start()
-
-
-class Dash:
-  command = ([DASH_CLI] +
-        (["-rpcconnect="+RPC_SERVER] if RPC_SERVER else []) +
-        (["-rpcport="+RPC_PORT] if RPC_PORT else []) +
-        (["-rpcuser="+RPC_USER] if RPC_USER else []) +
-        (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else []) +
-         ["-testnet"])
-  
-  @staticmethod
-  def createrawtransaction(output, addressAmount):
-    return Dash.call(["createrawtransaction",json.dumps(output), json.dumps(addressAmount)])
-  
-  @staticmethod  
-  def createmultisig(signsRequired, pubkeys):
-    return Dash.call(["createmultisig", str(signsRequired), json.dumps(pubkeys)])
-  
-  @staticmethod
-  def dumpprivkey(address):
-    return Dash.call(["dumpprivkey", address]).replace('\n','')    
-  
-  @staticmethod
-  def getaddresstxids(addresses):
-    return Dash.call(["getaddresstxids", json.dumps({"addresses":addresses})])
-  
-  @staticmethod
-  def getaddressbalance(addresses):
-    return {'received':100}
-    return Dash.call(["getaddressbalance",json.dumps({'addresses':addresses})])
-  
-  @staticmethod
-  def getblock(blockHash):
-    return {'time':5515236123}
-    return Dash.call(["getblock", blockHash])
-  
-  @staticmethod
-  def getblockcount():
-    count = Dash.call(['getblockcount'])
-    return int(count) if count else 0
-  
-  @staticmethod
-  def getblockhash(count):
-    return Dash.call(["getblockhash", str(count)])
-  
-  @staticmethod  
-  def getnewaddress():
-    return Dash.call(["getnewaddress"]).replace('\n','')
-  
-  @staticmethod
-  def getrawtransaction(address, parsed=1):
-    return Dash.call(["getrawtransaction", address, parsed])
-  
-  @staticmethod
-  def sendrawtransaction(hexadecimalValue, allowhighfees=False, instantsend=False, bypasslimits=False):
-    return Dash.call(["sendrawtransaction",hexadecimalValue, allowhighfees, instantsend, bypasslimits])  
-  
-  @staticmethod  
-  def sendtoaddress(address, amount):
-    return Dash.call(["sendtoaddress", address, str(amount)])
-  
-  @staticmethod
-  def signrawtransaction(transaction, output, privkeys):
-    return Dash.call(["signrawtransaction",transaction, json.dumps(output), json.dumps(privkeys)])  
-  
-  @staticmethod
-  def validateaddress(address):
-    return Dash.call(['validateaddress', address])
-  
-  @staticmethod
-  def verifymessage(address, signature, finalMessage):
-    return Dash.call(["verifymessage", address, signature, finalMessage])
-
-  
-
-  
-  
-  @staticmethod
-  def call(args):
-    try:
-      #print("Command: ", ' '.join(command))
-      data = check_output(Dash.command + args)
-      try:
-        data = json.loads(data.decode("utf-8"))
-      except:
-        if type(data) == bytes:
-          data = data.decode("utf-8")
-        else:
-          data = str(data)
-      return data
-    except Exception as e:
-      #print(e)
-      return None
-
-class MyUserManager(BaseUserManager):
-  """
-  A custom user manager to deal with emails as unique identifiers for auth
-  instead of usernames. The default that's used is "UserManager"
-  """
-  def _create_user(self, username, password, **extra_fields):
-    """
-    Creates and saves a User with the given username and password.
-    """
-    if not username:
-      raise ValueError('The username must be set')
-    # username = self.normalize_username(username)
-    user = self.model(username=username, **extra_fields)
-    user.set_password(password)
-    user.save()
-    return user
-
-  def create_superuser(self, username, password, **extra_fields):
-    extra_fields.setdefault('is_staff', True)
-    extra_fields.setdefault('is_superuser', True)
-    extra_fields.setdefault('is_active', True)
-    extra_fields.setdefault('verified', True)
-    if extra_fields.get('is_staff') is not True:
-      raise ValueError('Superuser must have is_staff=True.')
-    if extra_fields.get('is_superuser') is not True:
-      raise ValueError('Superuser must have is_superuser=True.')
-    return self._create_user(username, password, **extra_fields)
-
-
-class User(AbstractBaseUser, PermissionsMixin):
-  
-  is_staff = models.BooleanField(
-    'staff status',
-    default=False,
-    help_text=('Designates whether the user can log into this site.'),
-  )
-  is_active = models.BooleanField(
-    'active',
-    default=True,
-    help_text=(
-      'Designates whether this user should be treated as active. '
-      'Unselect this instead of deleting accounts.'
-    ),
-  )
-  
-  email = models.EmailField(unique=True, null=True)
-  is_superuser = models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')
-  username     = models.CharField(unique=True, max_length=64, verbose_name='Username')
-  verified     = models.BooleanField(default=False)
-  created_at   = models.DateTimeField(auto_now_add=True)
-  updated_at   = models.DateTimeField(auto_now=True)
-  wallet_address = models.CharField(null=True, unique=True, max_length=64, verbose_name='Wallet Address')
-  signature = models.CharField(null=True, unique=True, max_length=128, verbose_name='Signature')
-  message = models.CharField(null=True, unique=True, max_length=128, verbose_name='Message')
-  final_message = models.CharField(null=True, unique=True, max_length=128, verbose_name='Message')
-
-
-  USERNAME_FIELD = 'username'
-  objects = MyUserManager()
-
-
-  def __str__(self):
-    return self.username
-
-
-  def get_short_name(self):
-    return self.username
-  # @property
-  # def id_back_url(self):
-  #     if self.id_back and hasattr(self.id_back, 'url'):
-  #         return self.id_back.url
-  #     else:
-  #         return '/static/images/placeholder.png'
-
-
-class Transaction(models.Model):
-  address = models.CharField(max_length=100, primary_key=True)
-  user   = models.ForeignKey(User, related_name="transactions")
-  amount = models.DecimalField(max_digits=20, decimal_places=6)
-  raffle = models.ForeignKey("Raffle", related_name="transactions")
-  blockHeight = models.IntegerField(verbose_name="Block Height")
-  boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
-  
-  def __str__(self):
-    return str((self.user, self.address))
-
-  @property
-  def getDate(self):
-    rawTransaction = Dash.getrawtransaction(self.address)
-    timestamp = rawTransaction['time']
-    return datetime.datetime.fromtimestamp(timestamp)
-   
-class RaffleSigner(models.Model):
-  user = models.ForeignKey(User)
-  raffle = models.ForeignKey("Raffle")
-  signed = models.BooleanField(default=False)
-  class Meta():
-    auto_created=True
-    
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   description = RichTextField()
@@ -261,8 +34,8 @@ class Raffle(models.Model):
   transaction = models.CharField(verbose_name="Transaction", max_length=100, blank=True, null=True)
   signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers", related_name="signs")
   type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
-
   type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type")
+  blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
   isMultisig = models.BooleanField(default=True, verbose_name=" Multisign Prize address")
   signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
 
@@ -288,6 +61,10 @@ class Raffle(models.Model):
       self.createMultisigAddress()
 
     super(Raffle, self).save(*args, **kwargs)    
+
+  @property
+  def getPrice(self):
+    return rafflePrice[self.type]
 
   def __str__(self):
     return self.name
@@ -346,8 +123,8 @@ class Raffle(models.Model):
       self.MSredeemScript = data['redeemScript']
 
   def getTransactions(self):
-    for ag in self.addresses.all():
-      txs = Dash.getaddresstxids([ag.address])
+    for addressGenerated in self.addresses.all():
+      txs = Dash.getaddresstxids([addressGenerated.address])
       if txs is None:
         continue
 
@@ -364,31 +141,30 @@ class Raffle(models.Model):
           continue
 
         for detail in txRaw['vout']:
-          if ag.address in detail['scriptPubKey']['addresses']:
+          if addressGenerated.address in detail['scriptPubKey']['addresses']:
             tickets = int(detail['value']/float(self.ticketPrice))
             tx = Transaction(
               address=txRaw['txid'],
               amount=detail['value'],
-              user=ag.user,
+              user=addressGenerated.user,
               blockHeight=blockHeight,
               raffle=self,
               boughtTicket=tickets
             )
             total = float(tickets*self.ticketPrice)
             left = total
-            transaction = call([
-                  "sendtoaddress",
-                  self.addressPrize,
-                  str((total*self.prizePercentage)/100.0)
-                ])
+            transaction = Dash.sendtoaddress(
+              self.addressPrize,
+              str((total*self.prizePercentage)/100.0)
+            )
+
             left -= (total*self.prizePercentage)/100.0
-            call([
-              "sendtoaddress",
+            Dash.sendtoaddress(
               self.addressProject,
               str((total*self.projectPercentage)/100.0)
-            ])
+            )
+
             left -= (total*self.projectPercentage)/100.0
-            
             tx.save()
 
   def addPrivKey(self, privkey):
@@ -494,12 +270,10 @@ class Raffle(models.Model):
     return -1
 
   def getWinner(self):
-    #print("Winner: ", self.winnerAddress, self.transaction)
     if self.winnerAddress:
       if self.transaction:
         return self.winnerAddress
       else:
-        #print("1))))")
         self.__send()
         return
     count = Dash.getblockcount()
@@ -543,7 +317,7 @@ class Raffle(models.Model):
               if self.winnerAddress:
                 break
             if not self.winnerAddress:
-              #print("Winner address not found")
+              print("Winner address not found")
               return
           else:
             self.winnerAddress = self.winner.wallet_address
@@ -562,14 +336,4 @@ class Raffle(models.Model):
             #         sendEmailLoser(user)
             #     else:
             #         sendEmailWinner(user, self.name, amount)
-
-
-class AddressGenerated(models.Model):
-  user    = models.ForeignKey(User)
-  raffle  = models.ForeignKey(Raffle, related_name="addresses")
-  address = models.CharField(unique=True, max_length=64, verbose_name='Address')
-
-
-  def __str__(self):
-    return str((self.user, self.address))
 

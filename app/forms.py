@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 from app import models
-from app.models import Dash
+from app.dash import Dash
 
 
 

@@ -16,24 +16,50 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container content">
   {% for raffle in activeRaffles %}
-    <div class="shadow" style="background-color: white; margin:10px;">
-      <div class="row">
-        <div class="col-md-4">
-          <label> Prize </label>
-          <h5>7.982 Dash</h5>
-          <span class="chart" data-percent="73">
-            <span class="percent"></span>
-          </span>
-        </div>
-        <div class="col-md-4">
-          <br>
-          {{raffle.name}}
+    <div class="shadow" style=" margin:10px;">
+      <div class="card">
+        <div class="row" style="margin:2%">
+          <div class="col-md-3">
+            <div class="row  align-items-center h-100">
+              <div class="col-sm-2 col-xs-1"></div>
+              <div class="col-md-12 col-sm-3 col-xs-3 ">
+                <span class="chart" data-percent="10">
+                  <span class="percent"></span>
+                </span>
+              </div>
+              <div class="col-md-12 col-sm-5 col-xs-3">
+                <h5>Prize <b>7.982 Dash</b></h5>
+              </div>
+              <div class="col-sm-2 col-xs-1"></div>
+            </div>
+          </div>
+          <div class="col-md-7" >
+            <div class="row align-items-center">
+              <!-- <div class="col-sm-1 col-xs-1"></div> -->
+              <div class="col-md-6 col-sm-5 col-xs-12">
+                <h5>{{raffle.name}}</h5>
+              </div>  
+              <div class="col-md-6 col-sm-5 col-xs-12">
+                <p>Ticket price: 0.001 Dash</p>
+              </div>  
+              <!-- <div class="col-sm-1 col-xs-1"></div> -->
+            </div>
+            
+            <p align="left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur, libero quis ultrices mattis, eros dolor sollicitudin massa, cursus tempus lacus nisl non dolor. Phasellus leo velit, dignissim at vestibulum tempus, tincidunt eu est... <a href="#">Read more.</a></p>
+          </div>
+          <div class="col-md-2">
+            <div class="row  align-items-center h-100" style="width: 100%">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <button class="btn btn-success btn-raffle shadow">
+                  <i class="fas fa-ticket-alt"></i> Buy Tickets
+                </button>
+              </div>  
+            </div>
+          </div>
         </div>
       </div>
-      
-      
     </div>
   {% empty %}
     No active raffles

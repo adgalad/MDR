@@ -210,6 +210,8 @@ var CanvasRenderer = function(el, options) {
 	}.bind(this);
 };
 
+
+
 var EasyPieChart = function(el, opts) {
 	var defaultOptions = {
 		barColor: '#ef1e25',
