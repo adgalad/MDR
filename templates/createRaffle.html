@@ -1,17 +1,11 @@
-{% extends "base.html" %}
+{% extends "form.html" %}
 {% load humanize %}
 
-
-{% block style %}
-  {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="/static/css/select2.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
-{% endblock style %}
-
-{% block content %}
+{% block form %}
   {% for message in messages %}
     <div style="color:red"> {{ message }} </div>
   {% endfor %}
+  <br>
   <br>
   
   <form method="post">
@@ -26,7 +20,7 @@
         {% elif field.name == "addressProject" %}
           <div class="row"> <div class="col-md-12"><hr></div> </div>
         {% endif %}
-        <div class="row" id="div_{{field.name}}">
+        <div class="row">
           <div class="container-contact100">
             <div class="wrap-contact100">
               <form class="contact100-form validate-form">
@@ -41,115 +35,39 @@
                 </div>
               <div class="row">
                 <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Beneficiary Address">
-                        <span class="label-input100">Beneficiary Address</span>
-                        <input class="input100" type="text" name="email" placeholder="Enter Ticket Price">
-                        <span class="focus-input100"></span>
-                      </div>
+                    <p class="label-input100">Type of Raffle</p>
+                    <div>
+                      <select class="selectpicker" data-width="100%">
+                        <option>Mini Dash Raffles (0.01 tDash)</option>
+                        <option>Dash Raffles (0.1 tDash)</option>
+                        <option>Mega Dash Raffle (0.5 tDash)</option>
+                      </select>
                     </div>
-                  <div class="col-md-6 col-sm-12 col-xs-12" id="div_isMultisig">
-                    <p class="label-input100">Multisign Prize address</p>
-                        <label class="switch" align="center">
-                            <input type="checkbox" name="isMultisig" id="id_isMultisig">
-                            <span class="slider round"></span>
-                        </label>
+                </div>
+                  <div class="col-md-6 col-sm-12 col-xs-12">
+                    <p class="label-input100">Signers</p>
+                    <div>
+                      <select class="selectpicker" data-live-search="true" data-width="100%">
+                      {% for field in form.signers %}
+                        {{ form.signers }}
+                      {% endfor %}
+                      </select>
+                    </div>
                   </div>
               </div>
-
-              <div class="row" id="div_signsRequired" style="display: none;">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input">
-                        <span class="label-input100">Signs Required</span>
-                        <input class="input100" type="text" name="signsRequired"  value="3" id="id_signsRequired" placeholder="Enter Signs Required">
-                        <span class="focus-input100"></span>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input">
-                        <span class="label-input100">Multisig Public Key 1</span>
-                        <input class="input100" type="text" name="MSpubkey1" id="id_MSpubkey1">
-                        <span class="focus-input100"></span>
-                      </div>
-                  </div>
-                </div>
-                <div class="row" id="div_MSpubkey2" style="display: none;">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Ticket Price">
-                        <span class="label-input100">Multisig Public Key 2</span>
-                        <input class="input100" type="text" name="MSpubkey2" id="id_MSpubkey2">
-                        <span class="focus-input100"></span>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Ticket Price">
-                        <span class="label-input100">Multisig Public Key 3</span>
-                        <input class="input100" type="text" name="MSpubkey3" id="id_MSpubkey3">
-                        <span class="focus-input100"></span>
-                      </div>
-                  </div>
-                </div>
-                <div class="row" id="div_MSpubkey4" style="display: none;">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Ticket Price">
-                        <span class="label-input100">Multisig Public Key 4</span>
-                        <input class="input100" type="text" name="MSpubkey4" id="id_MSpubkey4">
-                        <span class="focus-input100"></span>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Ticket Price">
-                        <span class="label-input100">Multisig Public Key 5</span>
-                        <input class="input100" type="text" name="MSpubkey5" id="id_MSpubkey5">
-                        <span class="focus-input100"></span>
-                      </div>
-                  </div>
-                </div>
-                <div class="row" id="div_signers" style="display: none;">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Ticket Price">
-                        <span class="label-input100">Multisig Public Key 6</span>
-                        <input class="input100" type="text" name="MSpubkey6" id="id_MSpubkey6">
-                        <span class="focus-input100"></span>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 input100-select">
-                        <span class="label-input100">Signers</span>
-                        <div>
-                          <select class="selectpicker" multiple data-live-search="true">
-                            <option>Select Budget</option>
-                            <option>1500 $</option>
-                            <option>2000 $</option>
-                            <option>2500 $</option>
-                          </select>
-                        </div>
-                        <span class="focus-input100"></span>
-                      </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Ticket Price">
-                        <span class="label-input100">Ticket Price</span>
-                        <input class="input100" type="text" name="MSpubkey6" id="id_MSpubkey6">
-                        <span class="focus-input100"></span>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="wrap-input100 validate-input" data-validate = "Valid email is required Ticket Price">
-                        <span class="label-input100">Block Height</span>
-                        <input class="input100" type="text" name="MSpubkey6" id="id_MSpubkey6"> 
-                        <span class="focus-input100"></span>
-                      </div>
-                  </div>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate = "Message is required">
+              <div class="wrap-input100 validate-input" data-validate="Name is required">
+                  <span class="label-input100">thumbnail</span>
+                  <input class="input100" type="text" name="thumbnail"  name="id_thumbnail" placeholder="Enter your thumbnail">
+                  <span class="focus-input100"></span>
+              </div>
+              <br>
                  <p class="label-input100" style="margin-bottom:15px;">Description:</p>
                     <div class="col-md-8">{{ form.description }}</div>
-                </div>
-
-                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                    <br>
+                    <div class="col-sm-12" align="center">
+                      <div class="col-sm-6">
+                      <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                    </div>
               </form>
             </div>
           </div>
@@ -162,15 +80,13 @@
           </div>
         {% endif %}
     </div>
-    Estimated time is: <dt id="date"> </dt>
-    <br>
   </div>   
 
 
 
 
   <div id="dropDownSelect1"></div>
-{% endblock content %}
+{% endblock form %}
 
 {% block scripts %}
   {{ block.super }}
