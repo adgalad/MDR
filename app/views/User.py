@@ -34,9 +34,9 @@ class User:
       form = forms.Login()
    
     if request.GET.get('modal') == '1':
-      base = 'empty.html'
+      base = 'modalForm.html'
     else:
-      base = 'base.html'
+      base = 'form.html'
     print(base)
     return render(request, "login.html", {'form': form, 'base':base})    
 
@@ -75,9 +75,9 @@ class User:
     else:
       form = forms.SignUp()
     if request.GET.get('modal') == '1':
-      base = 'empty.html'
+      base = 'modalForm.html'
     else:
-      base = 'base.html'
+      base = 'form.html'
     
     return render(request, "SingUp.html", {'form': form, 'base':base})
 
