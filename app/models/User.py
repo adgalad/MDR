@@ -7,7 +7,7 @@ class MyUserManager(BaseUserManager):
   A custom user manager to deal with emails as unique identifiers for auth
   instead of usernames. The default that's used is "UserManager"
   """
-  def _create_user(self, username, password, **extra_fields):
+  def _create_user(self, username, password,email, **extra_fields):
     """
     Creates and saves a User with the given username and password.
     """
@@ -16,6 +16,7 @@ class MyUserManager(BaseUserManager):
     # username = self.normalize_username(username)
     user = self.model(username=username, **extra_fields)
     user.set_password(password)
+    user.EmailField(email)
     user.save()
     return user
 

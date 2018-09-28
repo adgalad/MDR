@@ -65,9 +65,10 @@ class User:
       form = forms.SignUp(request.POST)
       if form.is_valid():
         #print(form.cleaned_data)
-        form.save()
         username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password1')
+        form.save()
         user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)

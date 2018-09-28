@@ -139,7 +139,7 @@ class SignUp(UserCreationForm):
 
     class Meta():
         model = models.User
-        fields = ("username",)
+        fields = ("username","email",)
     
     def __init__(self, *args, **kwargs):
         super(SignUp, self).__init__(*args, **kwargs)
