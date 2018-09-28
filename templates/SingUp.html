@@ -1,4 +1,4 @@
-{% extends "modalForm.html" %}
+{% extends base %}
 
 {%load humanize %}
 
@@ -15,7 +15,7 @@
     {% endblock beforeForm %}
 
 <div class="modal-dialog modal-md">
-  <div class="modal-content {% if request.GET.modal != '1'%} shadow {%endif%}">
+  <div class="modal-content {% if request.GET.modal != '1'%} shadow modal-margin {%endif%} ">
     <div class="modal-body">
     {% if request.GET.modal == '1'%}
         <button type="button" class="close" data-dismiss="modal">x</button>
