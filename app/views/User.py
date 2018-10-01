@@ -46,7 +46,7 @@ class User:
   @login_required(login_url='/login/')
   def editProfile(request):
     if request.method == "POST":
-      form = forms.editProfile(request.POST, instance=request.user)
+      form = forms.EditProfile(request.POST, instance=request.user)
       if form.is_valid():
         form.save()
         messages.success(request, "Email was changed successfully.")
@@ -69,6 +69,9 @@ class User:
         passwordForm.save()
         update_session_auth_hash(request, passwordForm.user)
         messages.success(request, "Password was changed successfully.")
+        return redirect(reverse('profile'))
+      else:
+        messages.success(request, "Couldn't change the password. Please, try again.")
         return redirect(reverse('profile'))
     else:
       raise PermissionDenied
@@ -127,7 +130,7 @@ class User:
     else:
       request.user.message = message
       request.user.save()
-      form =  forms.AddWalletAddress(
+      form = forms.AddWalletAddress(
             initial={'final_message':message}
           )
 
