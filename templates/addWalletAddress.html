@@ -92,7 +92,8 @@
                                     </div>
                                   </div>
                                   <br>
-                                <form method="post" action="" style="padding:10px 0px 0px 0px;">
+                                <form method="post" action="{%url 'addWalletAddress' %}" style="padding:10px 0px 0px 0px;">
+                                  {% csrf_token %}
                                     <div class="container" style="z-index:-1;">
                                         <div class="omb_login">
                                               <div class="wrap-input100 validate-input">
@@ -115,7 +116,8 @@
                                                 <div class="col-sm-9">
                                                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="botton">Submit</button>
                                                 </div>
-                                            </div>     
+                                            </div> 
+                                            <input type="text" name="final_message" value="{{ form.final_message.value }}" maxlength="128" required="" id="id_final_message" style="display: none;" class="form-control">    
                                         </div>
                                     </div>
                                 </form>

@@ -11,6 +11,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from app import models, forms
 from app.dash import Dash
 
@@ -43,16 +45,27 @@ class User:
   @staticmethod
   def editProfile(request):
     if request.method == "POST":
-      form = forms.editProfile(request.POST)
+      form = forms.editProfile(request.POST, instance=request.user)
       if form.is_valid():
         #print(form.cleaned_data)
-        form.save()
         username = form.cleaned_data.get('username')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password1')
+        update_session_auth_hash(request, request.user)
+        form.save()
+        user = authenticate(username=username, password=password)
+        if user is not None:
+          login_auth(request, user)
+          return redirect(reverse('index'))
+        messages.success(request, "your user modified successfully.")
+        return redirect(reverse('profile'))
     else:
       form = forms.editProfile()
-    return render(request, "editProfile.html", {'form': form})
+    if request.GET.get('modal') == '1':
+      base = 'modalForm.html'
+    else:
+      base = 'form.html'
+    return render(request, "editProfile.html", {'form': form, 'base':base})
 
   @staticmethod
   def logout(request):
@@ -83,7 +96,6 @@ class User:
     return render(request, "SingUp.html", {'form': form, 'base':base})
 
   @login_required(login_url='/login/')
-  @staticmethod
   def addWalletAddress(request):
     message = "Raffle Confirm Wallet %s" %str(datetime.datetime.now())
     if request.method == "POST":
@@ -95,6 +107,7 @@ class User:
         if request.user.message == finalMessage:
           if Dash.verifymessage(address, signature, finalMessage):
             form.save()
+            messages.success(request, "Sucessfully registered Wallet.")
             return redirect(reverse('profile'))
           else:
             messages.error(request, "Could not verify signed message. Please try again.")

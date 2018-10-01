@@ -2,18 +2,10 @@
 {% load mathfilters %}
 
 {% block content %}
-    {% for message in messages %}
-        <div style="color:red"> {{ message }} </div>
-    {% endfor %}
+    
     <br>
     <br>
     <br>
-    {% if request.user.wallet_address %}
-        <a href="{% url 'addWalletAddress' %}">
-            <button> Change wallet address</button>
-        </a>
-    <br>
-    {% endif %}
 
 <div class="container">
     <div class="container-contact100" style="width: 100%;min-height: 20vh !important;">
@@ -28,7 +20,7 @@
                 <div class="row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-1"><b>Wallet:</b></div>
-                    <div class="col-sm-3" style="padding-left:30px">yjPtP7yAYkKd1a63gf3xpttu74Joa5MpZV</div>
+                    <div class="col-sm-3" style="padding-left:30px">{% if request.user.wallet_address%} {{request.user.wallet_address}} {% else %} Wallet not registered {% endif %}</div>
                     <div class="col-sm-4">
                         
                     </div>
@@ -44,27 +36,53 @@
                 <div class="row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-1"><b>Email:</b></div>
-                    <div class="col-sm-3" style="padding-left:30px">fernando.salas2102@gmail.com</div>
+                    <div class="col-sm-3" style="padding-left:30px">{{request.user.email}}</div>
                     <div class="col-sm-4"></div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4"></div>   
                     <div class="col-sm-2" style="margin-top:20px;"><a class="btn btn-primary" style="text-decoration:none" href="#"
-                           onclick="return abrir_modal('{% url 'addWalletAddress' %}')">Edit Wallet&nbsp;&nbsp;
+                           onclick="return abrir_modal('{% url 'addWalletAddress' %}')">{% if request.user.wallet_address%} Change {% else %} Add {% endif %} Wallet&nbsp;&nbsp;
                           <i class="fa fa-wallet"></i></a></div> 
                     <div class="col-sm-2" style="margin-top:20px;">  
                     <a class="btn btn-primary" style="text-decoration:none" href="#"
-                           onclick="return abrir_modal('{% url 'editProfile' %}')">Edit Profile&nbsp;&nbsp;
+                           onclick="return abrir_modal('/editProfile/?modal=1')">Edit Profile&nbsp;&nbsp;
                           <i class="fa fa-user-edit"></i>
                         </a>
                     </div>
                     <div class="col-sm-4"></div>
                 </div>
             </div>
-
+    {% for message in messages %}
+            <br>
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                  <strong>Important information:</strong>&nbsp;&nbsp; {{ message }}.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+    {% endfor %}
         </div>
     </div>
 </div>
+<div id="alert" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog" style="width: 400px;">
+          <div class="modal-content">
+              <div class="modal-header" style="background-color:#008de4">
+                  <h4 class="modal-title" style="font-weight: bold; font-size: 18px; color:#fff;">Important information</h4>
+              </div>
+              <div class="modal-body">
+                  <p style="font-size: 16px; color:#000;" id="mensaje"></p>
+              </div>
+              <div class="modal-footer">
+                  
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="aceptarModal" aria-hidden="true">Aceptar</button>
+              
+              </div>
+          </div>
+      </div>
+</div>
+
     <br>
     <h2> Your Transactions </h2>
 

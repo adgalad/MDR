@@ -41,8 +41,8 @@ class Raffle:
     #   date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
     return render(request, "raffle.html", {"raffle":raffle, 'date':raffle.getDate, 'prize': prize})
 
-  @login_required(login_url='/login/')
   @staticmethod
+  @login_required(login_url='/login/')
   def createRaffle(request):
     if request.method == "POST":
       form = forms.Raffle(request.POST)

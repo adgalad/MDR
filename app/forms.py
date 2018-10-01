@@ -146,11 +146,11 @@ class SignUp(UserCreationForm):
         for i in self.fields:
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
-class editProfile(forms.Form):
+class editProfile(forms.ModelForm):
 
     class Meta():
         model = models.User
-        fields = ("username",)
+        fields = ("username","email","password1",)
     
     def __init__(self, *args, **kwargs):
         super(editProfile, self).__init__(*args, **kwargs)
