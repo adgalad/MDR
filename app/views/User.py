@@ -43,29 +43,35 @@ class User:
     return render(request, "login.html", {'form': form, 'base':base})    
 
   @staticmethod
+  @login_required(login_url='/login/')
   def editProfile(request):
     if request.method == "POST":
       form = forms.editProfile(request.POST, instance=request.user)
       if form.is_valid():
-        #print(form.cleaned_data)
-        username = form.cleaned_data.get('username')
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password1')
-        update_session_auth_hash(request, request.user)
         form.save()
-        user = authenticate(username=username, password=password)
-        if user is not None:
-          login_auth(request, user)
-          return redirect(reverse('index'))
-        messages.success(request, "your user modified successfully.")
+        messages.success(request, "Email was changed successfully.")
         return redirect(reverse('profile'))
     else:
-      form = forms.editProfile()
+      form = forms.EditProfile(instance=request.user)
+      passwordForm = PasswordChangeForm(user=request.user)
     if request.GET.get('modal') == '1':
       base = 'modalForm.html'
     else:
       base = 'form.html'
-    return render(request, "editProfile.html", {'form': form, 'base':base})
+    return render(request, "editProfile.html", {'form': form, 'passwordForm':passwordForm,'base':base})
+
+  @staticmethod
+  @login_required(login_url='/login/')
+  def changePassword(request):
+    if request.method == "POST":
+      passwordForm = PasswordChangeForm(data=request.POST, user=request.user)
+      if passwordForm.is_valid():
+        passwordForm.save()
+        update_session_auth_hash(request, passwordForm.user)
+        messages.success(request, "Password was changed successfully.")
+        return redirect(reverse('profile'))
+    else:
+      raise PermissionDenied
 
   @staticmethod
   def logout(request):

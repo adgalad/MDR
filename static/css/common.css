@@ -222,6 +222,10 @@ table {
   color: white !important;
 }
 
+.dropdown-item {
+  color: white !important; 
+}
+
 /* Tooltip text */
 .tooltipaba .tooltiptext {
     visibility: hidden;

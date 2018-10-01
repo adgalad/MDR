@@ -39,5 +39,6 @@ urlpatterns = [
     url(r'^addWalletAddress/$', views.User.addWalletAddress, name="addWalletAddress"),
     url(r'^profile/$', views.User.profile, name="profile"),
     url(r'^editProfile/$', views.User.editProfile, name="editProfile"),
+    url(r'^api/changePassword/$', views.User.changePassword, name="api.changePassword"),
 
 ] + staticfiles_urlpatterns()
