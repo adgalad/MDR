@@ -29,15 +29,16 @@
 
                       <h3 id="text" style="margin-bottom:25px;">Edit Profile</h3>
                       <div class="omb_login">
-                        <div class="col-xs-12 col-sm-12"> 
-                          {% for field in form %} 
-                          <div class="wrap-input100 validate-input">
-                            <input class="input100 has-val" type="text" name="{{field.html_name}}" required="" id="{{field.auto_id}}">
-                            <span class="focus-input100" data-placeholder="{{field.label}}"></span>
-                          </div>
-                          {% endfor %}
-                          
-                          <form method="post" action="{% url 'editProfile' %}">
+                        <form method="post" action="{% url 'editProfile' %}">
+                          <div class="col-xs-12 col-sm-12"> 
+                            {% for field in form %} 
+                            <div class="wrap-input100 validate-input">
+                              <input class="input100 has-val" type="text" name="{{field.html_name}}" required="" id="{{field.auto_id}}">
+                              <span class="focus-input100" data-placeholder="{{field.label}}"></span>
+                            </div>
+                            {% endfor %}
+                            
+                            
                             {% csrf_token %}
                             {% for field in form %} 
                                 {% if field.errors %} 
@@ -49,27 +50,29 @@
                                 </div>
                                 {% endif %}
                             {% endfor %}
-                          </form>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="col-sm-6">
-                                <button class="btn btn-primary btn-block" type="submit" id="botton">Change email</button>
-                            </div>
-                        </div>     
+                            
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="col-sm-6">
+                                  <button class="btn btn-primary btn-block" type="submit" id="botton">Change email</button>
+                              </div>
+                          </div> 
+                        </form>    
                       </div>
 
                       <br><hr><br>
                       <h3 id="text" style="margin-bottom:25px;">Change Password</h3>
                       <div class="omb_login">
-                        <div class="col-xs-12 col-sm-12"> 
-                          {% for field in passwordForm %} 
-                          <div class="wrap-input100 validate-input">
-                            <input class="input100 has-val" type="text" name="{{field.html_name}}" required="" id="{{field.auto_id}}">
-                            <span class="focus-input100" data-placeholder="{{field.label}}"></span>
-                          </div>
-                          {% endfor %}
-                          
-                          <form method="post" action="{%url 'api.changePassword' %}">
+                        <form method="post" action="{%url 'api.changePassword' %}">
+                          <div class="col-xs-12 col-sm-12"> 
+                            {% for field in passwordForm %} 
+                            <div class="wrap-input100 validate-input">
+                              <input class="input100 has-val" type="password" name="{{field.html_name}}" required="" id="{{field.auto_id}}">
+                              <span class="focus-input100" data-placeholder="{{field.label}}"></span>
+                            </div>
+                            {% endfor %}
+                            
+                            
                             {% csrf_token %}
                             {% for field in passwordForm %} 
                                 {% if field.errors %} 
@@ -81,13 +84,14 @@
                                 </div>
                                 {% endif %}
                             {% endfor %}
-                          </form>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="col-sm-8">
-                                <button class="btn btn-primary btn-block" type="submit" id="botton">Change password</button>
-                            </div>
-                        </div>     
+                            
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="col-sm-8">
+                                  <button class="btn btn-primary btn-block" type="submit" id="botton">Change password</button>
+                              </div>
+                          </div>
+                        </form>     
                       </div>
 
 
