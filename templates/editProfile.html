@@ -102,6 +102,16 @@
     </div>
   </div>
 </div>    
+
+    {% block afterForm %}
+        
+        
+        
+    {% endblock afterForm %}
+
+{% endblock form %}
+
+{% block scripts %}
 <script type="text/javascript">
 
      $(document).ready(function(){
@@ -110,10 +120,4 @@
       })
 
 </script>
-    {% block afterForm %}
-        
-        
-        
-    {% endblock afterForm %}
-
-{% endblock form %}
+{% endblock scripts %}

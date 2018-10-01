@@ -71,7 +71,7 @@ class User:
         messages.success(request, "Password was changed successfully.")
         return redirect(reverse('profile'))
       else:
-        messages.success(request, "Couldn't change the password. Please, try again.")
+        messages.error(request, "Couldn't change the password. Please, try again.")
         return redirect(reverse('profile'))
     else:
       raise PermissionDenied
