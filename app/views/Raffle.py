@@ -21,7 +21,8 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
-      raffle = None
+      raise PermissionDenied
+
     # try:
     #   count = Dash.getblockcount()
     #   address = Dash.getnewaddress()
@@ -30,7 +31,7 @@ class Raffle:
 
     # except Exception as e:
     #   raise PermissionDenied
-    balance = Dash.getaddressbalance([raffle.addressPrize])['received']
+    balance = 1000#Dash.getaddressbalance([raffle.addressPrize])['received']
     prize = balance/100000000 #<- satoshis
     #print(">>", balance, prize)
     if not prize or prize < 0:
