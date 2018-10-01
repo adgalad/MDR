@@ -46,7 +46,7 @@ class User:
   @login_required(login_url='/login/')
   def editProfile(request):
     if request.method == "POST":
-      form = forms.editProfile(request.POST, instance=request.user)
+      form = forms.EditProfile(request.POST, instance=request.user)
       if form.is_valid():
         form.save()
         messages.success(request, "Email was changed successfully.")
