@@ -49,7 +49,7 @@ class User:
       form = forms.EditProfile(request.POST, instance=request.user)
       if form.is_valid():
         form.save()
-        messages.success(request, "Email was changed successfully.")
+        messages.success(request, "Email was changed successfully.", extra_tags="alert-danger")
         return redirect(reverse('profile'))
     else:
       form = forms.EditProfile(instance=request.user)
@@ -68,10 +68,10 @@ class User:
       if passwordForm.is_valid():
         passwordForm.save()
         update_session_auth_hash(request, passwordForm.user)
-        messages.success(request, "Password was changed successfully.")
+        messages.success(request, "Password was changed successfully.", extra_tags="alert-success")
         return redirect(reverse('profile'))
       else:
-        messages.success(request, "Couldn't change the password. Please, try again.")
+        messages.error(request, "Couldn't change the password. Please, try again.", extra_tags="alert-danger")
         return redirect(reverse('profile'))
     else:
       raise PermissionDenied

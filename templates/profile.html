@@ -55,7 +55,7 @@
             </div>
     {% for message in messages %}
             <br>
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
                   <strong>Important information:</strong>&nbsp;&nbsp; {{ message }}.
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -142,3 +142,4 @@
     </div>
 
 {% endblock content %}
+
