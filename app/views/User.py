@@ -70,6 +70,9 @@ class User:
         update_session_auth_hash(request, passwordForm.user)
         messages.success(request, "Password was changed successfully.")
         return redirect(reverse('profile'))
+      else:
+        messages.success(request, "Couldn't change the password. Please, try again.")
+        return redirect(reverse('profile'))
     else:
       raise PermissionDenied
 
@@ -127,7 +130,7 @@ class User:
     else:
       request.user.message = message
       request.user.save()
-      form =  forms.AddWalletAddress(
+      form = forms.AddWalletAddress(
             initial={'final_message':message}
           )
 
