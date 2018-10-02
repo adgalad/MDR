@@ -109,6 +109,7 @@ class Raffle(models.Model):
       blockHash = Dash.getblockhash(count)
       blockTime = Dash.getblock(blockHash)['time']
       date = datetime.datetime.fromtimestamp(blockTime + (self.blockHeight-count) * (2.6*60))
+    
     return date
   
   @property

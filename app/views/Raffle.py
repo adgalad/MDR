@@ -36,11 +36,8 @@ class Raffle:
     #print(">>", balance, prize)
     if not prize or prize < 0:
       prize = 0
-    # if raffle.winnerAddress:
-    #   date = datetime.datetime.fromtimestamp(blockTime)
-    # else:
-    #   date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
-    return render(request, "raffle.html", {"raffle":raffle, 'date':raffle.getDate, 'prize': prize})
+    
+    return render(request, "raffle.html", {"raffle":raffle, 'prize': prize})
 
   @staticmethod
   @login_required(login_url='/login/')
