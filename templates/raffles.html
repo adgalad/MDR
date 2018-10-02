@@ -20,8 +20,8 @@
   {% for raffle in activeRaffles %}
     <div class="shadow" style=" margin:10px;">
       <div class="card">
-        <div class="row" style="margin:2%">
-          <div class="col-md-3">
+        <div class="row" style="margin:4%">
+          <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12">
             <div class="row  align-items-center h-100">
               <div class="col-sm-2 col-xs-1"></div>
               <div class="col-md-12 col-sm-3 col-xs-3 ">
@@ -30,26 +30,26 @@
                 </span>
               </div>
               <div class="col-md-12 col-sm-5 col-xs-3">
-                <h5>Prize <b>7.982 Dash</b></h5>
+                <h5>Prize <b> {{raffle.totalPrize}} tDash</b></h5>
               </div>
               <div class="col-sm-2 col-xs-1"></div>
             </div>
           </div>
-          <div class="col-md-7" >
+          <div class="col-xl-7 col-lg-8 col-md-7 col-sm-12 col-12" >
             <div class="row align-items-center">
               <!-- <div class="col-sm-1 col-xs-1"></div> -->
               <div class="col-md-6 col-sm-5 col-xs-12">
                 <h5>{{raffle.name}}</h5>
               </div>  
               <div class="col-md-6 col-sm-5 col-xs-12">
-                <p>Ticket price: 0.001 Dash</p>
+                <p>Ticket price: {{raffle.getPrice}} tDash</p>
               </div>  
               <!-- <div class="col-sm-1 col-xs-1"></div> -->
             </div>
             
-            <p align="left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur, libero quis ultrices mattis, eros dolor sollicitudin massa, cursus tempus lacus nisl non dolor. Phasellus leo velit, dignissim at vestibulum tempus, tincidunt eu est... <a href="#">Read more.</a></p>
+            <p align="left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur, libero quis ultrices mattis, eros dolor sollicitudin massa, cursus tempus lacus nisl non dolor. Phasellus leo velit, dignissim at vestibulum tempus, tincidunt eu est... <a href="{% url 'raffleDetails' raffle.pk %}">Read more.</a></p>
           </div>
-          <div class="col-md-2">
+          <div class="offset-xl-0 col-xl-1 offset-lg-4 col-lg-8 offset-md-5 col-md-7 col-sm-12 col-12">
             <div class="row  align-items-center h-100" style="width: 100%">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <button class="btn btn-success btn-raffle shadow">
