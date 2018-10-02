@@ -13,6 +13,7 @@ from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.http import JsonResponse
 from app import models, forms
 from app.dash import Dash
 
@@ -138,4 +139,19 @@ class User:
 
   @staticmethod
   def profile(request):
-    return render(request, "profile.html")  
+    return render(request, "profile.html")
+
+  def getUsers(request):
+      id_users = request.GET.get('id_users')
+      options = '<option value="11" selected="selected">---------</option>'
+      if id_users:
+          users = models.User.objects.filter(username__contains=id_users)   
+      for user in users:
+          options += '<option value="%s">%s</option>' % (
+              user.pk,
+              user.username
+          )
+      response = {}
+      response['signers'] = options
+      print(response)
+      return JsonResponse(response)

@@ -37,9 +37,11 @@
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <p class="label-input100">Type of Raffle</p>
                     <div>
-                      <select class="selectpicker" data-width="100%">
+                      <select class="selectpicker" data-live-search="true" data-width="100%">
                         <option>Mini Dash Raffles (0.01 tDash)</option>
                         <option>Dash Raffles (0.1 tDash)</option>
+                        <option>Mega Dash Raffle (0.5 tDash)</option>
+                        <option>Mega Dash Raffle (0.5 tDash)</option>
                         <option>Mega Dash Raffle (0.5 tDash)</option>
                       </select>
                     </div>
@@ -47,17 +49,14 @@
                   <div class="col-md-6 col-sm-12 col-xs-12">
                     <p class="label-input100">Signers</p>
                     <div>
-                      <select class="selectpicker" data-live-search="true" data-width="100%">
-                      {% for field in form.signers %}
-                        {{ form.signers }}
-                      {% endfor %}
-                      </select>
+                        <select class="selectpicker" data-width="100%" id="id_signers" tabindex="-98"> 
+                        </select>
                     </div>
                   </div>
               </div>
               <div class="wrap-input100 validate-input" data-validate="Name is required">
                   <span class="label-input100">thumbnail</span>
-                  <input class="input100" type="text" name="thumbnail"  name="id_thumbnail" placeholder="Enter your thumbnail">
+                  <input class="input100" type="text" name="thumbnail" placeholder="Enter your thumbnail">
                   <span class="focus-input100"></span>
               </div>
               <br>
@@ -84,8 +83,6 @@
 
 
 
-
-  <div id="dropDownSelect1"></div>
 {% endblock form %}
 
 {% block scripts %}
@@ -124,10 +121,10 @@
           .prop('required',true)
           .prop('disabled',false)
 
-        $('#div_signers').show()
+        /*$('#div_signers').show()
         $('#id_signers')
           .prop('required',true)
-          .prop('disabled',false)
+          .prop('disabled',false)*/
 
         for (var i = 1; i <= 6 ; i++){
           $('#div_MSpubkey'+String(i)).show()
@@ -148,10 +145,10 @@
           .prop('required',false)
           .prop('disabled',true)
 
-        $('#div_signers').hide()
+        /*$('#div_signers').hide()
         $('#id_signers')
           .prop('required',false)
-          .prop('disabled',true)
+          .prop('disabled',true)*/
 
         for (var i = 1; i <= 6 ; i++){
           $('#div_MSpubkey'+String(i)).hide()
@@ -206,6 +203,36 @@
 
   gtag('config', 'UA-23581568-13');
 
+   $(document).ready(function() {
+        $("#id_users").on('change', getSigners);
+        
+    });
 
+    function getSigners() {
+        var usersId = $("#id_users").val();
+        if (usersId) {
+          console.log(usersId)
+            // Eliminamos las opciones anteriores del select
+            /*$("#id_signers").html("");*/
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'api.users' %}",
+                data: {
+                    "id_users": usersId,
+                },
+            });
+            request.done(function(response) {
+                // Agregamos los resultados al select
+                $("#id_proceso").html(response.signers);
+                $("#id_signers").html(response.signers);
+                console.log(response.signers)
+            });
+
+        } else {
+            $("#id_signers").html("<option value='' selected='selected'>---------</option>");
+            $("#id_signers").trigger("change");
+            console.log('Hola')
+        }
+    }    
   </script>
 {% endblock scripts %}
