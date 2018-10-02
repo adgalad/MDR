@@ -2,20 +2,13 @@
 
 
 {% block content %}
-    <a href="{% url 'raffleDetails' raffle.id %}"><button> < Back</button></a><br><br>
-    {% for message in messages %}
-        <div style="color:red"> {{ message }} </div>
-    {% endfor %}
-    <br>
-    Ticket price: {{ raffle.ticketPrice }} tDash 
-    <br><br>
-    How many tickets do you want to buy?<br>
-    <input id="numberTickets" type="number" value="1" onkeyup="requestQR()" onchange="requestQR()">
-    <br><br>
-    <a id="link" href="">
-        <img id="image" href="#">
-    </a>
-    <p id="address"></p>
+    <h2> Buy tickets </h2>
+
+    <p> How many ticket do you want to buy </p>
+    <input type="number" name="nTickets" value="1">
+    
+    <input type="checkbox" name="terms"> I agree to the <a href="{% url 'terms' %}">terms and conditions</a>
+    
 
 {% endblock content %}
     

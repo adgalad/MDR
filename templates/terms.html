@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load mathfilters %}
+
+
+{% block style %}
+  {{block.super}}
+  <style type="text/css">
+    p {
+      text-align: left;
+    }
+  </style>
+{% endblock style %}
+{% block content %}
+  <section style="margin-top: 160px">
+    <div class="container">
+      <h2>MEGA DASH RAFFLE</h2>
+      <h3>SITE TERMS</h3>
+      <p><strong>Introduction and acceptance of terms</strong></p>
+      <p>As a Project's Proposal Owner (and for purposes of this contract a Non-Profit Organization Representative &ndash; NPOR) of Mega Dash Raffle, your access and use of the Mega Dash Raffle Service constitutes your agreement with, and acceptance of the Mega Dash Raffle Terms of Service outline below.  A NPOR may be a charity, school, community association, sporting club or an individual or business fundraising for a Not-for Profit organization.</p>
+      <p><strong>Service Overview</strong></p>
+      <p>Mega Dash Raffle will utilize custom-designed software to create a raffle page and process online ticket sales on behalf of the Beneficiary. Mega Dash Raffle will supply this service in accordance with the legislation enforced by the government controlling body of the state(s) in which the raffle is to be held.  Raffle ticket purchases external to (TBA) are not permitted.</p>
+      <p>Mega Dash Raffle will provide a public random algorithm number generator facility to allow for a 100% random drawing of the raffle event.</p>
+      <p>Mega Dash Raffle adherer's to the Commercial Raffle Organizer's <a href="https://www.rafflelink.com.au/responsible-gambling-code-of-conduct">Responsible Gambling &amp; Code of Conduct</a>.</p>
+      <p><strong>Service Fee (include GST)</strong></p>
+      <p>Raffle creation Fee &ndash; 0.1 DASH. Payable upon registration and refundable after raffle event reach 20 tickets sold.</p>
+      <p>Service Fee &ndash; 10% of total gross ticket sales (DASH Digital Cash only). <span class="Apple-converted-space"> </span></p>
+      <p>Benefit project (NPOR Wallet) &ndash; 50% of total gross tickets sales.<span class="Apple-converted-space"> </span></p>
+      <p>Winner Jackpot (multisigned Wallet)&ndash; 40% of total gross tickets sales. Retained from proceeds at the raffle's conclusion.</p>
+      <p>Mega Dash Raffle is responsible for the all DASH fees and hosting costs related to the raffle page.</p>
+      <p><strong>Responsibility of Mega Dash Raffle</strong></p>
+      <p>Mega Dash Raffle will keep DASH Wallets for the purchase of raffle tickets and secure storage of bakers profile information (name and email)</p>
+      <p>Each raffle jackpot is held in a separate wallet from the Mega Dash Raffle wallet.  Raffle proceeds, less the nominated service fee charged by Mega Dash Raffle, will be forwarded to the NPOR wallet immediately after each ticket sell have been processed.</p>
+      <p>As soon as a raffle being drawn.  Mega Dash Raffle create payment transaction and sign jackpot wallet to send DASH to wallet's winner. Transaction will be waiting until any of two other signers give their private seed to finish payment auditors process and send funds to the winner.</p>
+      <p>Anyone has access to full reports during and at the conclusion of each raffle. The raffle sales data remains the sole property of the Mega Dash Raffle platform.  Mega Dash Raffle will not utilize in any manner, the personal information of the bakers.</p>
+      <p> </p>
+      <p>Responsibility of NPOR</p>
+      <p>The project and the organization that supports it is the sole responsibility of NPOR, who accepts the terms and conditions and declares that its organization does not carry out illicit activities</p>
+      <p>Sign the winner wallet and publishing the raffle drawn details in a public space.</p>
+      <p>Solely responsible for the promotion and marketing of their raffle event.</p>
+      <p>Conducting the raffle in accordance with the requirements of the government controlling body in their state / country.</p>
+      <p>Obtaining the relevant permit(s), when required, to enable the NPOR to conduct a raffle.</p>
+      <p>NPOR Login</p>
+      <p>As NPOR user will contain the personal information (name, email and wallet to receive their % of ticket raffle sells), you must keep your login information safe, private and secure at all times. Only those contacts who appear on the Raffle Registration should have knowledge of these NPOR login details.</p>
+      <p>Indemnity for misuse of NPOR Login information</p>
+      <p>Mega Dash Raffle accepts no liability for acts carried out by any person using your NPOR user login information, and you indemnify Mega Dash Raffle from any costs, expenses or damages payable in connection with your breach of the NPOR Login requirements.</p>
+      <p>As the creator of your organization's Raffle Page, you agree to not:-</p>
+      <p>infringe the intellectual property rights (including copyright) of any third party;<br />detrimentally affect the brand or reputation of Mega Dash Raffle or any affiliates or partners of Mega Dash Raffle;<br />be misleading or deceptive as to the nature, type, service or benefits of the Content;<br />contain information that is inaccurate, ambiguous, exaggerated, defamatory or untrue;<br />send junk email or spam to people who do not wish to receive email from You;<br />remove, alter, add to or change anything on the Raffle Page other than Your organization's logo, prize pictures and QR code.<br />Mega Dash Raffle reserves the right to remove or edit any content posted on the Raffle Page, Dash forum, Dash Discord and / or reddit channel  at its sole discretion, without notice and without liability if we deem the content to be inappropriate and or in breach of these Terms and Conditions.</p>
+      <p>Intellectual Property Rights</p>
+      <p>The NPOR indemnifies Mega Dash Raffle from any costs, expenses, claims or damages paid or payable by Mega Dash Raffle in connection with a claim by any person that the NPOR infringes the Intellectual Property Rights of that person.</p>
+      <p>For the purposes of these Terms, &ldquo;Intellectual Property Rights&rdquo; means all intellectual property rights, including but not limited to:<br />patents, copyright, rights in circuit layouts, registered and unregistered designs, registered and unregistered trademarks, knowhow and the right to have confidential information kept confidential; and</p>
+      <p>The NPOR grants to Mega Dash Raffle a royalty free, worldwide, non-exclusive, transferable, license to use, the NPOR's details in terms of logo, and website as a promotional tool for Mega Dash Raffle.</p>
+      <p>Disclaimer</p>
+      <p>During the registration process Mega Dash Raffle take reasonable steps to substantiate the Not-For-Profit status of the organization.</p>
+      <p>Mega Dash Raffle accepts no liability whatsoever for the actions of our NPORs on the Raffle Facility.</p>
+      <p>Mega Dash Raffle accepts no liability for ensuring that any Beneficiary applies the proceeds received from a raffle event in any particular way.</p>
+      <p>For our standard service, Mega Dash Raffle is only responsible for the raffle wallet prizes and its distribution. The NPOR must deal with any bakers dissatisfaction regarding the prize(s) and/or the distribution of the prize(s). Where the NPOR has enlisted the services of Mega Dash Raffle to supply prizes, Mega Dash Raffle will deal with any customer enquiry/concerns directly.</p>
+      <p>The NPOR must ensure that they meet the requirements of Government legislation in their state / country with regard to prize in DASH. Mega Dash Raffle takes no responsibility for the appropriateness of the funds sent to NPOR wallet, however we reserve the right to suspend the progress of the raffle if for some reason the content is questionable.</p>
+      <p>Mega Dash Raffle has made every effort to provide a reliable service for our NPORs. However, in the unlikely event that our service is disrupted due to a computer virus, hosting or network failure, unauthorized intervention or circumstances beyond our control, which may lead to a loss in ticket sales, Mega Dash Raffle is indemnified by our NPOR and bears no liability.</p>
+      <p>While Mega Dash Raffle strives to make the Government information on our website as timely and accurate as possible, we make no claims, promises, or guarantees about the accuracy, completeness, or adequacy of the contents of this site, and expressly disclaims liability for errors and omissions in the contents of this site. The onus is on our NPOR to research the Government Regulations as it applies to them specifically and take any necessary actions with regard to registrations or permits.</p>
+      <p>Mega Dash Raffle has taken measures to ensure a secure payment gateway and storage of personal information for ticket buyers. However, our NPORs recognise that Mega Dash Raffle cannot be held responsible for hacking or malicious attack.</p>
+      <p>Refund Policy</p>
+      <p>NPOR &ndash; Termination</p>
+      <p>Either party may terminate the online raffle before the commencement of the raffle event, but must do so by written notification by email.  In the event of the NPOR instigating the cancellation, the Raffle Establishment Fee of 0.1 DASH will be retained by Mega Dash Raffle as the cancellation fee.</p>
+      <p>NPOR &ndash; Limitations &amp; Changes</p>
+      <p>Once the raffle is registered, changes to the raffle project description will not be possible</p>
+      <p>Bakers (tickets buyers) &ndash;  Dash Payments</p>
+      <p>Purchases made through the Payment Platform by a baker utilizing a DASH Network are final and not disputable. </p>
+      <p>Where there has been an unauthorized use of a baker's DASH wallet, and the unauthorized nature of that use can be proven, then the payment could be refunded, ONLY if NPOR refunds payment received from this sell.</p>
+      <p>Mega Dash Raffle does not extend credit or loan money to customers to purchase raffle tickets.</p>
+      <p>Mega Dash Raffle makes no representations as to the compliance by our NPORs with the laws applicable to the conduct of their raffle event. Ticket buyers must establish to their own satisfaction the propriety or otherwise of the raffle by contacting the relevant NPOR Organization directly. Any disputes about raffles must be directed to the raffle NPOR Organization.</p>
+      <p>Correspondence</p>
+      <p>A NPOR notifying Mega Dash Raffle under these Terms must;</p>
+      <p>do so in writing by email to post.office@megadashraffle.org<br />All correspondence will be deemed received:</p>
+      <p>on the day the email is sent (as long as the sender has not received a delivery failure message in relation to that email).</p>
+    </div>
+  </section>
+  
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

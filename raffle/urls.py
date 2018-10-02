@@ -23,10 +23,12 @@ urlpatterns = [
 
     url(r'^$', views.index, name="index"),
     url(r'^help/$', views.help, name="help"),
+    url(r'^terms/$', views.terms, name="terms"),
 
     # Raffle URLs
     url(r'^createRaffle/$', views.Raffle.createRaffle, name="createRaffle"),
     url(r'^raffle/(?P<id>\w+)$', views.Raffle.details, name="raffleDetails"),
+    url(r'^raffle/(?P<id>\w+)/more$', views.Raffle.details, name="raffleMoreDetails"),
     url(r'^raffles/$', views.Raffle.active, name="raffles"),
     # url(r'^raffles/old$', views.Raffle.old, name="rafflesOld"),
     url(r'^buyTicket/(?P<id>\w+)$', views.Raffle.buyTicket, name="buyTicket"),

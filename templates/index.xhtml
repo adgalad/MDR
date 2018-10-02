@@ -14,19 +14,19 @@
 {% block content %}
   <section id="banner" style=" z-index:-1;">
     <div class="banner-container">
-          <img style="width: 100%; min-height: 400px;height: 100%" src="/static/img/banner.png">
-          <div class="centered cd-intro-content mask">
-            <div style="margin-top:10%; margin-bottom: 10%">
-              <h1 data-content="Welcome to Mega Dash Raffle">
-                <span>Welcome to <br>Mega Dash Raffle</span>
-              </h1>
-              <div class="action-wrapper">
-                <p>
-                  <a href="#0" class="btn btn-success cd-btn main-action">Go to Raffles</a>
-                </p>
-              </div>
-            </div>
+      <img style="width: 100%; min-height: 400px;height: 100%" src="/static/img/banner.png">
+      <div class="centered cd-intro-content mask">
+        <div style="margin-top:10%; margin-bottom: 10%">
+          <h1 data-content="Welcome to Mega Dash Raffle">
+            <span>Welcome to <br>Mega Dash Raffle</span>
+          </h1>
+          <div class="action-wrapper">
+            <p>
+              <a href="#0" class="btn btn-success cd-btn main-action">Go to Raffles</a>
+            </p>
           </div>
+        </div>
+      </div>
     </div>
   </section>
   <section id="featured" >
@@ -34,61 +34,15 @@
       <h2> Featured Raffles </h2>
       <p>These are our most active raffles</p>
       <div class="owl-carousel owl-theme ">
+        {% for item in raffles %}
           <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
             <div class="overlay">
-              <h2>MegaDashRffle proyect agrocognitive</h2>
-              <a class="info" href="#">See More</a>
-              <a class="info" href="#">To Buy</a>
+              <h2>{{item.name}}</h2>
+              <a class="info" href="{% url 'raffleDetails' item.pk %}">See More</a>
+              <a class="info" href="{% url 'raffleDetails' item.pk %}?buy=1">To Buy</a>
             </div>
           </div>
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
-            <div class="overlay">
-              <h2>Mini Dash Raffle - Benefit: Dash Ecuador Meetup project. Dash Boost proposal</h2>
-              <a class="info" href="#">See More</a>
-              <a class="info" href="#">To Buy</a>
-            </div>
-          </div>
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
-            <div class="overlay">
-              <h2>Dash Raffle - Benefit: Project Y for proposal funding</h2>
-              <a class="info" href="#">See More</a>
-              <a class="info" href="#">To Buy</a>
-            </div>
-          </div>
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
-            <div class="overlay">
-              <h2>Dash Indonesia proposal to Dash Boost</h2>
-              <a class="info" href="#">See More</a>
-              <a class="info" href="#">To Buy</a>
-            </div>
-          </div>
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
-            <div class="overlay">
-              <h2>Mega Dash Raffle - Benefit: AgroCognitive project (month 4)</h2>
-              <a class="info" href="#">See More</a>
-              <a class="info" href="#">To Buy</a>
-            </div>
-          </div>
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
-            <div class="overlay">
-              <h2>Mega Dash Raffle - Benefit: AgroCognitive project (month 4)</h2>
-              <a class="info" href="#">See More</a>
-              <a class="info" href="#">To Buy</a>
-            </div>
-          </div>
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
-            <div class="overlay">
-              <h2>Mini Dash Raffle - Benefit: Project X for post proposal in Dashboost</h2>
-              <a class="info" href="#">link here</a>
-            </div>
-          </div>
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="../static/img/1.2.png"></h4>
-            <div class="overlay">
-              <h2>Dash Raffle - Benefit: Venezuelan Communities</h2>
-              <a class="info" href="#">See More</a>
-              <a class="info" href="#">To Buy</a>
-            </div>
-          </div>
+        {% endfor %}
       </div>
       <br>
       <div class="row">
