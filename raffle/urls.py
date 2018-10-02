@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^raffle/(?P<id>\w+)/more$', views.Raffle.details, name="raffleMoreDetails"),
     url(r'^raffles/$', views.Raffle.active, name="raffles"),
     # url(r'^raffles/old$', views.Raffle.old, name="rafflesOld"),
-    url(r'^buyTicket/(?P<id>\w+)$', views.Raffle.buyTicket, name="buyTicket"),
+    url(r'^buyTicket/$', views.Raffle.buyTicket, name="buyTicket"),
     url(r'^addPrivkey/(?P<id>\w+)$', views.Raffle.addPrivkey, name="addPrivkey"), 
 
     url(r'^login/$', views.User.login, name="login"),

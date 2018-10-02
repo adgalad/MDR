@@ -2,12 +2,63 @@
 
 
 {% block content %}
-    <h2> Buy tickets </h2>
+<br>
+<br>
+<br>
+<div class="modal-dialog modal-md" {% if request.GET.modal == '1'%} style="z-index:1500;" {% endif %}>
+  <div class="modal-content {% if request.GET.modal != '1'%} shadow modal-margin {%endif%} ">
+    <div class="modal-body">
+    {% if request.GET.modal == '1'%}
+        <button type="button" class="close" data-dismiss="modal">x</button>
+    {% endif %}
+       <div class="container-fluid bg-gray" id="accordion-style-1">
+         <div class="container">
+            <section>
+              <div class="row" align="center">
+                <div class="col-12 mx-auto">
+                  <div class="accordion" id="accordionExample">
+                    <div class="container" style="z-index:-1;">
+                      <h3 id="text" style="margin-bottom:25px;">Buy tickets</h3>
+                        <p> How many ticket do you want to buy </p>
+                        <div class="row">
+                        <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-ticket-alt"></i></span>
+                                  </div>
+                                   <input class="form-control"  type="number" name="nTickets" value="1" style="text-align:center">
+                                </div>
+                            </div>
 
-    <p> How many ticket do you want to buy </p>
-    <input type="number" name="nTickets" value="1">
-    
-    <input type="checkbox" name="terms"> I agree to the <a href="{% url 'terms' %}">terms and conditions</a>
+                            <br>
+                            <br>
+                            <div class="col-sm-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="terms" id="defaultUnchecked" >
+                                    <label class="custom-control-label" for="defaultUnchecked">I agree to the <a href="{% url 'terms' %}">terms and conditions</a></label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                              <div class="col-sm-6">
+                                  <button class="btn btn-primary btn-block" type="submit" id="close">Close</button>
+                              </div>
+                              <div class="col-sm-6">
+                                  <button class="btn btn-primary btn-block" type="submit" id="continue" onclick="btn_submit()">Continue</button>
+                              </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>     
     
 
 {% endblock content %}
@@ -36,6 +87,20 @@
         }
 
         requestQR()
+
+    $(document).ready(function() {
+        function btn_submit() {
+            if ($('input[name=terms]:checked')) {
+                console.log('hola')
+                else{
+                    console.log('jeje')
+                  $('input[name=terms]').AddClass('is-invalid')
+                }
+             }
+        }
+    });
+    
+
     </script>
 {% endblock scripts %}
 
