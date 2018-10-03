@@ -55,7 +55,7 @@
                   </div>
               </div>
               <div class="wrap-input100 validate-input" data-validate="Name is required">
-                  <span class="label-input100">thumbnail</span>
+                  <span class="label-input100">Thumbnail</span>
                   <input class="input100" type="text" name="thumbnail" placeholder="Enter your thumbnail">
                   <span class="focus-input100"></span>
               </div>
@@ -90,7 +90,6 @@
   {{ form.media }}
   
   <script src="/static/js/bootstrap-select.js"></script>
-  <script src="/static/js/select2.min.js"></script>
 
   <script type="text/javascript">
 
@@ -111,7 +110,6 @@
     $(document).ready(function(){
       $.fn.selectpicker.Constructor.BootstrapVersion = '4';
       $('select').selectpicker();
-      console.log('Epale')
     })
     function toggleMultisig(){
       if ($('#id_isMultisig').prop('checked')){
@@ -191,11 +189,6 @@
       })
       estimate()
     })
-
-  $(".selection-2").select2({
-      minimumResultsForSearch: 20,
-      dropdownParent: $('#dropDownSelect1')
-    });
 
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
