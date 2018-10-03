@@ -48,7 +48,8 @@
             </div>
             <div class="row">
               <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                  <a href="{% url 'buyTicket' raffle.id %}" class="btn btn-primary"> Buy tickets </a>
+                  <a class="btn btn-primary" href="#"
+                           onclick="return abrir_modal('{% url "buyTicket" raffle.id %}')"> Buy tickets </a>
               </div> 
               <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
                   <a href="#" class="btn btn-primary">See more details</a>
