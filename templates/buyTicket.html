@@ -1,14 +1,13 @@
-{% extends "base.html" %}
+{% extends "modalForm.html" %}
 
+{%load humanize %}
 
-{% block content %}
+{% block form %}
 <br>
-<div class="modal-dialog modal-md" {% if request.GET.modal == '1'%} style="z-index:1500;" {% endif %}>
-  <div class="modal-content {% if request.GET.modal != '1'%} shadow modal-margin {%endif%} ">
+<div class="modal-dialog modal-md" style="z-index:1500;" >
+  <div class="modal-content shadow modal-margin ">
     <div class="modal-body">
-    {% if request.GET.modal == '1'%}
         <button type="button" class="close" data-dismiss="modal">x</button>
-    {% endif %}
        <div class="container-fluid bg-gray" id="accordion-style-1">
          <div class="container">
             <section>
@@ -16,8 +15,8 @@
                 <div class="col-12 mx-auto">
                   <div class="accordion" id="accordionExample">
                     <div class="container" style="z-index:-1;">
-                          <h3 id="text" style="margin-bottom:15px;">Buy tickets</h3>
-                          <p id="text">{{ Raffle.name }}</p>
+                          <h3 id="text" style="margin-bottom:15px;"><b>Buy tickets</b></h3>
+                          <h5 id="text">{{ raffle.name }}</h5>
                         <div id="pre-buy">
                             <p> How many ticket do you want to buy </p>
                             <div class="row">
@@ -25,7 +24,7 @@
                                  <div class="col-sm-6" style="margin-left:-15px;">
                                     <div class="input-group mb-3">
                                       <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="background-color:#0062cc !important"><input class="form-control"  type="number" name="nTickets" value="1" style="text-align:center;margin-right:10px;height:50px;width:100px;font-size:25px;" onchange="requestQR(this)" id="numberTickets" min="1" pattern="^[0-9]+"><i class="fas fa-ticket-alt fa-4x" style="color:white"></i>
+                                        <span class="input-group-text" id="basic-addon1" style="background-color:#0062cc !important"><input class="form-control"  type="number" name="nTickets" value="1" style="text-align:center;margin-right:10px;height:50px;width:100px;font-size:25px;" onchange="requestQR()" id="numberTickets" min="1" pattern="^[0-9]+"><i class="fas fa-ticket-alt fa-4x" style="color:white"></i>
                                        </span>
                                        </div>
                                     </div>
@@ -44,14 +43,14 @@
                                 <div class="col-sm-12">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="terms" id="defaultUnchecked" onchange="valid()">
-                                        <label class="custom-control-label" for="defaultUnchecked">I agree to the <a href="{% url 'terms' %}">terms</a> and <a>conditions</a></label>
+                                        <label class="custom-control-label" for="defaultUnchecked">I agree to the <a href="{% url 'terms' %}">terms</a> and <a href="{% url 'conditions' %}">conditions</a></label>
                                     </div>
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                   <div class="col-sm-6">
-                                      <button class="btn btn-primary btn-block" type="submit" id="close">Close</button>
+                                      <button class="btn btn-primary btn-block" type="submit" id="close" data-dismiss="modal">Close</button>
                                   </div>
                                   <div class="col-sm-6">
                                       <button class="btn btn-primary btn-block" type="button" id="continue" onclick="btn_submit()">Continue</button>
@@ -61,14 +60,14 @@
                         <div id="buy" style="display:none">
                             <p> Scan the following QR with your Dash Wallet</p>
                             <div>
-                                <a id="link" href="dash:{{address}}?amount=2&amp;label=Payment">
-                                    <img id="image" href="#" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=dash:{{address}}?amount=2&amp;label=Payment">
+                                <a id="link" >
+                                    <img id="image">
                                 </a>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-sm-1"></div>
-                                      <p id="address"> Or send to the following address:<span><i class="fa fa-copy" style="color:#0062cc"></i></span></p>
+                                      <p id="address"></p>
                                   
                             </div>
                             <div class="row">
@@ -76,7 +75,7 @@
                                     <button class="btn btn-primary btn-block" type="submit" id="back" onclick="back()">Go back</button>
                                   </div>
                                   <div class="col-sm-6">
-                                      <button class="btn btn-primary btn-block" type="button" id="close">Continue</button>
+                                      <button class="btn btn-primary btn-block" type="button" id="close" data-dismiss="modal">Close</button>
                                   </div>
                             </div>
                         </div>
@@ -92,30 +91,33 @@
 </div>     
     
 
-{% endblock content %}
+{% endblock form %}
     
 {% block scripts %}
-    {{ block.super }}
+  {{ block.super }}
     <script type="text/javascript">
 
-    function back() {
-        $('#pre-buy').show();
-        $('#buy').hide();
-    }
+     
+      var address = "{{raffle.addressPrize}}"
+      var price = {{raffle.ticketPrice}}
+      var number = document.getElementById('numberTickets');
+      console.log(number)
 
-    function close() {
-        // body...
-    }
+        function back() {
+            $('#pre-buy').show();
+            $('#buy').hide();
+        }
 
-    function btn_submit() {
-        if ($('input[name=terms]').prop('checked')) {
-              $('#pre-buy').hide();
-              $('#buy').show();
-            }else{
-              $('input[name=terms]').addClass('is-invalid');
-              $('#alert').show();
-            }
-    }
+
+        function btn_submit() {
+            if ($('input[name=terms]').prop('checked')) {
+                  $('#pre-buy').hide();
+                  $('#buy').show();
+                }else{
+                  $('input[name=terms]').addClass('is-invalid');
+                  $('#alert').show();
+                }
+        }
 
         function valid(){
           if ($('input[name=terms]').prop('checked')) {
@@ -124,11 +126,7 @@
           }
         }
 
-     var number = document.getElementById('numberTickets');
-      const address = "{{address}}"
-      const price = {{Raffle.ticketPrice}}
-
-        function requestQR(valor){
+        function requestQR(){
           
           if(number.value <= 0){
             number.value = 1;
@@ -140,7 +138,7 @@
             var dashuri = "dash:" + address + "?amount=" + String(n*price) + "&label=Payment"
             document.getElementById("image").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+dashuri
             document.getElementById("link").href = dashuri
-            document.getElementById("address").innerHTML = 'Or send ' + String((n*price).toFixed(3)) + ' tDash to the following address: {{address}}'
+            document.getElementById("address").innerHTML = 'Or send ' + String((n*price).toFixed(3)) + ' tDash to the following address: {{raffle.addressPrize}}'
             $span = $('<span />').addClass('d-inline-block').attr({'data-toggle':"tooltip", 'title':'Copy address','tabindex':'0', 'data-placement':"right"});
             $li = $('<li />').addClass('fa fa-copy').attr({'onclick':'copy()', 'style':'color: #0062cc;cursor: pointer;margin-left:10px;'});
             $('#address').append( $span );
@@ -150,7 +148,7 @@
         requestQR() 
 
 
-   function copy() {
+        function copy() {
          /* Get the text field */
           var copyText = "HOLA COMO ESTAS";
 
@@ -161,7 +159,6 @@
           document.execCommand('copy');
           document.body.removeChild(el);
         }
-
     </script>
 {% endblock scripts %}
 
