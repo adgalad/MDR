@@ -103,33 +103,33 @@ class Raffle:
     return render(request, "createRaffle.html", {'form': form, 'blockTime': blockTime, 'count': count})
 
   @staticmethod
-  def buyTicket(request, id):
+  def buyTicket(request):
     # if request.user.wallet_address is None:
     #    messages.error(request, "Before buying a ticket, you've to add a wallet addres in your profile." )
     #    return redirect(reverse("profile"))
-    try:
-      raffle = models.Raffle.objects.get(id=id)
-    except:
-      raffle = None
-    if raffle:
-      try:
-        user = request.user if not request.user.is_anonymous else models.User.objects.get(username="Anonymous")
-      except Exception as e:
-        #print("Missing Anonymous user")
-        raise PermissionDenied
-      addressGenerated = models.AddressGenerated.objects.filter(user=user, raffle=raffle)
-      if addressGenerated.exists():
-        address = addressGenerated[0].address
-      else:
-        address = Dash.getnewaddress().replace("\n", "")
-        addressGenerated = models.AddressGenerated(user=user, raffle=raffle, address=address)
-        addressGenerated.save()
+    # try:
+    #   raffle = models.Raffle.objects.get(id=id)
+    # except:
+    #   raffle = None
+    # if raffle:
+    #   try:
+    #     user = request.user if not request.user.is_anonymous else models.User.objects.get(username="Anonymous")
+    #   except Exception as e:
+    #     #print("Missing Anonymous user")
+    #     raise PermissionDenied
+    #   addressGenerated = models.AddressGenerated.objects.filter(user=user, raffle=raffle)
+    #   if addressGenerated.exists():
+    #     address = addressGenerated[0].address
+    #   else:
+    #     address = Dash.getnewaddress().replace("\n", "")
+    #     addressGenerated = models.AddressGenerated(user=user, raffle=raffle, address=address)
+    #     addressGenerated.save()
       
-    else:
-      messages.error(request, "raffle not found.")
+    # else:
+    #   messages.error(request, "raffle not found.")
     return render(request, "buyTicket.html", {
-        'address': address,
-        'raffle': raffle
+        'address': 'xfwasdsadsadsadsadw',
+        'raffle': 1
       })
   
   @login_required(login_url='/login/')
