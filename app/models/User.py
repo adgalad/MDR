@@ -59,7 +59,7 @@ class User(AbstractBaseUser, PermissionsMixin):
   signature = models.CharField(null=True, unique=True, max_length=128, verbose_name='Signature')
   message = models.CharField(null=True, unique=True, max_length=128, verbose_name='Message')
   final_message = models.CharField(null=True, unique=True, max_length=128, verbose_name='Message')
-
+  can_sign = models.BooleanField(verbose_name="Can sign multisig addresses", default=False)
 
   USERNAME_FIELD = 'username'
   objects = MyUserManager()
