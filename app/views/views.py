@@ -23,3 +23,6 @@ def help(request):
 
 def terms(request):
     return render(request, 'terms.html')
+
+def conditions(request):
+    return render(request, 'conditions.html')

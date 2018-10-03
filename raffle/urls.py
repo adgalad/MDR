@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^$', views.index, name="index"),
     url(r'^help/$', views.help, name="help"),
     url(r'^terms/$', views.terms, name="terms"),
+    url(r'^conditions/$', views.conditions, name="conditions"),
 
     # Raffle URLs
     url(r'^createRaffle/$', views.Raffle.createRaffle, name="createRaffle"),
