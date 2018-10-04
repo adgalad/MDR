@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.utils import timezone
 from app import models, forms
 from app.dash import Dash
 
@@ -69,30 +70,26 @@ class Raffle:
   def createRaffle(request):
     if request.method == "POST":
       form = forms.Raffle(request.POST)
-      print("Llego aqui", request.POST)
       if form.is_valid():
-        print('es valido')
-        raffle = form.save()
-        raffle.owner = request.user
-        print('Lo creo: ', raffle)
-        if raffle.isMultisig:
+        try:
+          raffle = form.save()
+          raffle.owner = request.user
+          # if not raffle.isMultisig:
           address = Dash.getnewaddress()
           raffle.MSpubkey1 = address
           raffle.signsRequired = 1
           raffle.privkey1 = Dash.dumpprivkey(address)
-          raffle.addressProject = request.user.wallet_address
+          raffle.drawDate = timezone.now() + datetime.timedelta(days=models.raffleDuration[raffle.type])
           raffle.save()
-          print('Lo salve')
           raffle.createMultisigAddress()
-        raffle.save()
-        return redirect(raffle)
-      else:
-        print('wat')
-        try:
-          count = Dash.getblockcount()
-          address = Dash.getnewaddress()
-          blockHash = Dash.getblockhash(count)
-          blockTime = Dash.getblock(blockHash)['time']
+          raffle.save()
+          return redirect(raffle)
+      # else:
+      #   try:
+      #     count = Dash.getblockcount()
+      #     address = Dash.getnewaddress()
+      #     blockHash = Dash.getblockhash(count)
+      #     blockTime = Dash.getblock(blockHash)['time']
       
         except Exception as e:
           #print(e)
@@ -107,7 +104,7 @@ class Raffle:
       except Exception as e:
         #print(e)
         raise PermissionDenied
-      form = forms.Raffle(initial={'blockHeight':count, 'address':address})
+    form = forms.Raffle(initial={'blockHeight':count, 'address':address})
 
     return render(request, "createRaffle.html", {'form': form, 'blockTime': blockTime, 'count': count})
 
