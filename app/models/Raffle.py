@@ -96,6 +96,13 @@ class Raffle(models.Model):
         return True
     return False
 
+  @property
+  def thumbnail(self):
+    if self.thumbnail_url != '':
+      return self.thumbnail_url
+    else:
+      return '/static/img/placeholder.png'
+
   def getMSpubkey(self):
     keys = []
     for i in range(1,7):

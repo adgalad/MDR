@@ -25,8 +25,8 @@ class Dash:
   
   @staticmethod
   def dumpprivkey(address):
-    return address
-    # return Dash.call(["dumpprivkey", address]).replace('\n','')    
+    return Dash.call(["dumpprivkey", address]).replace('\n','')    
+    # return address
   
   @staticmethod
   def getaddresstxids(addresses):
@@ -53,13 +53,13 @@ class Dash:
   
   @staticmethod  
   def getnewaddress():
-    return 'XaSDASDAXASFSDFWEDCSSD'
-    # return Dash.call(["getnewaddress"]).replace('\n','')
+    return Dash.call(["getnewaddress"]).replace('\n','')
+    # return 'XaSDASDAXASFSDFWEDCSSD'
   
   @staticmethod
   def getrawtransaction(address, parsed=1):
-    # return Dash.call(["getrawtransaction", address, parsed])
-    return {'time': 5566462526}
+    return Dash.call(["getrawtransaction", address, parsed])
+    # return {'time': 5566462526}
   
   @staticmethod
   def sendrawtransaction(hexadecimalValue, allowhighfees=False, instantsend=False, bypasslimits=False):
