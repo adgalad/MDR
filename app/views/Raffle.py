@@ -70,7 +70,6 @@ class Raffle:
   def createRaffle(request):
     if request.method == "POST":
       form = forms.Raffle(request.POST)
-      print(request.POST)
       if form.is_valid():
         try:
           rtype = form.cleaned_data['type']
@@ -105,7 +104,6 @@ class Raffle:
       #     blockTime = Dash.getblock(blockHash)['time']
       
         except Exception as e:
-          print(e)
           raise PermissionDenied
     else:
       form = forms.Raffle()
