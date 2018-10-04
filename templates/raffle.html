@@ -12,10 +12,18 @@
   </style>
 {% endblock style %}
 {% block content %}
-  <section style="margin-top: 160px">
-    <div align="left" class="shadow" style="width: 80%; background-color: white; padding: 4%;">
-      <div class="container" style="margin: ">
-        <div class="row">
+ 
+<div class="container content">
+    <div class="row" style="margin-left:10px;">
+        <div class="btn-group btn-breadcrumb breadcrumb-primary">
+            <div class="visible-lg-block"></div>
+            <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All the Raffles</a>
+            <div class="btn btn-info"><b>Details</b></div>
+        </div>
+    </div>
+    <div class="shadow" style=" margin:10px;">
+      <div class="card">
+        <div class="row" align="left" style=" margin:30px">
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <h3>{{raffle.name}}</h3>
           </div>
@@ -60,11 +68,14 @@
         </div>
         <br><hr><br>
         <div id="description">
+          <h2> Project description </h2>
           {{raffle.description}}
         </div>
       </div>
     </div>
-         
+  </div>
+</div>
+
         <!-- <br><br>
         <h2> Tickets Sold </h2>
         <div align="center" style="width: 60%">
@@ -115,6 +126,5 @@
             </tbody>
           </table>
         </div> -->
-  </section>
   
 {% endblock content %}

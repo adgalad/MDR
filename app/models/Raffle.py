@@ -4,6 +4,7 @@ import datetime
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 from ckeditor.fields import RichTextField
 
 from app.dash import Dash
@@ -16,15 +17,21 @@ rafflePrice = {
   'Mega Raffle': 0.1
 }
 
+raffleDuration = {
+  'Mini Raffle': 7,
+  'Raffle': 14,
+  'Mega Raffle': 30
+}
+
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
-  description = RichTextField()
+  description = models.CharField(verbose_name="Description", max_length=4096)
   thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
   addressProject = models.CharField(verbose_name="Beneficiary Address", max_length=100)
   prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=40.0)
   projectPercentage = models.FloatField(verbose_name="Project Percentage", default=50.0)
-  drawDate = models.DateField(verbose_name="Draw date")
+  drawDate = models.DateTimeField(verbose_name="Draw date")
   ticketsSold = models.IntegerField(verbose_name="Tickets Sold", default=0)
   ticketPrice = models.DecimalField(verbose_name="Ticket Price", max_digits=20, decimal_places=6)
   winner = models.ForeignKey(User, blank=True, null=True, related_name="rafflesWon")
@@ -32,7 +39,7 @@ class Raffle(models.Model):
   winnerAddress = models.CharField(verbose_name="Winner Address", max_length=100, blank=True, null=True)
   totalPrize = models.DecimalField(verbose_name="totalPrize", max_digits=20, decimal_places=6, blank=True, null=True)
   transaction = models.CharField(verbose_name="Transaction", max_length=100, blank=True, null=True)
-  signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers", related_name="signs")
+  signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers",related_name="signs")
   type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
   type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type")
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
@@ -55,6 +62,7 @@ class Raffle(models.Model):
 
   MSredeemScript = models.CharField(verbose_name="Multisig Redeem Script", max_length=100, blank=True, null=True)
   
+
   def save(self, *args, **kwargs):
     #print(self.isMultisigned)
     if not self.addressPrize and self.isMultisigned:
@@ -65,6 +73,15 @@ class Raffle(models.Model):
   @property
   def getPrice(self):
     return rafflePrice[self.type]
+
+
+  @property
+  def getDurationTimestamp(self):
+    return raffleDuration[self.type] * 24 * 3600
+
+  @property
+  def getTimeLeft(self):
+    return int((self.drawDate - timezone.now()).total_seconds())
 
   def __str__(self):
     return self.name
@@ -78,6 +95,13 @@ class Raffle(models.Model):
       if getattr(self,"MSpubkey"+str(i)):
         return True
     return False
+
+  @property
+  def thumbnail(self):
+    if self.thumbnail_url != '':
+      return self.thumbnail_url
+    else:
+      return '/static/img/placeholder.png'
 
   def getMSpubkey(self):
     keys = []
@@ -269,6 +293,8 @@ class Raffle(models.Model):
         self.save()
         return prize
     return -1
+
+
 
   def getWinner(self):
     if self.winnerAddress:

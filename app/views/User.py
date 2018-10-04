@@ -29,7 +29,7 @@ class User:
         user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)
-          return redirect(request.GET.get('next',reverse('index')))
+          return redirect(request.GET.get('next',reverse('home')))
         else:
           messages.error(request, "Bad username or password.")
           
@@ -80,7 +80,7 @@ class User:
   @staticmethod
   def logout(request):
     logout_auth(request)
-    return redirect(reverse('index'))
+    return redirect(reverse('home'))
 
   @staticmethod
   def signup(request):
@@ -95,7 +95,7 @@ class User:
         user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)
-          return redirect(reverse('index'))
+          return redirect(reverse('home'))
     else:
       form = forms.SignUp()
     if request.GET.get('modal') == '1':

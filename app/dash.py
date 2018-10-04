@@ -17,11 +17,16 @@ class Dash:
   
   @staticmethod  
   def createmultisig(signsRequired, pubkeys):
+    return {
+      'address': 'asdasdasd',
+      'redeemScript':'asdasdsdasd'
+    }
     return Dash.call(["createmultisig", str(signsRequired), json.dumps(pubkeys)])
   
   @staticmethod
   def dumpprivkey(address):
-    return Dash.call(["dumpprivkey", address]).replace('\n','')    
+    return address
+    # return Dash.call(["dumpprivkey", address]).replace('\n','')    
   
   @staticmethod
   def getaddresstxids(addresses):
@@ -48,11 +53,13 @@ class Dash:
   
   @staticmethod  
   def getnewaddress():
-    return Dash.call(["getnewaddress"]).replace('\n','')
+    return 'XaSDASDAXASFSDFWEDCSSD'
+    # return Dash.call(["getnewaddress"]).replace('\n','')
   
   @staticmethod
   def getrawtransaction(address, parsed=1):
-    return Dash.call(["getrawtransaction", address, parsed])
+    # return Dash.call(["getrawtransaction", address, parsed])
+    return {'time': 5566462526}
   
   @staticmethod
   def sendrawtransaction(hexadecimalValue, allowhighfees=False, instantsend=False, bypasslimits=False):

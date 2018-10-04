@@ -29,100 +29,25 @@ class AddPrivkey(forms.Form):
 
 
 class Raffle(forms.ModelForm):
+    signers = forms.ModelChoiceField(queryset=models.User.objects.filter(can_sign=True))
     class Meta:
         model = models.Raffle
+        widgets = {
+            'description': forms.Textarea(),
+            'signers': forms.Select(),
+        }
+        
         fields = ('name',
-                  'isMultisig',
-                  'signsRequired',
-                  'MSpubkey1',
-                  'MSpubkey2',
-                  'MSpubkey3',
-                  'MSpubkey4',
-                  'MSpubkey5',
-                  'MSpubkey6',
+                  'thumbnail_url',
                   'signers',
-                  'prizePercentage',
-                  'addressProject',
-                  'projectPercentage',
-                  'ticketPrice',
-                  'blockHeight',
+                  'type',
                   'description')
-    
 
     def __init__(self, *args, **kwargs):
         super(Raffle, self).__init__(*args, **kwargs)
         for i in self.fields:    
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
-
-    def clean_address(self):
-        address = self.cleaned_data['address']
-        data = Dash.validateaddress(address)
-        if not data['isvalid']:
-            raise forms.ValidationError(
-                    '%s is not a valid address.'% address
-                )
-        return address
-
-    def clean_blockHeight(self):
-        blockHeight = self.cleaned_data['blockHeight']
-        count = Dash.getblockcount()
-        if count > blockHeight:
-            raise forms.ValidationError(
-                    'The block %d already exists.' % blockHeight
-                )
-        return blockHeight
-
-        
-
-    def clean(self):
-        super().clean()
-        
-        project = self.cleaned_data['addressProject']
-        
-        if self.cleaned_data['isMultisig']:
-            for i in range(1,7):
-                field = 'MSpubkey' + str(i)
-                address = self.cleaned_data[field]
-                if not address:
-                    self.add_error(field, "%s cannot be empty" % field)
-                elif len(address) != 66:
-                    self.add_error(field, "Invalid address '%s'" % address)
-            
-        if not validateAddress(project):
-            self.add_error( "addressProject",
-                    'Addres "%s" is invalid.' % project
-                )
-
-        jp = self.cleaned_data['prizePercentage']
-        sp = self.cleaned_data['projectPercentage']
-        if jp + sp > 90:
-            if jp > sp:
-                self.add_error("prizePercentage",
-                    "Prize percentage is too high. Both, project and prize percetage, should sum 90%."
-                )
-            if jp <= sp:
-                self.add_error("projectPercentage",
-                    "Project percentage is too high. Both, project and prize percetage, should sum 90%."
-                )
-        elif jp + sp < 90:
-            if jp <= sp:
-                self.add_error("prizePercentage",
-                    "Prize percentage is too low. Both, project and prize percetage, should sum 90%."
-                )
-            if jp > sp:
-                self.add_error("projectPercentage",
-                    "Project percentage is too low. Both, project and prize percetage, should sum 90%."
-                )
-
-
-    
-    def clean_ticketPrice(self):
-        if self.cleaned_data['ticketPrice'] < 0.00000001:
-            raise forms.ValidationError(
-                    "The amount most be greater than 0.00000001 tDash"
-                )
-        return self.cleaned_data['ticketPrice']
 
 class Login(forms.Form):
     

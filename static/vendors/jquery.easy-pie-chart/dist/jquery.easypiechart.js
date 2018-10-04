@@ -198,7 +198,8 @@ var CanvasRenderer = function(el, options) {
 			var process = Math.min(Date.now() - startTime, options.animate.duration);
 			var currentValue = options.easing(this, process, from, to - from, options.animate.duration);
 			this.draw(currentValue);
-			options.onStep(from, to, currentValue);
+			console.log("Pedro: ", options)
+			options.onStep(from, to, currentValue, options.left);
 			if (process >= options.animate.duration) {
 				options.onStop(from, to);
 			} else {
@@ -211,8 +212,10 @@ var CanvasRenderer = function(el, options) {
 };
 
 var EasyPieChart = function(el, opts) {
+	console.log("BUSCA AQUI: ", opts)
 	var defaultOptions = {
 		barColor: '#ef1e25',
+		left: opts.left,
 		trackColor: '#f9f9f9',
 		scaleColor: '#dfe0e0',
 		scaleLength: 5,
@@ -235,7 +238,7 @@ var EasyPieChart = function(el, opts) {
 		onStart: function(from, to) {
 			return;
 		},
-		onStep: function(from, to, currentValue) {
+		onStep: function(from, to, currentValue, left) {
 			return;
 		},
 		onStop: function(from, to) {

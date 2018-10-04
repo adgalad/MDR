@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.utils import timezone
 from app import models, forms
 from app.dash import Dash
 
@@ -69,41 +70,47 @@ class Raffle:
   def createRaffle(request):
     if request.method == "POST":
       form = forms.Raffle(request.POST)
+      print(request.POST)
       if form.is_valid():
-        raffle = form.save()
-        raffle.owner = request.user
-        if not raffle.isMultisig:
-          address = Dash.getnewaddress()
-          raffle.MSpubkey1 = address
-          raffle.signsRequired = 1
-          raffle.privkey1 = Dash.dumpprivkey(address)
-          raffle.save()
-          raffle.createMultisigAddress()
-        raffle.save()
-        return redirect(raffle)
-      else:
         try:
-          count = Dash.getblockcount()
+          rtype = form.cleaned_data['type']
           address = Dash.getnewaddress()
-          blockHash = Dash.getblockhash(count)
-          blockTime = Dash.getblock(blockHash)['time']
+          raffle = models.Raffle.objects.create(
+                      name=form.cleaned_data['name'],
+                      thumbnail_url=form.cleaned_data['thumbnail_url'],
+                      type=rtype,
+                      description=form.cleaned_data['description'],
+                      ticketPrice=models.rafflePrice[rtype],
+                      drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[rtype]),
+                      MSpubkey1 = address,
+                      signsRequired = 1,
+                      privkey1 = Dash.dumpprivkey(address),
+                      owner = request.user,
+                      addressProject=request.user.wallet_address
+                    )
+          
+          
+          # raffle.signers.add(form.cleaned_data['signers'])
+          # # if not raffle.isMultisig:
+          
+
+          # raffle.createMultisigAddress()
+          # raffle.save()
+          return redirect(raffle)
+      # else:
+      #   try:
+      #     count = Dash.getblockcount()
+      #     address = Dash.getnewaddress()
+      #     blockHash = Dash.getblockhash(count)
+      #     blockTime = Dash.getblock(blockHash)['time']
       
         except Exception as e:
-          #print(e)
+          print(e)
           raise PermissionDenied
-    else:        
-      try:
-        count = Dash.getblockcount()
-        address = Dash.getnewaddress()
-        blockHash = Dash.getblockhash(count)
-        blockTime = Dash.getblock(blockHash)['time']
-      
-      except Exception as e:
-        #print(e)
-        raise PermissionDenied
-    form = forms.Raffle(initial={'blockHeight':count, 'address':address})
+    else:
+      form = forms.Raffle()
 
-    return render(request, "createRaffle.html", {'form': form, 'blockTime': blockTime, 'count': count})
+    return render(request, "createRaffle.html", {'form': form,})
 
   @staticmethod
   def buyTicket(request, id):
@@ -122,7 +129,7 @@ class Raffle:
         raise PermissionDenied
       addressGenerated = models.AddressGenerated.objects.filter(user=user, raffle=raffle)
       if addressGenerated.exists():
-        address = addressGenerated[0].address
+        address = addressGenerated[0].address.replace("\n", "")
       else:
         address = Dash.getnewaddress().replace("\n", "")
         addressGenerated = models.AddressGenerated(user=user, raffle=raffle, address=address)
