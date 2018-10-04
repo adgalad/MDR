@@ -52,7 +52,8 @@
           <div class="offset-xl-0 col-xl-1 offset-lg-4 col-lg-8 offset-md-5 col-md-7 col-sm-12 col-12">
             <div class="row  align-items-center h-100" style="width: 100%">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <button class="btn btn-success btn-raffle shadow">
+                <button class="btn btn-success btn-raffle shadow" 
+                           onclick="return abrir_modal('{% url "buyTicket" raffle.pk %}')">
                   <i class="fas fa-ticket-alt"></i> Buy Tickets
                 </button>
               </div>  
@@ -71,13 +72,12 @@
 
 {% block scripts %}
   {{block.super}}
-    <!-- jQuery -->
-    <script src="/static/vendors/jquery/dist/jquery.min.js"></script>
+
     <!-- Bootstrap -->
     <script src="/static/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- easy-pie-chart -->
     <script src="/static/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="/static/build/js/custom.js"></script>
+    <script src="/static/timebar/js/custom.js"></script>
 
 {% endblock scripts %}

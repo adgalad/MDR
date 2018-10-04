@@ -48,10 +48,12 @@
             </div>
             <div class="row">
               <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                  <a href="{% url 'buyTicket' raffle.id %}" class="btn btn-primary"> Buy tickets </a>
+                <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url "buyTicket" raffle.id %}')">
+                    <i class="fas fa-ticket-alt"></i> Buy tickets 
+                </a>  
               </div> 
               <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                  <a href="#" class="btn btn-primary">See more details</a>
+                  <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
               </div>
             </div>
           </div>
@@ -59,7 +61,6 @@
         <br><hr><br>
         <div id="description">
           {{raffle.description}}
-          jamonaosjdaojsdjashdjahsdjasd
         </div>
       </div>
     </div>

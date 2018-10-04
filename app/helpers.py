@@ -32,3 +32,14 @@ def sendEmailWinner(user, name, amount):
                 message=plain_message,
                 html_message=html_message,
                 recipient_list=[user.email]).start()
+
+
+
+
+
+
+
+
+
+
+

@@ -20,6 +20,7 @@ class Transaction(models.Model):
 
   @property
   def getDate(self):
+
     rawTransaction = Dash.getrawtransaction(self.address)
     timestamp = rawTransaction['time']
     return datetime.datetime.fromtimestamp(timestamp)
