@@ -8,83 +8,74 @@
   <br>
   <br>
   
-  <form class="contact100-form validate-form" method="post" action="{% url 'createRaffle' %}">
+  <form class="contact100-form validate-form" method="post">
     {% csrf_token %}
     <div class="container" align="left" style="width: 80%">
-        {% if field.name == "isMultisig" %}
-          <div class="row" style="margin-top: 5px; margin-bottom:  15px;">
-            <div class="col-md-4">Maintenance fee</div>
-            <div class="col-md-8">10%</div>
-          </div>
-          <div class="row"> <div class="col-md-12"><hr></div> </div>
-        {% elif field.name == "addressProject" %}
-          <div class="row"> <div class="col-md-12"><hr></div> </div>
-        {% endif %}
-        <div class="row">
-          <div class="container-contact100">
-            <div class="wrap-contact100">
-                <span class="contact100-form-title">
-                  Create Raffle
-                </span>
+      <div class="row">
+        <div class="container-contact100">
+          <div class="wrap-contact100">
+              <span class="contact100-form-title">
+                Create Raffle
+              </span>
 
-                <div class="wrap-input100 validate-input" data-validate="Name is required">
-                  <span class="label-input100">Raffle Name</span>
-                  <input class="input100" type="text" name="id_name" placeholder="Enter your Raffle Name" id="id_name">
-                  <span class="focus-input100"></span>
-                </div>
-              <div class="row">
-                <div class="col-md-6 col-sm-12 col-xs-12">
-                    <p class="label-input100">Type of Raffle</p>
-                    <div>
-                      {{form.type}}
-                    </div>
-                </div>
-                  <div class="col-md-6 col-sm-12 col-xs-12">
-                    <p class="label-input100">Signers</p>
-                    <div>
-                        {{form.signers}}
-                    </div>
+              <div class="wrap-input100 validate-input" data-validate="Name is required">
+                <span class="label-input100">Raffle Name</span>
+                <input class="input100" type="text" name="{{form.name.html_name}}" placeholder="Enter your Raffle Name" id="{{form.name.auto_id}}">
+                <span class="focus-input100"></span>
+              </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                  <p class="label-input100">Type of Raffle</p>
+                  <div>
+                    {{form.type}}
                   </div>
               </div>
-              <br>
-                <div class="wrap-input100 validate-input" data-validate="Name is required">
-                    <span class="label-input100">Thumbnail</span>
-                    <input class="input100" type="text" name="thumbnail_url" id="thumbnail_url" placeholder="Enter your thumbnail">
-                    <span class="focus-input100"></span>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <p class="label-input100">Signers</p>
+                  <div>
+                      {{form.signers}}
+                  </div>
                 </div>
-
-
-                 <p class="label-input100" style="margin-bottom:15px;">Description:</p>
-                    <div class="col-md-8">{{ form.description }}</div>
-                    <br>
-                    <div class="col-sm-12" id="alert">
-                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <span style="font-size:14px;" id="message">
-                        {% for field in form %}
-                          {{field.label}}
-                          {{ field.errors }}
-                          
-                        {% endfor %}
-                        </span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                    </div>
-                    <br>
-                    <div class="col-sm-12" align="center">
-                      <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block" type="submit">Submit</button>
-                    </div>
             </div>
+            <br>
+              <div class="wrap-input100 validate-input" data-validate="Name is required">
+                  <span class="label-input100">Thumbnail</span>
+                  <input class="input100" type="text" name="{{form.thumbnail_url.html_name}}" id="{{form.thumbnail_url.auto_id}}" placeholder="Enter a thumbnail url">
+                  <span class="focus-input100"></span>
+              </div>
+
+
+               <p class="label-input100" style="margin-bottom:15px;">Description:</p>
+                  <div class="col-md-8">{{ form.description }}</div>
+                  <br>
+                  <div class="col-sm-12" id="alert">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <span style="font-size:14px;" id="message">
+                      {% for field in form %}
+                        {{field.label}}
+                        {{ field.errors }}
+                        
+                      {% endfor %}
+                      </span>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="col-sm-12" align="center">
+                    <div class="col-sm-6">
+                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                  </div>
           </div>
         </div>
-        {% if field.errors %}
-          <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-8"><div style="color:red"> {{ field.errors }} </div></div>
-          </div>
-        {% endif %}
+      </div>
+      {% if field.errors %}
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-8"><div style="color:red"> {{ field.errors }} </div></div>
+        </div>
+      {% endif %}
     </div>
   </div>   
  </form>
@@ -99,111 +90,6 @@
 
   <script type="text/javascript">
 
-    blockTime = parseInt('{{ blockTime }}')
-    count = parseInt('{{ count }}')
-    input = $('#id_blockHeight')
-
-    function estimate(){
-      if (count > input.val()){
-        input.val(count)
-      } else {
-        approxTime = blockTime + (input.val() - count) * (2.6*60) // 2.6 minutes per block
-        console.log(approxTime)
-        date = timeConverter(approxTime)
-        $('#date').html(date)
-      }
-    } 
-
-    function toggleMultisig(){
-      if ($('#id_isMultisig').prop('checked')){
-        console.log('hola')
-        $('#div_signsRequired').show()
-        $('#id_signsRequired')
-          .prop('required',true)
-          .prop('disabled',false)
-
-        /*$('#div_signers').show()
-        $('#id_signers')
-          .prop('required',true)
-          .prop('disabled',false)*/
-
-        for (var i = 1; i <= 6 ; i++){
-          $('#div_MSpubkey'+String(i)).show()
-          $('#id_MSpubkey'+String(i))
-            .prop('required',true)
-            .prop('disabled',false)
-
-        }
-
-        // $('#div_addressPrize').hide()
-        // $('#id_addressPrize')
-        //   .prop('required',false)
-        //   .prop('disabled',true)
-
-      } else {
-        $('#div_signsRequired').hide()
-        $('#id_signsRequired')
-          .prop('required',false)
-          .prop('disabled',true)
-
-        /*$('#div_signers').hide()
-        $('#id_signers')
-          .prop('required',false)
-          .prop('disabled',true)*/
-
-        for (var i = 1; i <= 6 ; i++){
-          $('#div_MSpubkey'+String(i)).hide()
-          $('#id_MSpubkey'+String(i))
-            .prop('required',false)
-            .prop('disabled',true)
-
-        }
-
-        // $('#div_addressPrize').show()
-        // $('#id_addressPrize')
-        //   .prop('required',true)
-        //   .prop('disabled',false)
-
-      }
-    }
-
-    input.change(estimate)
-    prize = $('#id_prizePercentage')
-    project = $('#id_projectPercentage')
-    prize.change(function(){
-      if (prize.val() > 90){
-        prize.val(90)
-      } else if (prize.val() < 0) {
-        prize.val(0)
-      }
-      project.val(90-prize.val())
-    })
-
-    $(document).ready(function(){
-      toggleMultisig()
-      $('#id_isMultisig').change(toggleMultisig)
-      project.change(function(){
-        if (project.val() > 90){
-          project.val(90)
-        } else if (project.val() < 0) {
-          project.val(0)
-        }
-        prize.val(90-project.val())
-      })
-      estimate()
-    })
-
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-
-  function submit(){
-
-    if ($('id_name').val() == "" ){
-      console.log('debes colo')
-    }
-  }
+    
   </script>
 {% endblock scripts %}

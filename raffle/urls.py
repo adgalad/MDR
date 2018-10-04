@@ -21,7 +21,7 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^$', views.index, name="index"),
+    url(r'^$', views.index, name="home"),
     url(r'^help/$', views.help, name="help"),
     url(r'^terms/$', views.terms, name="terms"),
     url(r'^conditions/$', views.conditions, name="conditions"),

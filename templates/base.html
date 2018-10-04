@@ -2,176 +2,180 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% block meta %}
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <!-- Meta, title, CSS, favicons, etc. -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% endblock meta %}
-    
-    <title>Mega Dash Raffle | {% block title %}{% endblock %}</title>
-    
-    {% block style %}
-      <!-- Bootstrap -->
-      <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800i" rel="stylesheet">
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
-            rel="stylesheet" 
-            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
-            crossorigin="anonymous">
+  {% block meta %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% endblock meta %}
+  
+  <title>Mega Dash Raffle | {% block title %}{% endblock %}</title>
+  
+  {% block style %}
+    <!-- Bootstrap -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800i" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+          crossorigin="anonymous">
 
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-      <!-- Common Style -->
-      <link href="/static/css/common.css" rel="stylesheet">
-      <link href="/static/css/accordion.css" rel="stylesheet">
-    {% endblock style%}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Common Style -->
+    <link href="/static/css/common.css" rel="stylesheet">
+    <link href="/static/css/accordion.css" rel="stylesheet">
+  {% endblock style%}
 </head>
 
 
 <body>
-  <div id="popup" class="modal modal-top fade" role="dialog"></div>
-  <div id="container">
-  <header>
-    <div class="brand bg-dark" style="z-index: 1000;">
-      <span class="logo">
-        <div class="row" style="width: 100%">
-          <div class="col-md-4 col-sm-4 col-xs-1"> </div>
-          <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
-            <!-- <img src="/static/img/1.2.png" width="60px" > -->
-            <a href="{% url 'index' %}">
-              <img src="/static/img/logo_blanco.png" width="200px" style="margin-top: 10px" >
-            </a>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-1"> </div>
+<div id="popup" class="modal modal-top fade" role="dialog"></div>
+<div id="container" style="">
+<header>
+  <div class="brand bg-dark" style="z-index: 1000;">
+    <span class="logo">
+      <div class="row" style="width: 100%">
+        <div class="col-md-4 col-sm-4 col-xs-1"> </div>
+        <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
+          <!-- <img src="/static/img/1.2.png" width="60px" > -->
+          <a href="{% url 'home' %}">
+            <img src="/static/img/logo_blanco.png" width="200px" style="margin-top: 10px" >
+          </a>
         </div>
-        
-      </span>
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" style="width: 50% !important">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item {%block home%} {% endblock home%}">
-                <a class="nav-link" href="{% url 'index' %}">
-                  <i class="fa fa-home"></i>
-                  Home
-                </a>
-            </li>
-            <li class="nav-item {%block search%} {% endblock search%}">
-                <a class="nav-link" href="#">
-                  Search Raffles
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Contact us
-                </a>
-            </li>
-        </ul>
+        <div class="col-md-4 col-sm-4 col-xs-1"> </div>
       </div>
-        
-      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="width: 50% !important">
-        <ul class="navbar-nav ml-auto">
-            {% if user.is_authenticated %}
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Hello,  <b>{{ user.username }} </b>
-                  </a>
-                  <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{% url 'profile' %}">
-                      <i class="fa fa-user"></i>&nbsp; My Profile
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-book"></i>&nbsp; My Raffles
-                    </a>
-                    <a class="dropdown-item" href="{% url 'logout' %}">
-                      <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
-                    </a>
-                  </div>
-              </li>
-              &nbsp;&nbsp;
-            {% else %}
-            <li class="nav-item {%block login%} {% endblock login%}">
-                    <a class="nav-link" onclick="return abrir_modal('/login/?modal=1')">
-                      <i class="fa fa-user"></i>
-                      Log In
-                    </a>
-                </li>
-                <li class="nav-item {%block signup%} {% endblock signup%}">
-                    <a class="nav-link" onclick="return abrir_modal('/signup/?modal=1')">
-                      Sign Up
-                    </a>
-                </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link {%block rules%} {% endblock rules%}" href="#"
-                   onclick="return abrir_modal('{% url 'help' %}')">
-                  <i class="fa fa-question-circle"></i>
-                  Rules/Help
-                </a>
-            </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-
-    <div id="body" align="center" style="margin-top: 80px;">
-        {% block content %}
-            
-        {% endblock content %}
-    </div>
-
-
-  <footer class="footer bg-dark">
-
-      <div class="container">
-      <ul class="foote_bottom_ul_amrc" align='center'>
-        <li>
-          <a class="blue-link" href="#">Home</a>
-        </li>
-        <li>
-          <a class="blue-link" href="#">Search Raffles</a>
-        </li>
-        <li>
-          <a class="blue-link" href="#">Create a Raffle</a>
-        </li>
-        <li>
-          <a class="blue-link" href="#">Contact us</a>
-        </li>
-        <li>
-          <a class="blue-link" href="#">Help</a>
-        </li>
+      
+    </span>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" style="width: 50% !important">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item {%block home%} {% endblock home%}">
+              <a class="nav-link" href="{% url 'home' %}">
+                <i class="fa fa-home"></i>
+                Home
+              </a>
+          </li>
+          <li class="nav-item {%block search%} {% endblock search%}">
+              <a class="nav-link" href="#">
+                Search Raffles
+              </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#">
+                Contact us
+              </a>
+          </li>
       </ul>
-      <!--foote_bottom_ul_amrc ends here-->
-      <p class="text-center">Copyright @2018 | Designed With by <a href="http://megadashraffle.ddns.net:8000/">MegaDashRaffle</a></p>
-      <!--social_footer_ul ends here-->
-      </div>
-  </footer>
+    </div>
+      
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="width: 50% !important">
+      <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Hello,  <b>{{ user.username }} </b>
+                </a>
+                <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{% url 'profile' %}">
+                    <i class="fa fa-user"></i>&nbsp; My Profile
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fa fa-book"></i>&nbsp; My Raffles
+                  </a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
+                  </a>
+                </div>
+            </li>
+            &nbsp;&nbsp;
+          {% else %}
+          <li class="nav-item {%block login%} {% endblock login%}">
+                  <a class="nav-link" onclick="return abrir_modal('/login/?modal=1')">
+                    <i class="fa fa-user"></i>
+                    Log In
+                  </a>
+              </li>
+              <li class="nav-item {%block signup%} {% endblock signup%}">
+                  <a class="nav-link" onclick="return abrir_modal('/signup/?modal=1')">
+                    Sign Up
+                  </a>
+              </li>
+          {% endif %}
+          <li class="nav-item">
+              <a class="nav-link {%block rules%} {% endblock rules%}" href="#"
+                 onclick="return abrir_modal('{% url 'help' %}')">
+                <i class="fa fa-question-circle"></i>
+                Rules/Help
+              </a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+  <div id="body" align="center" style="margin-top: 80px;">
+      {% block content %}
+          
+      {% endblock content %}
+  </div>
+
+
+<footer class="footer bg-dark">
+
+    <div class="container">
+    <ul class="foote_bottom_ul_amrc" align='center'>
+      <li>
+        <a class="blue-link" href="{% url 'home'%}">Home</a>
+      </li>
+      <li>
+        <a class="blue-link" href="{% url 'raffles'%}">Search Raffles</a>
+      </li>
+      <li>
+        <a class="blue-link" href="#">Create a Raffle</a>
+      </li>
+      <li>
+        <a class="blue-link" href="{% url 'terms'">Terms</a>
+      </li>
+      <li>
+        <a class="blue-link" href="{% url 'conditions'">Conditions</a>
+      </li>
+      <li>
+        <a class="blue-link" href="#" onclick="return abrir_modal('{% url 'help' %}')">Help</a>
+      </li>
+    </ul>
+    <!--foote_bottom_ul_amrc ends here-->
+    <p class="text-center">Copyright @2018 | Designed by <a href="http://smartbasegroup.com/">SmartBase Group</a></p>
+    <!--social_footer_ul ends here-->
+    </div>
+</footer>
+</div>
 </body>
 
 {% block scripts %}
 
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-  <script src="/static/js/common.js"></script>
-  
-  <script type="text/javascript">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+<script src="/static/js/common.js"></script>
 
-    function abrir_modal(url)
+<script type="text/javascript">
+
+  function abrir_modal(url)
+    {
+      console.log(url)
+      $('#popup').load(url, function()
       {
-        console.log(url)
-        $('#popup').load(url, function()
-        {
-          $(this).modal('show');
-        });
-        return false;
-      }  
-  </script>
+        $(this).modal('show');
+      });
+      return false;
+    }  
+</script>
 {% endblock scripts %}
 
 
