@@ -128,7 +128,7 @@ class Raffle:
         raise PermissionDenied
       addressGenerated = models.AddressGenerated.objects.filter(user=user, raffle=raffle)
       if addressGenerated.exists():
-        address = addressGenerated[0].address
+        address = addressGenerated[0].address.replace("\n", "")
       else:
         address = Dash.getnewaddress().replace("\n", "")
         addressGenerated = models.AddressGenerated(user=user, raffle=raffle, address=address)
