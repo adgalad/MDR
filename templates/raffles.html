@@ -19,6 +19,12 @@
 {% block content %}
  
 <div class="container content">
+<div class="row" style="margin-left:10px;">
+        <div class="btn-group btn-breadcrumb breadcrumb-primary">
+            <div class="visible-lg-block"></div>
+            <div class="btn btn-info"><b>All Raffles</b></div>
+        </div>
+    </div>
   {% for raffle in activeRaffles %}
     <div class="shadow" style=" margin:10px;">
       <div class="card">
