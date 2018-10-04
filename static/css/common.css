@@ -1,3 +1,15 @@
+
+.explorer-link {
+  color:black;
+  text-decoration: none;
+  border-bottom: 1px dotted black;
+  overflow-wrap: break-word;
+}
+
+.wrap {
+  overflow-wrap: break-word;
+}
+
 #table {
   background-color:#008de4;
   color:white
@@ -309,11 +321,11 @@ header .brand .logo {
     font-size: 18px
 }
 
-.percent:after {
+/*.percent:after {
     content: 'days';
     margin-left: .1em;
     font-size: .8em
-}
+}*/
 .chart, .percent {
     display: inline-block
 }

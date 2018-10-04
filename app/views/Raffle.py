@@ -70,19 +70,31 @@ class Raffle:
   def createRaffle(request):
     if request.method == "POST":
       form = forms.Raffle(request.POST)
+      print(request.POST)
       if form.is_valid():
         try:
-          raffle = form.save()
-          raffle.owner = request.user
-          # if not raffle.isMultisig:
+          rtype = form.cleaned_data['type']
           address = Dash.getnewaddress()
-          raffle.MSpubkey1 = address
-          raffle.signsRequired = 1
-          raffle.privkey1 = Dash.dumpprivkey(address)
-          raffle.drawDate = timezone.now() + datetime.timedelta(days=models.raffleDuration[raffle.type])
-          raffle.save()
-          raffle.createMultisigAddress()
-          raffle.save()
+          raffle = models.Raffle.objects.create(
+                      name=form.cleaned_data['name'],
+                      thumbnail_url=form.cleaned_data['thumbnail_url'],
+                      type=rtype,
+                      description=form.cleaned_data['description'],
+                      ticketPrice=models.rafflePrice[rtype],
+                      drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[rtype]),
+                      MSpubkey1 = address,
+                      signsRequired = 1,
+                      privkey1 = Dash.dumpprivkey(address),
+                      owner = request.user
+                    )
+          
+          
+          # raffle.signers.add(form.cleaned_data['signers'])
+          # # if not raffle.isMultisig:
+          
+
+          # raffle.createMultisigAddress()
+          # raffle.save()
           return redirect(raffle)
       # else:
       #   try:
@@ -92,21 +104,12 @@ class Raffle:
       #     blockTime = Dash.getblock(blockHash)['time']
       
         except Exception as e:
-          #print(e)
+          print(e)
           raise PermissionDenied
-    else:        
-      try:
-        count = Dash.getblockcount()
-        address = Dash.getnewaddress()
-        blockHash = Dash.getblockhash(count)
-        blockTime = Dash.getblock(blockHash)['time']
-      
-      except Exception as e:
-        #print(e)
-        raise PermissionDenied
-    form = forms.Raffle(initial={'blockHeight':count, 'address':address})
+    else:
+      form = forms.Raffle()
 
-    return render(request, "createRaffle.html", {'form': form, 'blockTime': blockTime, 'count': count})
+    return render(request, "createRaffle.html", {'form': form,})
 
   @staticmethod
   def buyTicket(request, id):
