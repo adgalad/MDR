@@ -17,14 +17,11 @@ rafflePrice = {
   'Mega Raffle': 0.1
 }
 
-<<<<<<< HEAD
 raffleDuration = {
   'Mini Raffle': 7,
   'Raffle': 14,
   'Mega Raffle': 30
 }
-=======
->>>>>>> 25cd7130f30041d34b04b15a2901996c6da4a6ed
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
