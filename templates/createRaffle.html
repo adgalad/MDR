@@ -8,7 +8,7 @@
   <br>
   <br>
   
-  <form method="post">
+  <form class="contact100-form validate-form" method="post" action="{% url 'createRaffle' %}">
     {% csrf_token %}
     <div class="container" align="left" style="width: 80%">
         {% if field.name == "isMultisig" %}
@@ -23,55 +23,62 @@
         <div class="row">
           <div class="container-contact100">
             <div class="wrap-contact100">
-              <form class="contact100-form validate-form">
                 <span class="contact100-form-title">
                   Create Raffle
                 </span>
 
                 <div class="wrap-input100 validate-input" data-validate="Name is required">
                   <span class="label-input100">Raffle Name</span>
-                  <input class="input100" type="text" name="name" placeholder="Enter your Raffle Name">
+                  <input class="input100" type="text" name="id_name" placeholder="Enter your Raffle Name" id="id_name">
                   <span class="focus-input100"></span>
                 </div>
               <div class="row">
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <p class="label-input100">Type of Raffle</p>
                     <div>
-                      <select class="selectpicker" data-live-search="true" data-width="100%">
-                        <option>Mini Dash Raffles (0.01 tDash)</option>
-                        <option>Dash Raffles (0.1 tDash)</option>
-                        <option>Mega Dash Raffle (0.5 tDash)</option>
-                        <option>Mega Dash Raffle (0.5 tDash)</option>
-                        <option>Mega Dash Raffle (0.5 tDash)</option>
-                      </select>
+                      {{form.type}}
                     </div>
                 </div>
                   <div class="col-md-6 col-sm-12 col-xs-12">
                     <p class="label-input100">Signers</p>
                     <div>
-                        <select class="selectpicker" data-width="100%" id="id_signers" tabindex="-98"> 
-                        </select>
+                        {{form.signers}}
                     </div>
                   </div>
               </div>
-              <div class="wrap-input100 validate-input" data-validate="Name is required">
-                  <span class="label-input100">Thumbnail</span>
-                  <input class="input100" type="text" name="thumbnail" placeholder="Enter your thumbnail">
-                  <span class="focus-input100"></span>
-              </div>
               <br>
+                <div class="wrap-input100 validate-input" data-validate="Name is required">
+                    <span class="label-input100">Thumbnail</span>
+                    <input class="input100" type="text" name="thumbnail_url" id="thumbnail_url" placeholder="Enter your thumbnail">
+                    <span class="focus-input100"></span>
+                </div>
+
+
                  <p class="label-input100" style="margin-bottom:15px;">Description:</p>
                     <div class="col-md-8">{{ form.description }}</div>
+                    <br>
+                    <div class="col-sm-12" id="alert">
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span style="font-size:14px;" id="message">
+                        {% for field in form %}
+                          {{field.label}}
+                          {{ field.errors }}
+                          
+                        {% endfor %}
+                        </span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    </div>
                     <br>
                     <div class="col-sm-12" align="center">
                       <div class="col-sm-6">
                       <button class="btn btn-primary btn-block" type="submit">Submit</button>
                     </div>
-              </form>
             </div>
           </div>
         </div>
-
         {% if field.errors %}
           <div class="row">
             <div class="col-md-4"></div>
@@ -80,7 +87,7 @@
         {% endif %}
     </div>
   </div>   
-
+ </form>
 
 
 {% endblock form %}
@@ -89,7 +96,6 @@
   {{ block.super }}
   {{ form.media }}
   
-  <script src="/static/js/bootstrap-select.js"></script>
 
   <script type="text/javascript">
 
@@ -107,10 +113,7 @@
         $('#date').html(date)
       }
     } 
-    $(document).ready(function(){
-      $.fn.selectpicker.Constructor.BootstrapVersion = '4';
-      $('select').selectpicker();
-    })
+
     function toggleMultisig(){
       if ($('#id_isMultisig').prop('checked')){
         console.log('hola')
@@ -196,36 +199,11 @@
 
   gtag('config', 'UA-23581568-13');
 
-   $(document).ready(function() {
-        $("#id_users").on('change', getSigners);
-        
-    });
+  function submit(){
 
-    function getSigners() {
-        var usersId = $("#id_users").val();
-        if (usersId) {
-          console.log(usersId)
-            // Eliminamos las opciones anteriores del select
-            /*$("#id_signers").html("");*/
-            var request = $.ajax({
-                type: "GET",
-                url: "{% url 'api.users' %}",
-                data: {
-                    "id_users": usersId,
-                },
-            });
-            request.done(function(response) {
-                // Agregamos los resultados al select
-                $("#id_proceso").html(response.signers);
-                $("#id_signers").html(response.signers);
-                console.log(response.signers)
-            });
-
-        } else {
-            $("#id_signers").html("<option value='' selected='selected'>---------</option>");
-            $("#id_signers").trigger("change");
-            console.log('Hola')
-        }
-    }    
+    if ($('id_name').val() == "" ){
+      console.log('debes colo')
+    }
+  }
   </script>
 {% endblock scripts %}

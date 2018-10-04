@@ -17,11 +17,14 @@ rafflePrice = {
   'Mega Raffle': 0.1
 }
 
+<<<<<<< HEAD
 raffleDuration = {
   'Mini Raffle': 7,
   'Raffle': 14,
   'Mega Raffle': 30
 }
+=======
+>>>>>>> 25cd7130f30041d34b04b15a2901996c6da4a6ed
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
@@ -39,7 +42,7 @@ class Raffle(models.Model):
   winnerAddress = models.CharField(verbose_name="Winner Address", max_length=100, blank=True, null=True)
   totalPrize = models.DecimalField(verbose_name="totalPrize", max_digits=20, decimal_places=6, blank=True, null=True)
   transaction = models.CharField(verbose_name="Transaction", max_length=100, blank=True, null=True)
-  signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers", related_name="signs")
+  signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers",related_name="signs")
   type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
   type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type")
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
@@ -62,6 +65,7 @@ class Raffle(models.Model):
 
   MSredeemScript = models.CharField(verbose_name="Multisig Redeem Script", max_length=100, blank=True, null=True)
   
+
   def save(self, *args, **kwargs):
     #print(self.isMultisigned)
     if not self.addressPrize and self.isMultisigned:
