@@ -65,7 +65,7 @@ class UserAdmin(BaseUserAdmin):
     readonly_fields=('created_at', 'updated_at',)
     fieldsets = (
         (None                , {'fields': ('username', 'password')}),
-        (('Permissions')    , {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        (('Permissions')    , {'fields': ('is_active', 'is_staff', 'is_superuser','can_sign' , 'groups', 'user_permissions')}),
         (('Important dates'), {'fields': ('last_login', 'created_at', 'updated_at')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
