@@ -12,10 +12,18 @@
   </style>
 {% endblock style %}
 {% block content %}
-  <section style="margin-top: 160px">
-    <div align="left" class="shadow" style="width: 80%; background-color: white; padding: 4%;">
-      <div class="container" style="margin: ">
-        <div class="row">
+ <div class="container content">
+    <div class="row" style="margin-left:10px;">
+        <div class="btn-group btn-breadcrumb breadcrumb-primary">
+            <div class="visible-lg-block"></div>
+            <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All Raffles</a>
+            <a href="{% url 'raffleDetails' raffle.pk %}" class="btn btn-primary visible-lg-block visible-md-block">Details</a>
+            <div class="btn btn-info"><b>More Details</b></div>
+        </div>
+    </div>
+    <div class="shadow" style=" margin:10px;">
+      <div class="card" style="min-width: 446px !important;">
+        <div class="row" align="left" style=" margin:30px">
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <h3>{{raffle.name}}</h3>
           </div>
@@ -133,7 +141,7 @@
 
       </div>
     </div>
-         
-  </section>
+  </div>
+</div>
   
 {% endblock content %}
