@@ -85,7 +85,8 @@ class Raffle:
                       MSpubkey1 = address,
                       signsRequired = 1,
                       privkey1 = Dash.dumpprivkey(address),
-                      owner = request.user
+                      owner = request.user,
+                      addressProject=request.user.wallet_address
                     )
           
           
