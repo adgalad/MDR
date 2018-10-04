@@ -16,7 +16,7 @@ class MyUserManager(BaseUserManager):
     # username = self.normalize_username(username)
     user = self.model(username=username, **extra_fields)
     user.set_password(password)
-    # user.EmailField(email)
+    #user.EmailField(email)
     user.save()
     return user
 
