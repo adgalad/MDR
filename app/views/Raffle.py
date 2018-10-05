@@ -83,8 +83,6 @@ class Raffle:
                       ticketPrice=models.rafflePrice[rtype],
                       drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[rtype]),
                       MSpubkey1 = address,
-                      signsRequired = 1,
-                      privkey1 = Dash.dumpprivkey(address),
                       owner = request.user,
                       addressProject=request.user.wallet_address
                     )
