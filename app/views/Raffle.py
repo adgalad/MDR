@@ -68,34 +68,39 @@ class Raffle:
   @staticmethod
   @login_required(login_url='/login/')
   def createRaffle(request):
+    if not request.user.wallet_address:
+      return redirect(reverse('addWalletAddress'))
     if request.method == "POST":
       form = forms.Raffle(request.POST)
       if form.is_valid():
         try:
           rtype = form.cleaned_data['type']
-          address = Dash.getnewaddress()
-          raffle = models.Raffle.objects.create(
-                      name=form.cleaned_data['name'],
-                      thumbnail_url=form.cleaned_data['thumbnail_url'],
-                      type=rtype,
-                      description=form.cleaned_data['description'],
-                      ticketPrice=models.rafflePrice[rtype],
-                      drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[rtype]),
-                      MSpubkey1 = address,
-                      signsRequired = 1,
-                      privkey1 = Dash.dumpprivkey(address),
-                      owner = request.user,
-                      addressProject=request.user.wallet_address
-                    )
-          
-          
-          # raffle.signers.add(form.cleaned_data['signers'])
-          # # if not raffle.isMultisig:
-          
+          admin = models.User.objects.filter(email='admin@admin.com')
+          if request.user.wallet_address and form.cleaned_data['signers'].wallet_address and admin[0].wallet_address:
+            raffle = models.Raffle.objects.create(
+                        name=form.cleaned_data['name'],
+                        thumbnail_url=form.cleaned_data['thumbnail_url'],
+                        type=rtype,
+                        description=form.cleaned_data['description'],
+                        ticketPrice=models.rafflePrice[rtype],
+                        drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[rtype]),
+                        owner = request.user,
+                        addressProject=request.user.wallet_address,
+                        MSpubkey1=request.user.wallet_address,
+                        MSpubkey2=form.cleaned_data['signers'].wallet_address,
+                        MSpubkey3=admin[0].wallet_address 
+                      )
+            
+            
+            raffle.signers.add(form.cleaned_data['signers'])
+            # # if not raffle.isMultisig:
+            
 
-          # raffle.createMultisigAddress()
-          # raffle.save()
-          return redirect(raffle)
+            # raffle.createMultisigAddress()
+            raffle.save()
+            return redirect(raffle)
+          else:
+            messages.error(request, "Couldn't create multisig address.")
       # else:
       #   try:
       #     count = Dash.getblockcount()
@@ -104,6 +109,7 @@ class Raffle:
       #     blockTime = Dash.getblock(blockHash)['time']
       
         except Exception as e:
+          print(e)
           raise PermissionDenied
     else:
       form = forms.Raffle()
