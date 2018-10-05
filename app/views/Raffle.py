@@ -89,12 +89,12 @@ class Raffle:
                     )
           
           
-          # raffle.signers.add(form.cleaned_data['signers'])
+          raffle.signers.add(form.cleaned_data['signers'])
           # # if not raffle.isMultisig:
           
 
           # raffle.createMultisigAddress()
-          # raffle.save()
+          raffle.save()
           return redirect(raffle)
       # else:
       #   try:
@@ -104,6 +104,7 @@ class Raffle:
       #     blockTime = Dash.getblock(blockHash)['time']
       
         except Exception as e:
+          print(e)
           raise PermissionDenied
     else:
       form = forms.Raffle()
