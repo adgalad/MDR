@@ -70,7 +70,6 @@ class Raffle:
   def createRaffle(request):
     if request.method == "POST":
       form = forms.Raffle(request.POST)
-      print(request.POST)
       if form.is_valid():
         try:
           rtype = form.cleaned_data['type']
@@ -88,12 +87,12 @@ class Raffle:
                     )
           
           
-          # raffle.signers.add(form.cleaned_data['signers'])
+          raffle.signers.add(form.cleaned_data['signers'])
           # # if not raffle.isMultisig:
           
 
           # raffle.createMultisigAddress()
-          # raffle.save()
+          raffle.save()
           return redirect(raffle)
       # else:
       #   try:

@@ -40,7 +40,6 @@ class User:
       base = 'modalForm.html'
     else:
       base = 'form.html'
-    print(base)
     return render(request, "login.html", {'form': form, 'base':base})    
 
   @staticmethod
@@ -87,7 +86,6 @@ class User:
     if request.method == "POST":
       form = forms.SignUp(request.POST)
       if form.is_valid():
-        #print(form.cleaned_data)
         username = form.cleaned_data.get('username')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password1')
@@ -153,5 +151,4 @@ class User:
           )
       response = {}
       response['signers'] = options
-      print(response)
       return JsonResponse(response)
