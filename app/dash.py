@@ -17,11 +17,12 @@ class Dash:
   
   @staticmethod  
   def createmultisig(signsRequired, pubkeys):
-    return {
-      'address': 'asdasdasd',
-      'redeemScript':'asdasdsdasd'
-    }
-    return Dash.call(["createmultisig", str(signsRequired), json.dumps(pubkeys)])
+    d = Dash.call(["createmultisig", str(signsRequired), json.dumps(pubkeys)])
+    return d
+    # return {
+    #   'address': 'asdasdasd',
+    #   'redeemScript':'asdasdsdasd'
+    # }
   
   @staticmethod
   def dumpprivkey(address):
@@ -34,13 +35,13 @@ class Dash:
   
   @staticmethod
   def getaddressbalance(addresses):
-    return {'received':100}
     return Dash.call(["getaddressbalance",json.dumps({'addresses':addresses})])
+    # return {'received':100}
   
   @staticmethod
   def getblock(blockHash):
-    return {'time':5515236123}
     return Dash.call(["getblock", blockHash])
+    # return {'time':5515236123}
   
   @staticmethod
   def getblockcount():
@@ -84,7 +85,6 @@ class Dash:
   @staticmethod
   def call(args):
     try:
-      #print("Command: ", ' '.join(command))
       data = check_output(Dash.command + args)
       try:
         data = json.loads(data.decode("utf-8"))
@@ -95,5 +95,5 @@ class Dash:
           data = str(data)
       return data
     except Exception as e:
-      #print(e)
+      print(e)
       return None
