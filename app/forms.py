@@ -95,4 +95,13 @@ class AddWalletAddress(forms.ModelForm):
         for i in self.fields:
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
+class ChangeEmailForm(forms.Form):
+ email = forms.EmailField(label=("Email"), max_length=254)
 
+ def clean_email(self):
+   return self.cleaned_data['email'].lower()
+
+ def __init__(self, *args, **kwargs):
+   super(ChangeEmailForm, self).__init__(*args, **kwargs)
+   for i in self.fields:
+       self.fields[i].widget.attrs.update({'class' : 'form-control', 'placeholder': self.fields[i].label})
