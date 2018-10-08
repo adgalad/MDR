@@ -1,6 +1,7 @@
 import json
 import datetime
 
+from django.contrib import messages
 from django.http import HttpResponseServerError
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
@@ -14,7 +15,7 @@ class Raffle:
   @staticmethod
   def active(request):
     count = Dash.getblockcount()
-    activeRaffles = models.Raffle.objects.all()
+    activeRaffles = models.Raffle.objects.filter(drawDate__gt=timezone.now())
     return render(request, "raffles.html", {'activeRaffles': activeRaffles})    
 
   @staticmethod
@@ -41,7 +42,7 @@ class Raffle:
     #   date = datetime.datetime.fromtimestamp(blockTime)
     # else:
     #   date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
-    return render(request, "raffle.html", {"raffle":raffle, 'date':raffle.getDate, 'prize': prize})
+    return render(request, "raffle.html", {"raffle":raffle, 'prize': prize})
 
   def moreDetails(request, id):
     try:

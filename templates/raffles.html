@@ -28,7 +28,7 @@
   {% for raffle in activeRaffles %}
     <div class="shadow" style=" margin:10px;">
       <div class="card">
-        <div class="row" style="margin:4%">
+        <div class="row" style="margin-left:4%; margin-right:4%; margin-top: 1%; margin-bottom: 1%">
           <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12">
             <div class="row  align-items-center h-100">
               <div class="col-sm-1 col-1"></div>
@@ -39,7 +39,7 @@
                 </span>
               </div>
               <div class="col-md-12 col-sm-5 col-5">
-                <h5>Prize <b> {{raffle.totalPrize}} tDash</b></h5>
+                <h5>Prize <b> {{raffle.getPrize}} tDash</b></h5>
               </div>
               <div class="col-sm-1 col-1"></div>
             </div>

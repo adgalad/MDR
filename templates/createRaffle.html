@@ -2,13 +2,11 @@
 {% load humanize %}
 
 {% block form %}
-  {% for message in messages %}
-    <div style="color:red"> {{ message }} </div>
-  {% endfor %}
   <br>
   <br>
   
   <form class="contact100-form validate-form" method="post">
+    
     {% csrf_token %}
     <div class="container" align="left" style="width: 80%">
       <div class="row">
@@ -17,7 +15,9 @@
               <span class="contact100-form-title">
                 Create Raffle
               </span>
-
+              {% for message in messages %}
+                <div style="color:red"> {{ message }} </div>
+              {% endfor %}
               <div class="wrap-input100 validate-input" data-validate="Name is required">
                 <span class="label-input100">Raffle Name</span>
                 <input class="input100" type="text" name="{{form.name.html_name}}" placeholder="Enter your Raffle Name" id="{{form.name.auto_id}}">
