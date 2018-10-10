@@ -23,11 +23,16 @@
     </div>
     <div class="shadow" style=" margin:10px;">
       <div class="card">
-        <div class="row" align="left" style=" margin:30px">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="row" align="left" style=" margin:10px">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-left:30px;margin-top:20px;">
             <h3>{{raffle.name}}</h3>
           </div>
+
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 details">
+              <div class="item hovereffect" id="floatnone"><img class="img-responsive" width="240px" height="240px" src="{{raffle.thumbnail}}" style="display:inline">
+              </div>
+          </div>
             <div class="row">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 details">
                 <b>Raffle Address:</b>
@@ -37,25 +42,25 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
-                <b>Draw Date:</b> {{raffle.getDate}}
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                <b>Draw Date:</b> {{raffle.drawDate}}
               </div> 
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
                 <b>Prize:</b> {{ prize }} tDash
               </div>
             </div>
 
             <div class="row">
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
                   <b>Ticket Price:</b> {{ raffle.ticketPrice | intcomma }} tDash
             
               </div> 
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
                   <b>Nro of tickets sold:</b> {{ raffle.ticketsSold }}
               </div>
             </div>
             <div class="row">
-              <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
+              <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
                 <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url "buyTicket" raffle.id %}')">
                     <i class="fas fa-ticket-alt"></i> Buy tickets 
                 </a>  
@@ -64,6 +69,15 @@
                   <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
               </div>
             </div>
+            {% if raffle.finished and raffle.owner == request.owner %}
+              <div class="row">
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
+                    <i class="fas fa-ticket-alt"></i> 
+                  </a>  
+                </div> 
+              </div>
+            {% endif %}
           </div>
         </div>
         <br><hr><br>

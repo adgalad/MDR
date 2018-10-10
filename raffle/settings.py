@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'mathfilters',
     'app',
-    'ckeditor'
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -198,6 +198,4 @@ EMAIL_HOST_PASSWORD = 'asd123asd'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Mega Dash Raffle'
-
-
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

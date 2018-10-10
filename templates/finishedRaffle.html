@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load mathfilters %}
+
+
+{% block style %}
+  {{block.super}}
+  <style type="text/css">
+    p, pre, ul {
+      text-align: left;
+    }
+    .one-line{
+      height: 80px;
+    }
+    .code {
+      /*margin:5%;*/
+      padding: 3%;
+      background-color: #eeffcc;
+    }
+  </style>
+{% endblock style %}
+{% block content %}
+ 
+<div class="container content">
+  
+  <div class="shadow" style=" margin:10px;">
+    <div class="card" style="padding: 5%">
+      <h2> Instruction to finalize the raffle </h2>      
+      <p>
+        To finalize the raffle you have to sign the multisig transaction and send the money to your wallet and to the raffle's winner.
+        The following steps are required and as simple as possible, but we encourage you to look at the <a href="https://docs.dash.org/en/latest/wallets/dashcore/advanced.html#multisignature">official documentation</a> to fully understand the process of signing a transaction to spend multisig addresses.
+      </p>
+
+      <ul>
+        <li>
+          Open the Debug console in the Tools menu of the your Dash QT Wallet that holds the address you used to create the raffle. If you are not sure, you can validate if the address belongs to this wallet by typing the following command and check if among the results there is a <b>"ismine":true</b>
+        </li>
+      </ul>
+      <div class="code one-line">
+        <pre>validateaddress {{raffle.addressProject}}</pre>
+      </div>
+      <br>
+
+      <ul>
+        <li>
+          Next, obtain the private key of your Dash address by typing the following command.
+        </li>
+      </ul>
+      <div class="code one-line">
+        <pre>dumpprivkey {{raffle.addressProject}}</pre>
+      </div>
+      <br>
+      <ul>
+        <li>
+          Now, you have to sign the transaction to spend the multisig address. Just copy and paste on the console, the following command and replace where it says <b>'Your private key'</b> with the private key you obtained in the last step. It will give you the hexadecimal represetation of the signed transaction.
+        </li>
+      </ul>
+      <div class="code">
+        <pre>{{raffle.commandSignRawTx | safe}}</pre>
+      </div>
+      <br>
+      <ul>
+        <li>
+          Finally, copy and paste the following command on the console and replace the <b>Transaction Hexadecimal</b> with the entire result of the last step.
+        </li>
+      </ul>
+      <div class="code one-line" >
+        <pre>sendrawtransaction <b style="color:#990000">'Transaction Hexadecimal'</b> true false false
+
+        </pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}

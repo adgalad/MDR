@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from app import views
 
 urlpatterns = [
@@ -28,9 +29,11 @@ urlpatterns = [
 
     # Raffle URLs
     url(r'^createRaffle/$', views.Raffle.createRaffle, name="createRaffle"),
+    url(r'^myRaffles/$', views.Raffle.myRaffles, name="myRaffles"),
     url(r'^raffle/(?P<id>\w+)$', views.Raffle.details, name="raffleDetails"),
     url(r'^raffle/(?P<id>\w+)/more$', views.Raffle.moreDetails, name="raffleMoreDetails"),
     url(r'^raffles/$', views.Raffle.active, name="raffles"),
+    url(r'^raffle/(?P<id>\w+)/finished$', views.Raffle.finished, name="finishedRaffle"),
     # url(r'^raffles/old$', views.Raffle.old, name="rafflesOld"),
     url(r'^buyTicket/(?P<id>\w+)$', views.Raffle.buyTicket, name="buyTicket"),
     url(r'^addPrivkey/(?P<id>\w+)$', views.Raffle.addPrivkey, name="addPrivkey"), 
@@ -44,6 +47,18 @@ urlpatterns = [
     url(r'^editProfile/$', views.User.editProfile, name="editProfile"),
     url(r'^api/users/', views.User.getUsers, name="api.users"),
     url(r'^api/changePassword/$', views.User.changePassword, name="api.changePassword"),
+
+    url(r'^reset/password_reset', views.password_reset, 
+        name='password_reset'), 
+    url(r'^password_reset_done', password_reset_done, 
+        {'template_name': 'registration/password_reset_done.html'}, 
+        name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', password_reset_confirm, 
+        {'template_name': 'registration/password_reset_confirm.html'},
+        name='password_reset_confirm'
+        ),
+    url(r'^reset/done', password_reset_complete, {'template_name': 'registration/password_reset_complete.html'},
+        name='password_reset_complete'),
 
 
 ] + staticfiles_urlpatterns()

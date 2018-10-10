@@ -30,13 +30,13 @@
   </section>
   <section id="featured" >
     <div class="container" align="left">
-      <h2> Featured Raffles </h2>
+      <h2 > Featured Raffles </h2>
       <p>These are our most active raffles</p>
-      <div class="owl-carousel owl-theme ">
+      <div class="owl-carousel owl-theme">
         {% for item in raffles %}
-          <div class="item hovereffect"><h4><img class="img-responsive" width="100px" src="{{item.thumbnail}}"></h4>
+          <div class="item hovereffect" id="small"><h4><img class="img-responsive" id="small" style="min-width:270px; min-height:270px;" src="{{item.thumbnail}}"></h4>
             <div class="overlay">
-              <h2>{{item.name}}</h2>
+              <h2 id="fontsmall">{{item.name}}</h2>
               <a class="info" href="{% url 'raffleDetails' item.pk %}">See More</a>
             </div>
           </div>
@@ -138,7 +138,7 @@
         autoplayHoverPause:true,
         responsive:{
             0:{
-                items:3,
+                items:2,
             },
             600:{
                 items:3,
@@ -148,5 +148,6 @@
             }
         }
       })
+
   </script>
 {% endblock scripts %}

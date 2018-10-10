@@ -61,6 +61,10 @@ class Dash:
   def getrawtransaction(address, parsed=1):
     return Dash.call(["getrawtransaction", address, parsed])
     # return {'time': 5566462526}
+
+  @staticmethod
+  def importpubkey(pubkey, label='', rescan='false'):
+    return Dash.call(["importpubkey", "'%s'"%pubkey, '"%s"'%label, rescan])
   
   @staticmethod
   def sendrawtransaction(hexadecimalValue, allowhighfees=False, instantsend=False, bypasslimits=False):
@@ -82,9 +86,11 @@ class Dash:
   def verifymessage(address, signature, finalMessage):
     return Dash.call(["verifymessage", address, signature, finalMessage])
 
+
   @staticmethod
   def call(args):
     try:
+      print(' '.join(Dash.command + args))
       data = check_output(Dash.command + args)
       try:
         data = json.loads(data.decode("utf-8"))

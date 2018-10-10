@@ -23,14 +23,16 @@ raffleDuration = {
   'Mega Raffle': 30
 }
 
+SIGNS_REQUIRED = 2
+
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   description = models.CharField(verbose_name="Description", max_length=4096)
-  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, max_length=2048)
+  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
   addressProject = models.CharField(null=True, verbose_name="Beneficiary Address", max_length=100)
-  prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=40.0)
-  projectPercentage = models.FloatField(verbose_name="Project Percentage", default=50.0)
+  prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=44.45)
+  projectPercentage = models.FloatField(verbose_name="Project Percentage", default=55.55)
   drawDate = models.DateTimeField(verbose_name="Draw date")
   ticketsSold = models.IntegerField(verbose_name="Tickets Sold", default=0)
   ticketPrice = models.DecimalField(verbose_name="Ticket Price", max_digits=20, decimal_places=6)
@@ -43,8 +45,8 @@ class Raffle(models.Model):
   type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
   type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type")
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
-  isMultisig = models.BooleanField(default=True, verbose_name=" Multisign Prize address")
-  signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
+  isMultisig = models.BooleanField(default=True, verbose_name="Multisign Prize address")
+  # signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
 
   MSpubkey1 = models.CharField(verbose_name="Multisig Public Key 1", max_length=67, blank=True, null=True)
   MSpubkey2 = models.CharField(verbose_name="Multisig Public Key 2", max_length=67, blank=True, null=True)
@@ -53,26 +55,22 @@ class Raffle(models.Model):
   MSpubkey5 = models.CharField(verbose_name="Multisig Public Key 5", max_length=67, blank=True, null=True)
   MSpubkey6 = models.CharField(verbose_name="Multisig Public Key 6", max_length=67, blank=True, null=True)
 
-  privkey1 = models.CharField(verbose_name="Private Key 1", max_length=53, blank=True, null=True)
-  privkey2 = models.CharField(verbose_name="Private Key 2", max_length=53, blank=True, null=True)
-  privkey3 = models.CharField(verbose_name="Private Key 3", max_length=53, blank=True, null=True)
-  privkey4 = models.CharField(verbose_name="Private Key 4", max_length=53, blank=True, null=True)
-  privkey5 = models.CharField(verbose_name="Private Key 5", max_length=53, blank=True, null=True)
-  privkey6 = models.CharField(verbose_name="Private Key 6", max_length=53, blank=True, null=True)
 
-  MSredeemScript = models.CharField(verbose_name="Multisig Redeem Script", max_length=100, blank=True, null=True)
+  MSredeemScript = models.CharField(verbose_name="Multisig Redeem Script", max_length=1024, blank=True, null=True)
   
+  commandSignRawTx = models.CharField(verbose_name="Command to sign raw transaction", max_length=1024*100, null=True, blank=True) # 100 kb
 
-  def save(self, *args, **kwargs):
-    #print(self.isMultisigned)
-    if not self.addressPrize and self.isMultisigned:
-      self.createMultisigAddress()
-
-    super(Raffle, self).save(*args, **kwargs)    
 
   @property
   def getPrice(self):
+    print(rafflePrice[self.type], rafflePrice, self.type)
     return rafflePrice[self.type]
+
+  @property
+  def getPrize(self):
+
+    total = Dash.getaddressbalance(self.addressPrize)
+    return float(self.totalPrize)*self.prizePercentage/100.0
 
 
   @property
@@ -120,41 +118,28 @@ class Raffle(models.Model):
         keys.append(key)
     return keys
 
-  @property
-  def getDate(self):
-    
-    if self.winnerAddress:
-      count = self.blockHeight
-      blockHash = Dash.getblockhash(count)
-      blockTime = Dash.getblock(blockHash)['time']
-      date = datetime.datetime.fromtimestamp(blockTime)
-    else:
-      count = Dash.getblockcount()
-      blockHash = Dash.getblockhash(count)
-      blockTime = Dash.getblock(blockHash)['time']
-      date = datetime.datetime.fromtimestamp(blockTime + (self.blockHeight-count) * (2.6*60))
-    
-    return date
   
   @property
   def finished(self):
-    count = Dash.getblockcount()
-    return self.blockHeight < count
+    # count = Dash.getblockcount()
+    # return self.blockHeight < count
+    return self.drawDate < timezone.now()
 
   def createMultisigAddress(self):
     if self.isMultisigned:
-      data = Dash.createmultisig(str(self.signsRequired), self.getMSpubkey())
+      data = Dash.createmultisig(str(SIGNS_REQUIRED), self.getMSpubkey())
       self.addressPrize = data['address']
       self.MSredeemScript = data['redeemScript']
 
   def getTransactions(self):
+    transactions = self.transactions.all()
     for addressGenerated in self.addresses.all():
       txs = Dash.getaddresstxids([addressGenerated.address])
       if txs is None:
         continue
 
       for i in txs:
-        if Transaction.objects.filter(address=i).exists():
+        if transactions.filter(address=i).exists():
           continue
 
         txRaw = Dash.getrawtransaction(i)
@@ -165,32 +150,40 @@ class Raffle(models.Model):
         if blockHeight > self.blockHeight:
           continue
 
+        total = 0
         for detail in txRaw['vout']:
           if addressGenerated.address in detail['scriptPubKey']['addresses']:
-            tickets = int(detail['value']/float(self.ticketPrice))
+            amount = detail['value']
+            tickets = int(amount/float(self.ticketPrice))
             tx = Transaction(
               address=txRaw['txid'],
-              amount=detail['value'],
+              amount=amount,
               user=addressGenerated.user,
               blockHeight=blockHeight,
               raffle=self,
               boughtTicket=tickets
-            )
-            total = float(tickets*self.ticketPrice)
-            left = total
-            transaction = Dash.sendtoaddress(
-              self.addressPrize,
-              str((total*self.prizePercentage)/100.0)
-            )
+            ).save()
+            total += amount
 
-            left -= (total*self.prizePercentage)/100.0
-            Dash.sendtoaddress(
-              self.addressProject,
-              str((total*self.projectPercentage)/100.0)
-            )
+        total = total*90/100
+        Dash.sendtoaddress(
+          self.addressPrize,
+          str(total)
+        )
+        self.totalPrize += total
+            # total = float(tickets*self.ticketPrice)
+            # left = total
+            # transaction = Dash.sendtoaddress(
+            #   self.addressPrize,
+            #   str((total*self.prizePercentage)/100.0)
+            # )
 
-            left -= (total*self.projectPercentage)/100.0
-            tx.save()
+            # left -= (total*self.prizePercentage)/100.0
+            
+
+            # left -= (total*self.projectPercentage)/100.0
+
+        self.save()
 
   def addPrivKey(self, privkey):
     for i in range(1, self.signsRequired + 1):
@@ -203,11 +196,6 @@ class Raffle(models.Model):
         return "Duplicated Private Key"
     self.__signMultisignedTransaction()
     return "Private Key succesfully added"
-
-  def __resetPrivkey(self):
-    for i in range(1, self.signsRequired + 1):
-      setattr(self, "privkey"+str(i), None)
-    self.save()
   
   def nPrivkey(self):
     n = 0
@@ -236,8 +224,6 @@ class Raffle(models.Model):
           return -1
   
         for _vout in rawTx['vout']:
-          #print(">>", _vout)
-          #print(_vout['scriptPubKey']['type'] == 'scripthash', self.addressPrize in _vout['scriptPubKey']['addresses'])
           if _vout['scriptPubKey']['type'] == 'scripthash' and self.addressPrize in _vout['scriptPubKey']['addresses']:
             scriptPubKey = _vout['scriptPubKey']['hex']
             vout = _vout['n']
@@ -256,8 +242,18 @@ class Raffle(models.Model):
                  "redeemScript": self.MSredeemScript})
       
       prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
-      toAddress = {self.winnerAddress: round(prize-fee,6)}
+      prize -= fee
+      winnerAmount = prize*self.prizePercentage/100
+      projectAmount = prize*self.projectPercentage/100
+      newAddress = Dash.getnewaddress()
+      
+      toAddress = {
+        self.winnerAddress: winnerAmount,
+        self.addressProject: projectAmount,
+      }
+
       transaction = Dash.createrawtransaction(outputs1, toAddress)
+      
       if transaction is None:
         return -1
 
@@ -269,21 +265,19 @@ class Raffle(models.Model):
       if not sign['complete']:
         return -1
       
-      hex = sign['hex']
+      self.commandSignRawTx = ' '.join('signrawtransaction', sign['hex'], outputs2, '[ "<b style="color:#990000">Your private key</b>" ]')
 
-      transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
-      if transaction:
-        self.transaction = transaction
-        self.save()
-        return prize-fee
-      else:
-        self.__resetPrivkey()
+      EmailThread(subject="The raffle %s has finished"%self.name, 
+                  message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
+                  html_message="<html></html>",
+                  recipient_list=[self.owner.email])
+      # transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
       return -1
 
   def __send(self):
     #print("2))))    ", self.isMultisigned)
     if self.isMultisigned:
-      return self.__signMultisignedTransaction()
+      self.__signMultisignedTransaction()
     else:
       prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
       transaction = Dash.sendtoaddress(self.winnerAddress, prize if type(prize) == str else str(prize))
@@ -291,8 +285,6 @@ class Raffle(models.Model):
       if transaction:
         self.transaction = transaction
         self.save()
-        return prize
-    return -1
 
 
 
@@ -313,7 +305,7 @@ class Raffle(models.Model):
     self.ticketsSold = tickets
     self.save()
 
-    if count >= self.blockHeight:
+    if self.finished:
       txArray = []
       
       for tx in allTransactions:
@@ -350,9 +342,7 @@ class Raffle(models.Model):
             self.winnerAddress = self.winner.wallet_address
           
           self.save()
-          amount  = self.__send()
-          self.totalPrize = amount
-          self.save()
+          self.__send()
           # if self.transaction:
             # users = { tx.user for tx in allTransactions }
             # for user in users:

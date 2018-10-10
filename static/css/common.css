@@ -610,6 +610,9 @@ header .brand .logo {
 
 @media (max-width: 767px) {
   .btn-breadcrumb { margin-left: 1px; margin-right: 1px;font-size:10px; width: calc(100% - 67%) !important; }
+  #floatnone { float: none !important; }
+  #small{ min-width:160px !important; min-height:160px !important; font-size:14px !important; }
+  #fontsmall{ font-size:14px !important; }
 }
 
 /*.btn-breadcrumb{

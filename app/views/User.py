@@ -106,34 +106,37 @@ class User:
   @login_required(login_url='/login/')
   def addWalletAddress(request):
     message = "Raffle Confirm Wallet %s" %str(datetime.datetime.now())
+    if request.GET.get('modal') == '1':
+      base = 'modalForm.html'
+    else:
+      base = 'form.html'
+
     if request.method == "POST":
       form = forms.AddWalletAddress(request.POST, instance=request.user)
-      if form.is_valid():
-        address = form.cleaned_data['wallet_address']
-        signature = form.cleaned_data['signature']
-        finalMessage = form.cleaned_data['final_message']
-        if request.user.message == finalMessage:
-          if Dash.verifymessage(address, signature, finalMessage):
-            form.save()
-            messages.success(request, "Sucessfully registered Wallet.")
-            return redirect(reverse('profile'))
-          else:
-            messages.error(request, "Could not verify signed message. Please try again.")
-        else:
-          messages.error(request, "The signature has an incorrect message. Please try again.")
+      try:
+        is_valid = form.is_valid()
+      except Exception as e:
+        print(e)
+        is_valid = False
+
+      if is_valid:
+        form.save()
+        messages.success(request, "Address registered sucessfully.")
+        return redirect(reverse('profile'))
       else:
-        form = forms.AddWalletAddress(
-            initial={'message':message}
-          )
-        messages.error(request, "jola")
+        return render(request, "addWalletAddress.html", {'form': form, 'base': base})
     else:
       request.user.message = message
       request.user.save()
       form = forms.AddWalletAddress(
-            initial={'final_message':message}
+            initial={'final_message':message,
+                     'user_pk':request.user.pk,
+                     'signature':'',
+                     'wallet_address':'',
+                     'public_key':'', }
           )
-
-    return render(request, "addWalletAddress.html", {'form': form})
+    
+    return render(request, "addWalletAddress.html", {'form': form, 'base': base})
 
   @staticmethod
   def profile(request):

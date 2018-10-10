@@ -4,6 +4,7 @@ import datetime
 from django.contrib import messages
 from django.http import HttpResponseServerError
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -15,8 +16,32 @@ class Raffle:
   @staticmethod
   def active(request):
     count = Dash.getblockcount()
-    activeRaffles = models.Raffle.objects.all()
-    return render(request, "raffles.html", {'activeRaffles': activeRaffles})    
+    activeRaffles = models.Raffle.objects.filter(drawDate__gt=timezone.now()).order_by('drawDate')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(activeRaffles, 10)
+    try:
+        numbers = paginator.page(page)
+    except PageNotAnInteger:
+        numbers = paginator.page(1)
+    except EmptyPage:
+        numbers = paginator.page(paginator.num_pages)
+    return render(request, "raffles.html", {'numbers': numbers})
+
+  @staticmethod
+  def myRaffles(request):
+    count = Dash.getblockcount()
+    user = request.user
+    activeRaffles = models.Raffle.objects.filter(owner=user).order_by('-drawDate')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(activeRaffles, 10)
+    try:
+        numbers = paginator.page(page)
+    except PageNotAnInteger:
+        numbers = paginator.page(1)
+    except EmptyPage:
+        numbers = paginator.page(paginator.num_pages)
+    return render(request, "rafflesUser.html", {'numbers': numbers})    
+
 
   @staticmethod
   def details(request, id):
@@ -42,7 +67,7 @@ class Raffle:
     #   date = datetime.datetime.fromtimestamp(blockTime)
     # else:
     #   date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
-    return render(request, "raffle.html", {"raffle":raffle, 'date':raffle.getDate, 'prize': prize})
+    return render(request, "raffle.html", {"raffle":raffle, 'prize': prize})
 
   def moreDetails(request, id):
     try:
@@ -68,6 +93,14 @@ class Raffle:
 
   @staticmethod
   @login_required(login_url='/login/')
+  def finished(request,id):
+    raffle = models.Raffle.objects.get(pk=id)
+    if raffle.owner != request.user and not request.user.is_superuser:
+      raise PermissionDenied
+    return render(request, "finishedRaffle.html", {"raffle":raffle})
+
+  @staticmethod
+  @login_required(login_url='/login/')
   def createRaffle(request):
     if not request.user.wallet_address:
       return redirect(reverse('addWalletAddress'))
@@ -75,29 +108,27 @@ class Raffle:
       form = forms.Raffle(request.POST)
       if form.is_valid():
         try:
-          rtype = form.cleaned_data['type']
-          admin = models.User.objects.filter(email='admin@admin.com')
-          if request.user.wallet_address and form.cleaned_data['signers'].wallet_address and admin[0].wallet_address:
+          raffleType = form.cleaned_data['type']
+          admin = models.User.objects.get(email='admin@admin.com')
+          address = Dash.getnewaddress()
+          pubkey = Dash.validateaddress(address)['pubkey']
+          if request.user.wallet_address and form.cleaned_data['signers'].wallet_address and admin.wallet_address:
             raffle = models.Raffle.objects.create(
                         name=form.cleaned_data['name'],
                         thumbnail_url=form.cleaned_data['thumbnail_url'],
-                        type=rtype,
+                        type=raffleType,
                         description=form.cleaned_data['description'],
-                        ticketPrice=models.rafflePrice[rtype],
-                        drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[rtype]),
+                        ticketPrice=models.rafflePrice[raffleType],
+                        drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[raffleType]),
                         owner = request.user,
                         addressProject=request.user.wallet_address,
-                        MSpubkey1=request.user.wallet_address,
-                        MSpubkey2=form.cleaned_data['signers'].wallet_address,
-                        MSpubkey3=admin[0].wallet_address 
+                        MSpubkey1=request.user.public_key,
+                        # MSpubkey2=form.cleaned_data['signers'].wallet_address,
+                        MSpubkey2=pubkey
                       )
             
-            
-            raffle.signers.add(form.cleaned_data['signers'])
-            # # if not raffle.isMultisig:
-            
-
-            # raffle.createMultisigAddress()
+            # raffle.signers.add(form.cleaned_data['signers'])
+            raffle.createMultisigAddress()
             raffle.save()
             return redirect(raffle)
           else:
