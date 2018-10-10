@@ -87,14 +87,11 @@ admin.site.register(User, UserAdmin)
 
 class Transaction(admin.ModelAdmin):
     pass
-class RaffleSigner(admin.ModelAdmin):
-    pass
 class Raffle(admin.ModelAdmin):
     pass
 class AddressGenerated(admin.ModelAdmin):
     pass
 
 admin.site.register(models.Transaction, Transaction)
-admin.site.register(models.RaffleSigner, RaffleSigner)
 admin.site.register(models.Raffle, Raffle)
 admin.site.register(models.AddressGenerated, AddressGenerated)
