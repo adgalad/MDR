@@ -24,14 +24,7 @@ class Transaction(models.Model):
     rawTransaction = Dash.getrawtransaction(self.address)
     timestamp = rawTransaction['time']
     return datetime.datetime.fromtimestamp(timestamp)
-   
-class RaffleSigner(models.Model):
-  user = models.ForeignKey(User)
-  raffle = models.ForeignKey("Raffle")
-  signed = models.BooleanField(default=False)
-  
-  class Meta():
-    auto_created=True 
+
 
 class AddressGenerated(models.Model):
   user    = models.ForeignKey(User)

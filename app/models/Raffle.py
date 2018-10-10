@@ -41,7 +41,7 @@ class Raffle(models.Model):
   winnerAddress = models.CharField(verbose_name="Winner Address", max_length=100, blank=True, null=True)
   totalPrize = models.DecimalField(verbose_name="totalPrize", default=0, max_digits=20, decimal_places=6, blank=True, null=True)
   transaction = models.CharField(verbose_name="Transaction", max_length=100, blank=True, null=True)
-  signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers",related_name="signs")
+  # signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers",related_name="signs")
   type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
   type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type")
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
@@ -206,73 +206,70 @@ class Raffle(models.Model):
 
 
   def __signMultisignedTransaction(self):
-    #print(">>>>>>>>>>")
-    if self.nPrivkey() >= self.signsRequired:
-      #print("1: ", self.nPrivkey() >= self.signsRequired)
-      txs = Dash.getaddresstxids([self.addressPrize])
-      if txs is None:
+    txs = Dash.getaddresstxids([self.addressPrize])
+    if txs is None:
+      return -1
+
+    fee = 0.002
+    scriptPubKey = None
+    vout = 0
+    outputs1 = []
+    outputs2 = []
+    for tx in txs:
+      rawTx = Dash.getrawtransaction(tx)
+      if rawTx is None:
         return -1
 
-      fee = 0.002
-      scriptPubKey = None
-      vout = 0
-      outputs1 = []
-      outputs2 = []
-      for tx in txs:
-        rawTx = Dash.getrawtransaction(tx)
-        if rawTx is None:
-          return -1
-  
-        for _vout in rawTx['vout']:
-          if _vout['scriptPubKey']['type'] == 'scripthash' and self.addressPrize in _vout['scriptPubKey']['addresses']:
-            scriptPubKey = _vout['scriptPubKey']['hex']
-            vout = _vout['n']
-            break
+      for _vout in rawTx['vout']:
+        if _vout['scriptPubKey']['type'] == 'scripthash' and self.addressPrize in _vout['scriptPubKey']['addresses']:
+          scriptPubKey = _vout['scriptPubKey']['hex']
+          vout = _vout['n']
+          break
 
-        txData = {
-          "txid": tx,
-          "vout": vout
-        }
-
-        outputs1.append({"txid": tx, "vout": vout})
-
-        outputs2.append({"txid": tx, 
-                 "vout": vout,
-                 "scriptPubKey": scriptPubKey,
-                 "redeemScript": self.MSredeemScript})
-      
-      prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
-      prize -= fee
-      winnerAmount = prize*self.prizePercentage/100
-      projectAmount = prize*self.projectPercentage/100
-      newAddress = Dash.getnewaddress()
-      
-      toAddress = {
-        self.winnerAddress: winnerAmount,
-        self.addressProject: projectAmount,
+      txData = {
+        "txid": tx,
+        "vout": vout
       }
 
-      transaction = Dash.createrawtransaction(outputs1, toAddress)
-      
-      if transaction is None:
-        return -1
+      outputs1.append({"txid": tx, "vout": vout})
 
+      outputs2.append({"txid": tx, 
+               "vout": vout,
+               "scriptPubKey": scriptPubKey,
+               "redeemScript": self.MSredeemScript})
+    
+    prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
+    prize -= fee
+    winnerAmount = prize*self.prizePercentage/100
+    projectAmount = prize*self.projectPercentage/100
+    newAddress = Dash.getnewaddress()
+    
+    toAddress = {
+      self.winnerAddress: winnerAmount,
+      self.addressProject: projectAmount,
+    }
 
-      sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, self.getPrivkey)
-      if not sign or not "complete" in sign:
-        return -1
-
-      if not sign['complete']:
-        return -1
-      
-      self.commandSignRawTx = ' '.join('signrawtransaction', sign['hex'], outputs2, '[ "<b style="color:#990000">Your private key</b>" ]')
-
-      EmailThread(subject="The raffle %s has finished"%self.name, 
-                  message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
-                  html_message="<html></html>",
-                  recipient_list=[self.owner.email])
-      # transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
+    transaction = Dash.createrawtransaction(outputs1, toAddress)
+    
+    if transaction is None:
       return -1
+
+
+    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, self.getPrivkey)
+    if not sign or not "complete" in sign:
+      return -1
+
+    if not sign['complete']:
+      return -1
+    
+    self.commandSignRawTx = ' '.join('signrawtransaction', sign['hex'], outputs2, '[ "<b style="color:#990000">Your private key</b>" ]')
+
+    EmailThread(subject="The raffle %s has finished"%self.name, 
+                message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
+                html_message="<html></html>",
+                recipient_list=[self.owner.email])
+    # transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
+    return -1
 
   def __send(self):
     #print("2))))    ", self.isMultisigned)
