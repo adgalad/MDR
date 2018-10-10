@@ -109,10 +109,9 @@ class Raffle:
       if form.is_valid():
         try:
           raffleType = form.cleaned_data['type']
-          admin = models.User.objects.get(email='admin@admin.com')
           address = Dash.getnewaddress()
           pubkey = Dash.validateaddress(address)['pubkey']
-          if request.user.wallet_address and form.cleaned_data['signers'].wallet_address and admin.wallet_address:
+          if request.user.wallet_address:
             raffle = models.Raffle.objects.create(
                         name=form.cleaned_data['name'],
                         thumbnail_url=form.cleaned_data['thumbnail_url'],
