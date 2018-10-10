@@ -30,7 +30,7 @@ class RaffleSigner(models.Model):
   raffle = models.ForeignKey("Raffle")
   signed = models.BooleanField(default=False)
   class Meta():
-    auto_created=True
+    auto_created=True 
 
 class AddressGenerated(models.Model):
   user    = models.ForeignKey(User)
