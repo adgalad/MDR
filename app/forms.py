@@ -44,22 +44,27 @@ class Raffle(forms.ModelForm):
                   'description')
 
     def clean_thumbnail_url(self):
-        import requests
-        from PIL import Image
-        from io import StringIO, BytesIO
-        r = requests.get(url)
-        try:
-            im = Image.open(StringIO(r.content))
-        except:
-            im = None
-
-        if not im:
+        url = self.cleaned_data['thumbnail_url']
+        
+        if url == '' or url == None:
+            return '/static/img/placeholder.png'
+        else:
+            import requests
+            from PIL import Image
+            from io import StringIO, BytesIO
+            r = requests.get(url)
             try:
-                im = Image.open(BytesIO(r.content))
+                im = Image.open(StringIO(r.content))
             except:
-                raise form.ValidationError("A valid image URL is required.")
+                im = None
 
-        return self.cleaned_data['thumbnail_url']
+            if not im:
+                try:
+                    im = Image.open(BytesIO(r.content))
+                except:
+                    raise form.ValidationError("A valid image URL is required.")
+
+            return self.cleaned_data['thumbnail_url']
 
 
     def __init__(self, *args, **kwargs):

@@ -5,7 +5,7 @@
   <br>
   <br>
   
-  <form class="contact100-form validate-form" method="post">
+  <form class="contact100-form" method="post">
     
     {% csrf_token %}
     <div class="container" align="left" style="width: 80%">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <br>
-              <div class="wrap-input100 validate-input" data-validate="Name is required">
+              <div class="wrap-input100 validate-input">
                   <span class="label-input100">Thumbnail</span>
                   <input class="input100" type="text" name="{{form.thumbnail_url.html_name}}" id="{{form.thumbnail_url.auto_id}}" placeholder="Enter a thumbnail url">
                   <span class="focus-input100"></span>

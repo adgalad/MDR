@@ -28,7 +28,7 @@ SIGNS_REQUIRED = 2
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   description = models.CharField(verbose_name="Description", max_length=4096)
-  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, max_length=2048)
+  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
   addressProject = models.CharField(null=True, verbose_name="Beneficiary Address", max_length=100)
   prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=44.45)
@@ -68,6 +68,7 @@ class Raffle(models.Model):
 
   @property
   def getPrize(self):
+
     total = Dash.getaddressbalance(self.addressPrize)
     return float(self.totalPrize)*self.prizePercentage/100.0
 

@@ -112,7 +112,7 @@ class Raffle:
           admin = models.User.objects.get(email='admin@admin.com')
           address = Dash.getnewaddress()
           pubkey = Dash.validateaddress(address)['pubkey']
-          if request.user.wallet_address and form.cleaned_data['signers'].wallet_address and admin[0].wallet_address:
+          if request.user.wallet_address and form.cleaned_data['signers'].wallet_address and admin.wallet_address:
             raffle = models.Raffle.objects.create(
                         name=form.cleaned_data['name'],
                         thumbnail_url=form.cleaned_data['thumbnail_url'],

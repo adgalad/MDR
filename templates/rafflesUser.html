@@ -33,7 +33,7 @@
               <div class="row  align-items-center h-100">
                 <div class="col-sm-1 col-1"></div>
                 <div class="col-md-12 col-sm-5 col-5">
-                  <h5>Jackpot <b> {{raffle.TotalPrize}} tDash</b></h5>
+                  <h5>Jackpot <b> {% if raffle.totalPrize > 0 %} {{raffle.totalPrize}} {% else %} 0 {% endif %} tDash</b></h5>
                 </div>
                 <div class="col-sm-1 col-1"></div>
               </div>
