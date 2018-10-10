@@ -64,6 +64,15 @@
                   <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
               </div>
             </div>
+            {% if raffle.finished and raffle.owner == request.owner %}
+              <div class="row">
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
+                    <i class="fas fa-ticket-alt"></i> 
+                  </a>  
+                </div> 
+              </div>
+            {% endif %}
           </div>
         </div>
         <br><hr><br>

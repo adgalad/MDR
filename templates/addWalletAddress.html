@@ -24,9 +24,9 @@
                    <div class="row" align="center">
                         <div class="col-12 mx-auto">
                            <div class="accordion" id="accordionExample">
-                              <h3 id="text">Add Wallet</h3>
+                              <h3 id="text">Add Wallet Address</h3>
                                   <div align="justify" style="padding:15px 15px 0px 15px;">
-                                      You need to create a signed message with your DashCore QT wallet in order to continue. To create it, follow the next steps:
+                                      You need to create a signed message and get a public key with your DashCore QT wallet in order to be able to create a raffle. To do it, follow the next steps:
                                       <div align="left" class="row" style="margin-left: 3%;">
                                         <div class="col-md-12 inst">
                                           - Open DashCore QT wallet on your local machine and select “sign message” in the file menu.
@@ -76,7 +76,14 @@
                                           and paste them in the labelled fields below.
                                         </div>
                                         <div class="col-md-12 inst">
-                                          - Click the submit button.
+                                          - Finally, get the public key of the address used in the first step, by typing the command 
+                                          <div class="tooltipaba">
+                                            <b>validateaddress</b>
+                                            <span class="tooltiptext">
+                                              <img class="tooltipimg" src="/static/img/validateaddress.png" width="500px">
+                                            </span>
+                                          </div> 
+                                           followed by the address at the "Debug Console" in the Tools menu.
                                         </div>
                                       </div>
                                   </div>
@@ -96,14 +103,33 @@
                                   {% csrf_token %}
                                     <div class="container" style="z-index:-1;">
                                         <div class="omb_login">
-                                              <div class="wrap-input100 validate-input">
-                                                <input class="input100 has-val" type="text" name="wallet_address" required="" id="id_wallet_address">
-                                                <span class="focus-input100" data-placeholder="Wallet Address"></span>
-                                              </div>  
-                                               <div class="wrap-input100 validate-input" data-validate="Enter Signature">
-                                                  <input class="input100 has-val" type="text" name="signature" required="" id="id_signature">
-                                                  <span class="focus-input100" data-placeholder="Signature"></span>
-                                               </div>      
+                                            {%for field in form %}
+                                              {% if field.name != "final_message" and field.name != "user_pk" %}
+                                                <div class="wrap-input100 validate-input">
+                                                  <input class="input100 has-val" type="text" name="{{field.html_name}}" required="" id="{{field.auto_id}}">
+                                                  <span class="focus-input100" data-placeholder="{{field.label}}"></span>
+                                                </div>      
+                                              {% else %}
+                                                {{field}}
+                                              {% endif %}
+
+                                              {% if field.errors %}
+                                                <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top:-15px;">
+                                                  {{ field.errors }} 
+                                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                              {% endif %}
+                                            {% endfor %}
+                                            {% if form.non_field_errors %}
+                                              <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top:-15px;">
+                                                {{ form.non_field_errors }}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                            {% endif %}
                                               {% for message in messages %}
                                               <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top:-15px;">
                                                 {{ message }} 
