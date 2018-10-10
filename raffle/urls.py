@@ -29,6 +29,7 @@ urlpatterns = [
 
     # Raffle URLs
     url(r'^createRaffle/$', views.Raffle.createRaffle, name="createRaffle"),
+    url(r'^myRaffles/$', views.Raffle.myRaffles, name="myRaffles"),
     url(r'^raffle/(?P<id>\w+)$', views.Raffle.details, name="raffleDetails"),
     url(r'^raffle/(?P<id>\w+)/more$', views.Raffle.moreDetails, name="raffleMoreDetails"),
     url(r'^raffles/$', views.Raffle.active, name="raffles"),

@@ -20,9 +20,8 @@
  
 <div class="container content">
     <div class="row" style="margin-left:10px;">
-        <div class="btn-group btn-breadcrumb breadcrumb-primary">
-            <div class="visible-lg-block"></div>
-            <div class="btn btn-info"><b>All Raffles</b></div>
+        <div class="offset-md-5">
+          <a class="btn btn-primary" style="margin-top: 1%" href="{% url 'createRaffle' %}"><i class="fas fa-plus"></i>&nbsp;Create Raffle</a>
         </div>
     </div>
   <div class="infinite-container">
@@ -33,14 +32,8 @@
             <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12">
               <div class="row  align-items-center h-100">
                 <div class="col-sm-1 col-1"></div>
-                <div class="col-md-12 col-sm-5 col-5 " id="chart">
-                  <span class="chart" data-percent="{{raffle.getTimeLeft|mul:100|div:raffle.getDurationTimestamp}}" data-left="{{raffle.getTimeLeft}}">
-                    <span class="percent">
-                    </span>
-                  </span>
-                </div>
                 <div class="col-md-12 col-sm-5 col-5">
-                  <h5>Prize <b> {{raffle.getPrize}} tDash</b></h5>
+                  <h5>Jackpot <b> {{raffle.TotalPrize}} tDash</b></h5>
                 </div>
                 <div class="col-sm-1 col-1"></div>
               </div>
@@ -52,21 +45,17 @@
                   <h5>{{raffle.name}}</h5>
                 </div>  
                 <div class="col-md-6 col-sm-12 col-12">
-                  <p>Ticket price: {{raffle.getPrice}} tDash</p>
+                  <p>Ticket sold: {{raffle.ticketsSold}} </p>
                 </div>  
                 <!-- <div class="col-sm-1 col-xs-1"></div> -->
               </div>
               
-              <p align="left">{{raffle.description | truncatechars:100}} </p>
+              <p align="left">{{raffle.description | truncatechars:200}} </p>
             </div>
             <div class="offset-xl-0 col-xl-1 offset-lg- col-lg-8 offset-md-5 col-md-7 col-sm-12 col-12">
               <div class="row  align-items-center h-100" style="width: 100%">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <a class="btn btn-primary" style="margin-top: 1%" href="{% url 'raffleDetails' raffle.pk %}">Read more.</a>
-                  <button class="btn btn-success btn-raffle shadow" style="margin-top: 5px" 
-                             onclick="return abrir_modal('{% url "buyTicket" raffle.pk %}')">
-                    <i class="fas fa-ticket-alt"></i> Buy Tickets
-                  </button>
                 </div>  
               </div>
             </div>
@@ -81,7 +70,7 @@
     <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}"></a>
   {% endif %}
   <div class="loading" style="display: none;">
-    <img src="/static/img/anima.gif" width="150px" height="150px">
+    <img src="/static/img/anima.gif" width="200px" height="150px">
   </div>
 </div>
  

@@ -4,6 +4,7 @@ import datetime
 from django.contrib import messages
 from django.http import HttpResponseServerError
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -15,8 +16,32 @@ class Raffle:
   @staticmethod
   def active(request):
     count = Dash.getblockcount()
-    activeRaffles = models.Raffle.objects.filter(drawDate__gt=timezone.now())
-    return render(request, "raffles.html", {'activeRaffles': activeRaffles})    
+    activeRaffles = models.Raffle.objects.filter(drawDate__gt=timezone.now()).order_by('drawDate')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(activeRaffles, 10)
+    try:
+        numbers = paginator.page(page)
+    except PageNotAnInteger:
+        numbers = paginator.page(1)
+    except EmptyPage:
+        numbers = paginator.page(paginator.num_pages)
+    return render(request, "raffles.html", {'numbers': numbers})
+
+  @staticmethod
+  def myRaffles(request):
+    count = Dash.getblockcount()
+    user = request.user
+    activeRaffles = models.Raffle.objects.filter(owner=user).order_by('-drawDate')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(activeRaffles, 10)
+    try:
+        numbers = paginator.page(page)
+    except PageNotAnInteger:
+        numbers = paginator.page(1)
+    except EmptyPage:
+        numbers = paginator.page(paginator.num_pages)
+    return render(request, "rafflesUser.html", {'numbers': numbers})    
+
 
   @staticmethod
   def details(request, id):
