@@ -109,28 +109,18 @@ class User:
     if request.method == "POST":
       form = forms.AddWalletAddress(request.POST, instance=request.user)
       if form.is_valid():
-        address = form.cleaned_data['wallet_address']
-        signature = form.cleaned_data['signature']
-        finalMessage = form.cleaned_data['final_message']
-        if request.user.message == finalMessage:
-          if Dash.verifymessage(address, signature, finalMessage):
-            form.save()
-            messages.success(request, "Sucessfully registered Wallet.")
-            return redirect(reverse('profile'))
-          else:
-            messages.error(request, "Could not verify signed message. Please try again.")
-        else:
-          messages.error(request, "The signature has an incorrect message. Please try again.")
+        form.save()
+        messages.success(request, "Address registered sucessfully.")
+        return redirect(reverse('profile'))
       else:
         form = forms.AddWalletAddress(
-            initial={'message':message}
+            initial={'message':message, 'user_pk':request.user.pk}
           )
-        messages.error(request, "jola")
     else:
       request.user.message = message
       request.user.save()
       form = forms.AddWalletAddress(
-            initial={'final_message':message}
+            initial={'final_message':message, 'user_pk':request.user.pk}
           )
 
     return render(request, "addWalletAddress.html", {'form': form})
