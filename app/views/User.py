@@ -106,6 +106,11 @@ class User:
   @login_required(login_url='/login/')
   def addWalletAddress(request):
     message = "Raffle Confirm Wallet %s" %str(datetime.datetime.now())
+    if request.GET.get('modal') == '1':
+      base = 'modalForm.html'
+    else:
+      base = 'form.html'
+
     if request.method == "POST":
       form = forms.AddWalletAddress(request.POST, instance=request.user)
       try:
@@ -119,17 +124,18 @@ class User:
         messages.success(request, "Address registered sucessfully.")
         return redirect(reverse('profile'))
       else:
-        return render(request, "addWalletAddress.html", {'form': form})        
+        return render(request, "addWalletAddress.html", {'form': form, 'base': base})
     else:
       request.user.message = message
       request.user.save()
       form = forms.AddWalletAddress(
-            initial={'final_message':message, 'user_pk':request.user.pk}
+            initial={'final_message':message,
+                     'user_pk':request.user.pk,
+                     'signature':'',
+                     'wallet_address':'',
+                     'public_key':'', }
           )
-    if request.GET.get('modal') == '1':
-      base = 'modalForm.html'
-    else:
-      base = 'form.html'
+    
     return render(request, "addWalletAddress.html", {'form': form, 'base': base})
 
   @staticmethod

@@ -129,7 +129,7 @@ class AddWalletAddress(forms.ModelForm):
         validation = Dash.validateaddress(address)
 
         if models.User.objects.filter(wallet_address=address).exists():
-            print("The signed message you entered is invalid.")
+            print('This address is already in use. Please use a different Dash address.', models.User.objects.filter(wallet_address=address))
             raise forms.ValidationError('This address is already in use. Please use a different Dash address.')
 
         if user.message != finalMessage:
@@ -152,7 +152,7 @@ class AddWalletAddress(forms.ModelForm):
                 pubkeyExists = 'pubkey' in validation
                 validPubkey = validation['pubkey'] == public_key if pubkeyExists else None
                 if not (iswatchonly and pubkeyExists and validPubkey):
-                    print('The public key you entered doesn\'t correspond to the address')
+                    print(iswatchonly , pubkeyExists , validPubkey, 'The public key you entered doesn\'t correspond to the address')
                     raise forms.ValidationError('The public key you entered doesn\'t correspond to the address')
 
             if validation['pubkey'] != public_key:
