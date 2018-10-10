@@ -122,8 +122,11 @@ class User:
       form = forms.AddWalletAddress(
             initial={'final_message':message, 'user_pk':request.user.pk}
           )
-
-    return render(request, "addWalletAddress.html", {'form': form})
+    if request.GET.get('modal') == '1':
+      base = 'modalForm.html'
+    else:
+      base = 'form.html'
+    return render(request, "addWalletAddress.html", {'form': form, 'base': base})
 
   @staticmethod
   def profile(request):

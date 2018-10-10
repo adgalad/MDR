@@ -1,4 +1,4 @@
-{% extends "modalForm.html" %}
+{% extends base %}
 {% block form %}
 {% block style %}
   {{block.super}}
@@ -14,10 +14,12 @@
         
     {% endblock beforeForm %}
 
-<div class="modal-dialog modal-lg" style="z-index:1500;margin-bottom:-10px;max-width:1000px !important;">
+<div class="modal-dialog modal-lg" style="{% if request.GET.modal == '1'%} z-index:1500;margin-bottom:-10px;max-width:1000px !important; {% else %} margin-top:150px; width:1000px !important;{% endif %} ">
   <div class="modal-content {% if request.GET.modal != '1'%} shadow {%endif%}">
     <div class="modal-body">
+    {% if request.GET.modal == '1'%}
         <button type="button" class="close" data-dismiss="modal">x</button>
+    {% endif %}
        <div class="container-fluid bg-gray" id="accordion-style-1">
            <div class="container">
                 <section>
