@@ -185,7 +185,8 @@ class Raffle:
     except:
       raise PermissionDenied
 
-    if not (raffle.finished and request.user in raffle.signers.all()):
+    # if not (raffle.finished and request.user in raffle.signers.all()):
+    if True
       raise PermissionDenied
     msg = ""
     if request.method == "POST":
