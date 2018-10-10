@@ -120,11 +120,6 @@ class AddWalletAddress(forms.ModelForm):
         for i in self.fields:
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
-    def clean_wallet_adress(self):
-        address = self.cleaned_data['wallet_address']
-        if models.User.objects.filter(wallet_address=address).exists():
-            raise forms.ValidationError('This address is already used.')
-        return address
     def clean(self):
         address = self.cleaned_data['wallet_address']
         signature = self.cleaned_data['signature']
@@ -132,6 +127,10 @@ class AddWalletAddress(forms.ModelForm):
         public_key = self.cleaned_data['public_key']
         user = models.User.objects.get(pk=self.cleaned_data['user_pk'])
         validation = Dash.validateaddress(address)
+
+        if models.User.objects.filter(wallet_address=address).exists():
+            print("The signed message you entered is invalid.")
+            raise forms.ValidationError('This address is already in use. Please use a different Dash address.')
 
         if user.message != finalMessage:
             print("The signed message you entered is invalid.")
@@ -151,10 +150,10 @@ class AddWalletAddress(forms.ModelForm):
                 validation = Dash.validateaddress(address)
                 iswatchonly = validation['iswatchonly'] 
                 pubkeyExists = 'pubkey' in validation
-                validPubkey = validation['pubkey'] == public_key
+                validPubkey = validation['pubkey'] == public_key if pubkeyExists else None
                 if not (iswatchonly and pubkeyExists and validPubkey):
                     print('The public key you entered doesn\'t correspond to the address')
-                    raise form.ValidationError('The public key you entered doesn\'t correspond to the address')
+                    raise forms.ValidationError('The public key you entered doesn\'t correspond to the address')
 
             if validation['pubkey'] != public_key:
                 print("The public key you entered is invalid.")

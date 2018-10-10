@@ -108,14 +108,18 @@ class User:
     message = "Raffle Confirm Wallet %s" %str(datetime.datetime.now())
     if request.method == "POST":
       form = forms.AddWalletAddress(request.POST, instance=request.user)
-      if form.is_valid():
+      try:
+        is_valid = form.is_valid()
+      except Exception as e:
+        print(e)
+        is_valid = False
+
+      if is_valid:
         form.save()
         messages.success(request, "Address registered sucessfully.")
         return redirect(reverse('profile'))
       else:
-        form = forms.AddWalletAddress(
-            initial={'message':message, 'user_pk':request.user.pk}
-          )
+        return render(request, "addWalletAddress.html", {'form': form})        
     else:
       request.user.message = message
       request.user.save()

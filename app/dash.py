@@ -64,7 +64,7 @@ class Dash:
 
   @staticmethod
   def importpubkey(pubkey, label='', rescan='false'):
-    return Dash.call(["importpubkey", pubkey, label, rescan])
+    return Dash.call(["importpubkey", "'%s'"%pubkey, '"%s"'%label, rescan])
   
   @staticmethod
   def sendrawtransaction(hexadecimalValue, allowhighfees=False, instantsend=False, bypasslimits=False):
@@ -90,6 +90,7 @@ class Dash:
   @staticmethod
   def call(args):
     try:
+      print(' '.join(Dash.command + args))
       data = check_output(Dash.command + args)
       try:
         data = json.loads(data.decode("utf-8"))
