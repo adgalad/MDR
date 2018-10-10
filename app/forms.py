@@ -29,17 +29,17 @@ class AddPrivkey(forms.Form):
 
 
 class Raffle(forms.ModelForm):
-    signers = forms.ModelChoiceField(queryset=models.User.objects.filter(can_sign=True))
+    # signers = forms.ModelChoiceField(queryset=models.User.objects.filter(can_sign=True))
     class Meta:
         model = models.Raffle
         widgets = {
             'description': forms.Textarea(),
-            'signers': forms.Select(),
+            # 'signers': forms.Select(),
         }
         
         fields = ('name',
                   'thumbnail_url',
-                  'signers',
+                  # 'signers',
                   'type',
                   'description')
 
