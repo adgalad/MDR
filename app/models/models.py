@@ -15,6 +15,8 @@ class Transaction(models.Model):
   blockHeight = models.IntegerField(verbose_name="Block Height")
   boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
   
+  class Meta:
+    ordering = ['-blockHeight']
   def __str__(self):
     return str((self.user, self.address))
 

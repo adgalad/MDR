@@ -245,14 +245,20 @@ class Raffle(models.Model):
     
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
     prize -= fee
-    winnerAmount = float('%.8f'%(prize*self.prizePercentage/100))
-    projectAmount =  float('%.8f'%(prize-winnerAmount))
+    
     newAddress = Dash.getnewaddress()
     
-    toAddress = {
-      self.winnerAddress: winnerAmount,
-      self.addressProject: projectAmount,
-    }
+    if self.winnerAddress == self.addressPrize:
+      toAddress = {
+        self.winnerAddress: prize,
+      }
+    else:
+      winnerAmount = float('%.8f'%(prize*self.prizePercentage/100))
+      projectAmount =  float('%.8f'%(prize-winnerAmount))
+      toAddress = {
+        self.winnerAddress: winnerAmount,
+        self.addressProject: projectAmount,
+      }
 
     transaction = Dash.createrawtransaction(outputs1, toAddress)
     
@@ -265,7 +271,7 @@ class Raffle(models.Model):
     if not sign:
       return -1
     
-    self.commandSignRawTx = ' '.join(['signrawtransaction', sign['hex'], json.dumps(outputs2), '[ "<b style="color:#990000">Your private key</b>" ]'])
+    self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your private key</b>" ]'])
     self.save()
     EmailThread(subject="The raffle %s has finished"%self.name, 
                 message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
