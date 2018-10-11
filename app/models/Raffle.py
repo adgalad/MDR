@@ -26,6 +26,7 @@ raffleDuration = {
 }
 
 SIGNS_REQUIRED = 2
+EPSILON = 0.00000001
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
@@ -159,7 +160,7 @@ class Raffle(models.Model):
         for detail in txRaw['vout']:
           if addressGenerated.address in detail['scriptPubKey']['addresses']:
             amount = detail['value']
-            tickets = int(amount/float(self.ticketPrice))
+            tickets = int(amount/float(self.ticketPrice) + EPSILON)
             tx = Transaction(
               address=txRaw['txid'],
               amount=amount,
