@@ -134,15 +134,12 @@ class Raffle(models.Model):
 
   def getTransactions(self):
     transactions = self.transactions.all()
-    print("????>", transactions)
     for addressGenerated in self.addresses.all():
       txs = Dash.getaddresstxids([addressGenerated.address])
-      print(">>>>>",txs)
       if txs is None:
         continue
 
       for i in txs:
-        print("->+ ",i, transactions.filter(address=i))
         if transactions.filter(address=i).exists():
           continue
 

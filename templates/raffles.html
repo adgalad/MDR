@@ -63,10 +63,12 @@
               <div class="row  align-items-center h-100" style="width: 100%">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <a class="btn btn-primary" style="margin-top: 1%" href="{% url 'raffleDetails' raffle.pk %}">Read more.</a>
-                  <button class="btn btn-success btn-raffle shadow" style="margin-top: 5px" 
-                             onclick="return abrir_modal('{% url "buyTicket" raffle.pk %}')">
-                    <i class="fas fa-ticket-alt"></i> Buy Tickets
-                  </button>
+                  {% if not raffle.finished %}
+                    <button class="btn btn-success btn-raffle shadow" style="margin-top: 5px" 
+                               onclick="return abrir_modal('{% url "buyTicket" raffle.pk %}')">
+                      <i class="fas fa-ticket-alt"></i> Buy Tickets
+                    </button>
+                  {% endif %}
                 </div>  
               </div>
             </div>
