@@ -49,47 +49,14 @@ class Raffle:
       raffle = models.Raffle.objects.get(id=id)
     except:
       raise PermissionDenied
-
-    # try:
-    #   count = Dash.getblockcount()
-    #   address = Dash.getnewaddress()
-    #   blockHash = Dash.getblockhash(count)
-    #   blockTime = Dash.getblock(blockHash)['time']
-
-    # except Exception as e:
-    #   raise PermissionDenied
-    balance = 1000#Dash.getaddressbalance([raffle.addressPrize])['received']
-    prize = balance/100000000 #<- satoshis
-    #print(">>", balance, prize)
-    if not prize or prize < 0:
-      prize = 0
-    # if raffle.winnerAddress:
-    #   date = datetime.datetime.fromtimestamp(blockTime)
-    # else:
-    #   date = datetime.datetime.fromtimestamp(blockTime + (raffle.blockHeight-count) * (2.6*60))
-    return render(request, "raffle.html", {"raffle":raffle, 'prize': prize})
+    return render(request, "raffle.html", {"raffle":raffle})
 
   def moreDetails(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
       raise PermissionDenied
-
-    # try:
-    #   count = Dash.getblockcount()
-    #   address = Dash.getnewaddress()
-    #   blockHash = Dash.getblockhash(count)
-    #   blockTime = Dash.getblock(blockHash)['time']
-
-    # except Exception as e:
-    #   raise PermissionDenied
-    balance = 1000#Dash.getaddressbalance([raffle.addressPrize])['received']
-    prize = balance/100000000 #<- satoshis
-    #print(">>", balance, prize)
-    if not prize or prize < 0:
-      prize = 0
-    
-    return render(request, "raffleDetails.html", {"raffle":raffle, 'prize': prize})
+    return render(request, "raffleDetails.html", {"raffle":raffle})
 
   @staticmethod
   @login_required(login_url='/login/')
