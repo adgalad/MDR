@@ -241,8 +241,8 @@ class Raffle(models.Model):
     
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
     prize -= fee
-    winnerAmount = prize*self.prizePercentage/100
-    projectAmount = prize*self.projectPercentage/100
+    winnerAmount = float('%.8f'%(prize*self.prizePercentage/100))
+    projectAmount =  float('%.8f'%(prize-winnerAmount))
     newAddress = Dash.getnewaddress()
     
     toAddress = {
