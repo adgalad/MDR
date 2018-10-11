@@ -49,7 +49,7 @@ class User:
       form = forms.EditProfile(request.POST, instance=request.user)
       if form.is_valid():
         form.save()
-        messages.success(request, "Email was changed successfully.", extra_tags="alert-danger")
+        messages.success(request, "Email was changed successfully.", extra_tags="alert-success")
         return redirect(reverse('profile'))
     else:
       form = forms.EditProfile(instance=request.user)
@@ -93,7 +93,7 @@ class User:
         user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)
-          return redirect(reverse('home'))
+          return redirect(reverse('profile'))
     else:
       form = forms.SignUp()
     if request.GET.get('modal') == '1':
@@ -121,7 +121,7 @@ class User:
 
       if is_valid:
         form.save()
-        messages.success(request, "Address registered sucessfully.")
+        messages.success(request, "Address registered sucessfully.", extra_tags="alert-success")
         return redirect(reverse('profile'))
       else:
         return render(request, "addWalletAddress.html", {'form': form, 'base': base})
