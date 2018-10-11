@@ -250,7 +250,7 @@ class Raffle(models.Model):
     
     if self.winnerAddress == self.addressProject:
       toAddress = {
-        self.winnerAddress: prize,
+        self.winnerAddress: '%.8f'%prize,
       }
     else:
       winnerAmount = float('%.8f'%(prize*self.prizePercentage/100))
