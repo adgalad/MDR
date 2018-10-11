@@ -260,10 +260,8 @@ class Raffle(models.Model):
 
     privkey = Dash.dumpprivkey(self.MSaddress)
     sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey])
-    if not sign or not "complete" in sign:
-      return -1
-
-    if not sign['complete']:
+    print(">>>>>>>>>>>>>>>>>", sign)
+    if not sign or not "complete" in sign or not sign['complete']:
       return -1
     
     self.commandSignRawTx = ' '.join('signrawtransaction', sign['hex'], outputs2, '[ "<b style="color:#990000">Your private key</b>" ]')
