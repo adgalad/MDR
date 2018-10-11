@@ -632,7 +632,7 @@ header .brand .logo {
 .btn-primary:hover{background-color: #286090;}
 
 .breadcrumb-success{ background-color: #5cb85c; }
-.breadcrumb-info{ background-color: #9acdff; }
+.breadcrumb-info{ background-color: #5bc0de; }
 .breadcrumb-warning{ background-color: #f0ad4e; }
 .breadcrumb-danger{ background-color: #d9534f; }
 .breadcrumb-negro{ background-color: #d4d4d4; }
@@ -690,9 +690,9 @@ header .brand .logo {
 }
 
 /** The Spacing **/
-.btn-breadcrumb .btn {padding:12px 24px 12px 48px;}
+.btn-breadcrumb .btn {padding:12px 22px 12px 28px;}
 .btn-breadcrumb .btn:first-child {padding:12px 12px 12px 20px;}
-.btn-breadcrumb .btn:last-child {padding:12px 32px 12px 48px;}
+.btn-breadcrumb .btn:last-child {padding:12px 22px 12px 28px;}
 
 /** Default button **/
 .btn-breadcrumb .btn.btn-default:after { border-left: 10px solid #fff;}
