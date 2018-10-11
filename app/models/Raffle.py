@@ -248,7 +248,7 @@ class Raffle(models.Model):
     
     newAddress = Dash.getnewaddress()
     
-    if self.winnerAddress == self.addressPrize:
+    if self.winnerAddress == self.addressProject:
       toAddress = {
         self.winnerAddress: prize,
       }
