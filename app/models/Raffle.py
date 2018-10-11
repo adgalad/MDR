@@ -1,6 +1,7 @@
 import json
 import random
 import datetime
+from decimal import Decimal
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -133,12 +134,15 @@ class Raffle(models.Model):
 
   def getTransactions(self):
     transactions = self.transactions.all()
+    print("????>", transactions)
     for addressGenerated in self.addresses.all():
       txs = Dash.getaddresstxids([addressGenerated.address])
+      print(">>>>>",txs)
       if txs is None:
         continue
 
       for i in txs:
+        print("->+ ",i, transactions.filter(address=i))
         if transactions.filter(address=i).exists():
           continue
 
@@ -146,8 +150,8 @@ class Raffle(models.Model):
         if txRaw is None:
           continue
 
-        blockHeight = txRaw['height']
-        if blockHeight > self.blockHeight:
+        dt = txRaw['time']
+        if dt > self.drawDate.timestamp():
           continue
 
         total = 0
@@ -159,7 +163,7 @@ class Raffle(models.Model):
               address=txRaw['txid'],
               amount=amount,
               user=addressGenerated.user,
-              blockHeight=blockHeight,
+              blockHeight=txRaw['height'],
               raffle=self,
               boughtTicket=tickets
             ).save()
@@ -170,7 +174,7 @@ class Raffle(models.Model):
           self.addressPrize,
           str(total)
         )
-        self.totalPrize += total
+        self.totalPrize += Decimal(total)
             # total = float(tickets*self.ticketPrice)
             # left = total
             # transaction = Dash.sendtoaddress(
