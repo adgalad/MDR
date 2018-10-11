@@ -264,7 +264,7 @@ class Raffle(models.Model):
     if not sign:
       return -1
     
-    self.commandSignRawTx = ' '.join(['signrawtransaction', sign['hex'], outputs2, '[ "<b style="color:#990000">Your private key</b>" ]'])
+    self.commandSignRawTx = ' '.join(['signrawtransaction', sign['hex'], json.dumps(outputs2), '[ "<b style="color:#990000">Your private key</b>" ]'])
     self.save()
     EmailThread(subject="The raffle %s has finished"%self.name, 
                 message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
