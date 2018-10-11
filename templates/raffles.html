@@ -34,10 +34,14 @@
               <div class="row  align-items-center h-100">
                 <div class="col-sm-1 col-1"></div>
                 <div class="col-md-12 col-sm-5 col-5 " id="chart">
-                  <span class="chart" data-percent="{{raffle.getTimeLeft|mul:100|div:raffle.getDurationTimestamp}}" data-left="{{raffle.getTimeLeft}}">
-                    <span class="percent">
+                  {% if raffle.finished %}
+                    <h5>Finished</h5>
+                  {% else %}
+                    <span class="chart" data-percent="{{raffle.getTimeLeft|mul:100|div:raffle.getDurationTimestamp}}" data-left="{{raffle.getTimeLeft}}">
+                      <span class="percent">
+                      </span>
                     </span>
-                  </span>
+                  {% endif %}
                 </div>
                 <div class="col-md-12 col-sm-5 col-5">
                   <h5>Prize <b> {{raffle.getPrize}} tDash</b></h5>
