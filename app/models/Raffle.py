@@ -48,7 +48,8 @@ class Raffle(models.Model):
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
   isMultisig = models.BooleanField(default=True, verbose_name="Multisign Prize address")
   # signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
-
+  
+  MSaddress = models.CharField(null=True, verbose_name="Generated address for MS", max_length=100)
   MSpubkey1 = models.CharField(verbose_name="Multisig Public Key 1", max_length=67, blank=True, null=True)
   MSpubkey2 = models.CharField(verbose_name="Multisig Public Key 2", max_length=67, blank=True, null=True)
   MSpubkey3 = models.CharField(verbose_name="Multisig Public Key 3", max_length=67, blank=True, null=True)
@@ -255,8 +256,8 @@ class Raffle(models.Model):
     if transaction is None:
       return -1
 
-
-    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, self.getPrivkey)
+    privkey = Dash.dumpprivkey(self.MSaddress)
+    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey])
     if not sign or not "complete" in sign:
       return -1
 

@@ -123,7 +123,8 @@ class Raffle:
                         addressProject=request.user.wallet_address,
                         MSpubkey1=request.user.public_key,
                         # MSpubkey2=form.cleaned_data['signers'].wallet_address,
-                        MSpubkey2=pubkey
+                        MSpubkey2=pubkey,
+                        MSaddress=address
                       )
             
             # raffle.signers.add(form.cleaned_data['signers'])
