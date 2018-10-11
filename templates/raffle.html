@@ -60,21 +60,26 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
-                {% if raffle.finished and raffle.owner == request.owner %}
+              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 details">
+                  <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
+              </div>
+              
+              {% if raffle.finished and raffle.owner == request.user %}
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
                   <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
-                    <i class="fas fa-ticket-alt"></i> Terminate Raffle
+                    Terminate Raffle
                   </a>  
-                {% else %}
+                </div>
+              {% else %}
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
                   <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url "buyTicket" raffle.id %}')">
                       <i class="fas fa-ticket-alt"></i> Buy tickets 
                   </a>  
-                {% endif %}
+                </div>
+              {% endif %}
                 
               </div> 
-              <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                  <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
-              </div>
+              
             </div>
           </div>
         </div>

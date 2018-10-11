@@ -8,6 +8,7 @@ from django.db import models
 from django.utils import timezone
 from ckeditor.fields import RichTextField
 
+from app.helpers import EmailThread
 from app.dash import Dash
 from app.models.User import User
 from app.models.models import Transaction
@@ -28,6 +29,7 @@ SIGNS_REQUIRED = 2
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
+  created_at = models.DateTimeField(auto_now_add=True)
   description = models.CharField(verbose_name="Description", max_length=4096)
   thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
@@ -48,7 +50,8 @@ class Raffle(models.Model):
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
   isMultisig = models.BooleanField(default=True, verbose_name="Multisign Prize address")
   # signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
-
+  
+  MSaddress = models.CharField(null=True, verbose_name="Generated address for MS", max_length=100)
   MSpubkey1 = models.CharField(verbose_name="Multisig Public Key 1", max_length=67, blank=True, null=True)
   MSpubkey2 = models.CharField(verbose_name="Multisig Public Key 2", max_length=67, blank=True, null=True)
   MSpubkey3 = models.CharField(verbose_name="Multisig Public Key 3", max_length=67, blank=True, null=True)
@@ -124,6 +127,7 @@ class Raffle(models.Model):
   def finished(self):
     # count = Dash.getblockcount()
     # return self.blockHeight < count
+    print(self.drawDate, timezone.now(),self.drawDate < timezone.now())
     return self.drawDate < timezone.now()
 
   def createMultisigAddress(self):
@@ -241,34 +245,38 @@ class Raffle(models.Model):
     
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
     prize -= fee
-    winnerAmount = prize*self.prizePercentage/100
-    projectAmount = prize*self.projectPercentage/100
+    
     newAddress = Dash.getnewaddress()
     
-    toAddress = {
-      self.winnerAddress: winnerAmount,
-      self.addressProject: projectAmount,
-    }
+    if self.winnerAddress == self.addressPrize:
+      toAddress = {
+        self.winnerAddress: prize,
+      }
+    else:
+      winnerAmount = float('%.8f'%(prize*self.prizePercentage/100))
+      projectAmount =  float('%.8f'%(prize-winnerAmount))
+      toAddress = {
+        self.winnerAddress: winnerAmount,
+        self.addressProject: projectAmount,
+      }
 
     transaction = Dash.createrawtransaction(outputs1, toAddress)
     
     if transaction is None:
       return -1
 
+    privkey = Dash.dumpprivkey(self.MSaddress)
+    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey])
 
-    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, self.getPrivkey)
-    if not sign or not "complete" in sign:
-      return -1
-
-    if not sign['complete']:
+    if not sign:
       return -1
     
-    self.commandSignRawTx = ' '.join('signrawtransaction', sign['hex'], outputs2, '[ "<b style="color:#990000">Your private key</b>" ]')
-
+    self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your private key</b>" ]'])
+    self.save()
     EmailThread(subject="The raffle %s has finished"%self.name, 
                 message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
                 html_message="<html></html>",
-                recipient_list=[self.owner.email])
+                recipient_list=[self.owner.email]).start()
     # transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
     return -1
 
@@ -288,7 +296,7 @@ class Raffle(models.Model):
 
   def getWinner(self):
     if self.winnerAddress:
-      if self.transaction:
+      if self.transaction or self.commandSignRawTx:
         return self.winnerAddress
       else:
         self.__send()

@@ -16,7 +16,7 @@ class Raffle:
   @staticmethod
   def active(request):
     count = Dash.getblockcount()
-    activeRaffles = models.Raffle.objects.filter(drawDate__gt=timezone.now()).order_by('drawDate')
+    activeRaffles = models.Raffle.objects.all().order_by('drawDate')
     page = request.GET.get('page', 1)
     paginator = Paginator(activeRaffles, 10)
     try:
@@ -123,7 +123,8 @@ class Raffle:
                         addressProject=request.user.wallet_address,
                         MSpubkey1=request.user.public_key,
                         # MSpubkey2=form.cleaned_data['signers'].wallet_address,
-                        MSpubkey2=pubkey
+                        MSpubkey2=pubkey,
+                        MSaddress=address
                       )
             
             # raffle.signers.add(form.cleaned_data['signers'])
