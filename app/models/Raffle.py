@@ -8,6 +8,7 @@ from django.db import models
 from django.utils import timezone
 from ckeditor.fields import RichTextField
 
+from app.helper import EmailThread
 from app.dash import Dash
 from app.models.User import User
 from app.models.models import Transaction
@@ -269,7 +270,7 @@ class Raffle(models.Model):
     EmailThread(subject="The raffle %s has finished"%self.name, 
                 message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
                 html_message="<html></html>",
-                recipient_list=[self.owner.email])
+                recipient_list=[self.owner.email]).start()
     # transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
     return -1
 
