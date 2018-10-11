@@ -46,17 +46,17 @@
               </div>
             </div>
             <div class="col-xl-7 col-lg-8 col-md-7 col-sm-12 col-12" >
-              <div class="row align-items-center">
+              <div class="row align-items-left">
                 <!-- <div class="col-sm-1 col-xs-1"></div> -->
-                <div class="col-md-6 col-sm-12 col-12">
-                  <h5>{{raffle.name}}</h5>
-                </div>  
-                <div class="col-md-6 col-sm-12 col-12">
-                  <p>Ticket price: {{raffle.getPrice}} tDash</p>
-                </div>  
+                <div class="col-md-12 col-sm-12 col-12">
+                  <h5 align="left">{{raffle.name}}</h5>
+                </div>   
                 <!-- <div class="col-sm-1 col-xs-1"></div> -->
+                <div class="col-md-12 col-sm-12 col-12">
+                  <p align="left">Ticket price: {{raffle.getPrice}} tDash</p>
+                </div> 
               </div>
-              
+ 
               <p align="left">{{raffle.description | truncatechars:100}} </p>
             </div>
             <div class="offset-xl-0 col-xl-1 offset-lg- col-lg-8 offset-md-5 col-md-7 col-sm-12 col-12">

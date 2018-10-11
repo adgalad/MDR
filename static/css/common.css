@@ -625,13 +625,14 @@ header .brand .logo {
   border-color: transparent; border: 0px solid transparent;
   border-right: 1px solid transparent !important; 
   font-size: 15px;
+  border-radius: .25rem !important;
 }
 .breadcrumb-default{ background-color: #fff; }
 .btn-primary,.breadcrumb-primary{ background-color: #337ab7; }
 .btn-primary:hover{background-color: #286090;}
 
 .breadcrumb-success{ background-color: #5cb85c; }
-.breadcrumb-info{ background-color: #5bc0de; }
+.breadcrumb-info{ background-color: #9acdff; }
 .breadcrumb-warning{ background-color: #f0ad4e; }
 .breadcrumb-danger{ background-color: #d9534f; }
 .breadcrumb-negro{ background-color: #d4d4d4; }
@@ -650,7 +651,7 @@ header .brand .logo {
 }
 .btn-breadcrumb .btn-derecha:first-child { 
   border-top-right-radius: 2px !important; 
-  border-bottom-right-radius: 2px !important; 
+  border-bottom-right-radius: 2px !important;  
 }
 
 .btn-breadcrumb .btn-derecha:after, .btn-breadcrumb .btn-derecha:before{
@@ -703,7 +704,7 @@ header .brand .logo {
 .btn-breadcrumb .btn.btn-primary:after {border-left: 10px solid #337ab7;}
 .btn-breadcrumb .btn.btn-primary:hover:after {border-left: 10px solid #286090;}
 .btn-breadcrumb .btn.btn-primary:hover:before, .btn-breadcrumb .btn.btn-primary:before {border-left: 10px solid #204d74;}
-.breadcrumb-primary{ border: solid 1px #204d74; }
+.breadcrumb-primary{ border-radius: .25rem; }
 
 
 /** Info button **/
