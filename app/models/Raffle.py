@@ -8,7 +8,7 @@ from django.db import models
 from django.utils import timezone
 from ckeditor.fields import RichTextField
 
-from app.helper import EmailThread
+from app.helpers import EmailThread
 from app.dash import Dash
 from app.models.User import User
 from app.models.models import Transaction
