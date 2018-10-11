@@ -15,7 +15,8 @@ from app.dash import Dash
 def index(request):
   #print(DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL)
   tx = models.Transaction.objects.all()[:15]
-  return render(request, "index.xhtml", {"transactions":tx})
+  raffles = models.Raffle.objects.all()[0:10]
+  return render(request, "index.xhtml", {"raffles":raffles,"transactions":tx})
 
 def help(request):
     return render(request, "help.html")  
