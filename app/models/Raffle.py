@@ -28,6 +28,7 @@ SIGNS_REQUIRED = 2
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
+  created_at = models.DateTimeField(auto_now_add=True)
   description = models.CharField(verbose_name="Description", max_length=4096)
   thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
@@ -125,6 +126,7 @@ class Raffle(models.Model):
   def finished(self):
     # count = Dash.getblockcount()
     # return self.blockHeight < count
+    print(self.drawDate, timezone.now(),self.drawDate < timezone.now())
     return self.drawDate < timezone.now()
 
   def createMultisigAddress(self):
@@ -289,7 +291,7 @@ class Raffle(models.Model):
 
   def getWinner(self):
     if self.winnerAddress:
-      if self.transaction:
+      if self.transaction or self.commandSignRawTx:
         return self.winnerAddress
       else:
         self.__send()
