@@ -48,7 +48,7 @@ urlpatterns = [
     url(r'^api/users/', views.User.getUsers, name="api.users"),
     url(r'^api/changePassword/$', views.User.changePassword, name="api.changePassword"),
 
-    url(r'^reset/password_reset', views.password_reset, 
+    url(r'^reset/password_reset', password_reset, 
         name='password_reset'), 
     url(r'^password_reset_done', password_reset_done, 
         {'template_name': 'registration/password_reset_done.html'}, 

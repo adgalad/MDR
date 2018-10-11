@@ -412,6 +412,7 @@ header .brand .logo {
 
   .rowtable.header .cell {
     display: none;
+    padding-left: 20px;
   }
 
   .rowtable .cell:before {
@@ -443,7 +444,7 @@ header .brand .logo {
   color: #666666;
   line-height: 1.2;
   font-weight: unset !important;
-
+  padding-left: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #f2f2f2;
