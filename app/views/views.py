@@ -15,7 +15,7 @@ from app.dash import Dash
 def index(request):
   #print(DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL)
   tx = models.Transaction.object.all()[:15]
-  return render(request, "index.xhtml", {"transactions":})
+  return render(request, "index.xhtml", {"transactions":tx})
 
 def help(request):
     return render(request, "help.html")  
