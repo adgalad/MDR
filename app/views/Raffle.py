@@ -31,7 +31,7 @@ class Raffle:
   def myRaffles(request):
     count = Dash.getblockcount()
     user = request.user
-    activeRaffles = models.Raffle.objects.filter(owner=user).order_by('-drawDate')
+    activeRaffles = user.ownsRaffles.all().order_by('-drawDate')
     page = request.GET.get('page', 1)
     paginator = Paginator(activeRaffles, 10)
     try:
@@ -106,13 +106,7 @@ class Raffle:
             return redirect(raffle)
           else:
             messages.error(request, "Couldn't create multisig address.")
-      # else:
-      #   try:
-      #     count = Dash.getblockcount()
-      #     address = Dash.getnewaddress()
-      #     blockHash = Dash.getblockhash(count)
-      #     blockTime = Dash.getblock(blockHash)['time']
-      
+
         except Exception as e:
           print(e)
           print("No entiendo")
@@ -129,6 +123,8 @@ class Raffle:
     except:
       raise PermissionDenied
 
+    if raffle.owner != request.user and not request.user.is_superuser:
+      raise PermissionDenied
     if request.GET.get('modal') == '1':
       base = 'modalForm.html'
     else:

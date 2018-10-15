@@ -55,11 +55,17 @@
             <div class="offset-xl-0 col-xl-1 offset-lg- col-lg-8 offset-md-5 col-md-7 col-sm-12 col-12">
               <div class="row  align-items-center h-100" style="width: 100%">
                 {% if raffle.finished %}
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
-                    Terminate Raffle
-                  </a>
-                </div>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
+                      Terminate Raffle
+                    </a>
+                  </div>
+                {% elif not raffle.is_active %}
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a class="btn btn-primary" href="{% url 'payRaffle' raffle.id %}">
+                      Pay raffle's fee
+                    </a>
+                  </div>
                 {% endif %}
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <a class="btn btn-primary" style="margin-top: 1%" href="{% url 'raffleDetails' raffle.pk %}">Read more</a>
