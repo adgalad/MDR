@@ -50,7 +50,7 @@ class Raffle:
     except:
       raise PermissionDenied
     if not raffle.is_active:
-      return redirect(reverse('payRaffle'))
+      return redirect(reverse('payRaffle'), kwargs={'id':id})
     return render(request, "raffle.html", {"raffle":raffle})
 
   def moreDetails(request, id):
@@ -59,7 +59,7 @@ class Raffle:
     except:
       raise PermissionDenied
     if not raffle.is_active:
-      return redirect(reverse('payRaffle'))
+      return redirect(reverse('payRaffle'), kwargs={'id':id})
     return render(request, "raffleDetails.html", {"raffle":raffle})
 
   @staticmethod
