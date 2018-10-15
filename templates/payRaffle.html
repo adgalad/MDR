@@ -5,9 +5,11 @@
 {% block form %}
 <br>
 <div class="modal-dialog modal-md" style="z-index:1500;" >
-  <div class="modal-content shadow modal-margin ">
+  <div class="modal-content {% if request.GET.modal != '1' %} shadow {% endif %}modal-margin ">
     <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal">x</button>
+        {% if request.GET.modal == '1' %}
+          <button type="button" class="close" data-dismiss="modal">x</button>
+        {% endif %}
        <div class="container-fluid bg-gray" id="accordion-style-1">
          <div class="container">
             <section>
@@ -19,9 +21,11 @@
                           
                         
                             <p> Your raffle was created successfully. In order to publish your raffle, you have to pay a 0.01 Dash fee to the following Dash address. </p>
+                            <div class="col-md-6" style=" border: 1px black solid; height: 40px;font-size:13px;padding-top:7px;">
+                              {{raffle.MSaddress}}
+                            </div>
 
-                            {{raffle.MSaddess}}
-                          <p>If the fee is not payout after 7 days, the raffle will be deleted and you will have to create a new one.</p>
+                            <p>If the fee is not payout after 7 days, the raffle will be deleted and you will have to create a new one.</p>
                         
                         
                     </div>
