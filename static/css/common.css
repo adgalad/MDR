@@ -616,6 +616,10 @@ header .brand .logo {
   #fontsmall{ font-size:14px !important; }
 }
 
+@media (max-width: 767px) {
+  .owl-stage-outer{position:relative;overflow:hidden;-webkit-transform:translate3d(0,0,0);height:170px;}
+}
+
 /*.btn-breadcrumb{
   width: 60%;
   background-color: #fff;

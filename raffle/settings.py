@@ -142,6 +142,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 CKEDITOR_BASEPATH = os.path.join(STATIC_URL, "ckeditor/ckeditor/")
 CKEDITOR_CONFIGS = {
     'default': {
+        'width': '100%',
         'skin': 'moono',
         # 'skin': 'office2013',
         'toolbar_Basic': [

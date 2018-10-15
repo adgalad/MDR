@@ -148,11 +148,14 @@ class AddWalletAddress(forms.ModelForm):
                     raise forms.ValidationError("The public key is invalid. Please try again.")
                
                 validation = Dash.validateaddress(address)
-                iswatchonly = validation['iswatchonly'] 
-                pubkeyExists = 'pubkey' in validation
-                validPubkey = validation['pubkey'] == public_key if pubkeyExists else None
-                if not (iswatchonly and pubkeyExists and validPubkey):
-                    print(iswatchonly , pubkeyExists , validPubkey, 'The public key you entered doesn\'t correspond to the address')
+                if not validation['iswatchonly']:
+                    print('The public key you entered doesn\'t correspond to the address.')
+                    raise forms.ValidationError('The public key you entered doesn\'t correspond to the address.')
+                elif not 'pubkey' in validation:
+                    print("Couldn't find public key.")  
+                    raise forms.ValidationError("Couldn't find public key.")  
+                elif not (validation['pubkey'] == public_key if pubkeyExists else False):
+                    print('The public key you entered doesn\'t correspond to the address')
                     raise forms.ValidationError('The public key you entered doesn\'t correspond to the address')
 
             if validation['pubkey'] != public_key:

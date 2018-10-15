@@ -16,7 +16,7 @@ class Raffle:
   @staticmethod
   def active(request):
     count = Dash.getblockcount()
-    activeRaffles = models.Raffle.objects.all().order_by('-drawDate')
+    activeRaffles = models.Raffle.objects.filter(is_active=True).order_by('-drawDate')
     page = request.GET.get('page', 1)
     paginator = Paginator(activeRaffles, 10)
     try:
@@ -49,12 +49,16 @@ class Raffle:
       raffle = models.Raffle.objects.get(id=id)
     except:
       raise PermissionDenied
+    if not raffle.is_active:
+      raise PermissionDenied
     return render(request, "raffle.html", {"raffle":raffle})
 
   def moreDetails(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
+      raise PermissionDenied
+    if not raffle.is_active:
       raise PermissionDenied
     return render(request, "raffleDetails.html", {"raffle":raffle})
 
@@ -63,6 +67,8 @@ class Raffle:
   def finished(request,id):
     raffle = models.Raffle.objects.get(pk=id)
     if raffle.owner != request.user and not request.user.is_superuser:
+      raise PermissionDenied
+    if not raffle.finished:
       raise PermissionDenied
     return render(request, "finishedRaffle.html", {"raffle":raffle})
 
@@ -114,6 +120,20 @@ class Raffle:
       form = forms.Raffle()
 
     return render(request, "createRaffle.html", {'form': form,})
+
+  @staticmethod
+  def pay(request, id):
+    try:
+      raffle = models.Raffle.objects.get(pk=id)
+    except:
+      raise PermissionDenied
+
+    if request.GET.get('modal') == '1':
+      base = 'modalForm.html'
+    else:
+      base = 'form.html'
+
+    return render(request, "payRaffle.html", {"raffle":raffle, "base":base})
 
   @staticmethod
   def buyTicket(request, id):

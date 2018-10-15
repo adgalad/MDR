@@ -70,7 +70,17 @@
                                       <p id="address"></p>
                                   
                             </div>
-                            <input type="text" name="raffleaddress" value="{{address}}" maxlength="128" required="" id="raffleaddress" style="display: none;" class="form-control"> 
+                            <input type="text" name="raffleaddress" value="{{address}}" maxlength="128" required="" id="raffleaddress" style="display: none;" class="form-control">
+                            <div class="col-sm-12" id="message">
+                                <div class="alert-form alert-warning alert-dismissible fade show" role="alert" style="margin-bottom:20px !important ;">
+                                  <span style="font-size:14px;text-align:left;">
+                                 <b>Attention:</b> Remember to transfer the exact amount indicated, otherwise the rest will be considered a donation and not a ticket sale.
+                                 The transaction Private send should not be sent.</span>
+                                  <button type="button" class="close" style="margin-right:10px;" onclick="message()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                            </div> 
                             <div class="row">
                                   <div class="col-sm-6">
                                     <button class="btn btn-primary btn-block" type="submit" id="back" onclick="back()">Go back</button>
@@ -107,6 +117,9 @@
             $('#buy').hide();
         }
 
+        function message() {
+            $('#message').hide();
+        }
 
         function btn_submit() {
             if ($('input[name=terms]').prop('checked')) {
