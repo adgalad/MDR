@@ -1,0 +1,107 @@
+{% extends base %}
+
+{%load humanize %}
+
+{% block form %}
+<br>
+<div class="modal-dialog modal-md" style="z-index:1500;" >
+  <div class="modal-content shadow modal-margin ">
+    <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+       <div class="container-fluid bg-gray" id="accordion-style-1">
+         <div class="container">
+            <section>
+              <div class="row" align="center">
+                <div class="col-12 mx-auto">
+                  <div class="accordion" id="accordionExample">
+                    <div class="container" style="z-index:-1;">
+                          <h3 id="text" style="margin-bottom:15px;"><b>Raffle Fee</b></h3>
+                          
+                        
+                            <p> Your raffle was created successfully. In order to publish your raffle, you have to pay a 0.01 Dash fee to the following Dash address. </p>
+
+                            {{raffle.MSaddess}}
+                          <p>If the fee is not payout after 7 days, the raffle will be deleted and you will have to create a new one.</p>
+                        
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>     
+    
+
+{% endblock form %}
+    
+{% block scripts %}
+  {{ block.super }}
+    <script type="text/javascript">
+      var address = "{{address}}"
+      var price = {{raffle.ticketPrice}}
+      var number = document.getElementById('numberTickets');
+      console.log(number)
+
+        function back() {
+            $('#pre-buy').show();
+            $('#buy').hide();
+        }
+
+
+        function btn_submit() {
+            if ($('input[name=terms]').prop('checked')) {
+                  $('#pre-buy').hide();
+                  $('#buy').show();
+                }else{
+                  $('input[name=terms]').addClass('is-invalid');
+                  $('#alert').show();
+                }
+        }
+
+        function valid(){
+          if ($('input[name=terms]').prop('checked')) {
+              $('#alert').hide();
+              $('input[name=terms]').removeClass('is-invalid');
+          }
+        }
+
+        function requestQR(){
+          
+          if(number.value <= 0){
+            number.value = 1;
+          }
+
+            var n = number.value
+            
+            console.log(address)
+            var dashuri = "dash:" + address + "?amount=" + String(n*price) + "&label=Payment"
+            document.getElementById("image").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+dashuri
+            document.getElementById("link").href = dashuri
+            document.getElementById("address").innerHTML = 'Or send ' + String((n*price).toFixed(3)) + ' tDash to the following address: {{address}}'
+            $span = $('<span />').addClass('d-inline-block').attr({'data-toggle':"tooltip", 'title':'Copy address','tabindex':'0', 'data-placement':"right"});
+            $li = $('<li />').addClass('fa fa-copy').attr({'onclick':'copy()', 'style':'color: #0062cc;cursor: pointer;margin-left:10px;'});
+            $('#address').append( $span );
+            ( $span ).append( $li )
+        }
+
+        requestQR() 
+
+
+        function copy() {
+         /* Get the text field */
+          var copyText = document.getElementById("raffleaddress");
+
+          const el = document.createElement('textarea');
+          el.value = copyText.value;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+        }
+    </script>
+{% endblock scripts %}
+

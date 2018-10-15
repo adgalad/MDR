@@ -27,15 +27,18 @@ raffleDuration = {
 
 SIGNS_REQUIRED = 2
 
+PAYMENT_AMOUNT = 0.1 # Dash
+
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   created_at = models.DateTimeField(auto_now_add=True)
-  description = models.CharField(verbose_name="Description", max_length=4096)
-  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL", blank=True, null=True, max_length=2048)
+  is_active = models.BooleanField("Raffle was paid", default=False)
+  description = RichTextField(verbose_name="Description")
+  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL (at least 350x350)", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
   addressProject = models.CharField(null=True, verbose_name="Beneficiary Address", max_length=100)
-  prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=44.45)
-  projectPercentage = models.FloatField(verbose_name="Project Percentage", default=55.55)
+  prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=44.44445)
+  projectPercentage = models.FloatField(verbose_name="Project Percentage", default=55.55555)
   drawDate = models.DateTimeField(verbose_name="Draw date")
   ticketsSold = models.IntegerField(verbose_name="Tickets Sold", default=0)
   ticketPrice = models.DecimalField(verbose_name="Ticket Price", max_digits=20, decimal_places=6)
@@ -46,9 +49,10 @@ class Raffle(models.Model):
   transaction = models.CharField(verbose_name="Transaction", max_length=100, blank=True, null=True)
   # signers = models.ManyToManyField(User, blank=True, through='RaffleSigner', verbose_name="Signers",related_name="signs")
   type_choice = ( ('Mini Raffle', 'Mini Raffle'), ('Raffle', 'Raffle'), ('Mega Raffle', 'Mega Raffle') )
-  type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type")
+  type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type of Raffle")
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
   isMultisig = models.BooleanField(default=True, verbose_name="Multisign Prize address")
+
   # signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
   
   MSaddress = models.CharField(null=True, verbose_name="Generated address for MS", max_length=100)
@@ -72,8 +76,6 @@ class Raffle(models.Model):
 
   @property
   def getPrize(self):
-
-    total = Dash.getaddressbalance(self.addressPrize)
     return float(self.totalPrize)*self.prizePercentage/100.0
 
 
@@ -135,6 +137,17 @@ class Raffle(models.Model):
       data = Dash.createmultisig(str(SIGNS_REQUIRED), self.getMSpubkey())
       self.addressPrize = data['address']
       self.MSredeemScript = data['redeemScript']
+
+  def checkPayment(self):
+    if is_active:
+      return
+    
+    balance = Dash.getaddressbalance(self.MSaddress)['balance']/100000000
+    if balance >= PAYMENT_AMOUNT:
+      self.is_active = True
+      self.save()
+    elif timezone.now()-self.created_at > datetime.timedelta(days=7):
+      self.delete()
 
   def getTransactions(self):
     transactions = self.transactions.all()
@@ -320,6 +333,7 @@ class Raffle(models.Model):
       
       if txArray:
         random.shuffle(txArray)
+        self.blockHeight = Dash.getblockcount()
         data = Dash.getblockhash(self.blockHeight)
       
         if data is not None:

@@ -12,11 +12,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         while(True):
-            raffles = models.Raffle.objects.filter(transaction__isnull=True)
+
+            # Check if a raffle finished
+            raffles = models.Raffle.objects.filter(transaction__isnull=True, is_active=True)
             for raffle in raffles:
                 #print(raffle.name)
                 raffle.getWinner()
-            #print('-------- Delay %d seconds --------'%self.DELAY)
+            
+            # Check payment of raffles
+            raffles = models.Raffle.objects.filter(is_active=False)
+            for raffle in raffles:
+                raffle.checkPayment()
+
             time.sleep(self.DELAY)
 
 
