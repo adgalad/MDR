@@ -19,14 +19,14 @@
                 <div style="color:red"> {{ message }} </div>
               {% endfor %}
               <div class="wrap-input100 validate-input" data-validate="Name is required">
-                <span class="label-input100">Raffle Name</span>
+                <span class="label-input100">{{form.name.label}}</span>
                 <input class="input100" type="text" name="{{form.name.html_name}}" placeholder="Enter your Raffle Name" id="{{form.name.auto_id}}">
                 <span class="focus-input100"></span>
               </div>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="wrap-input100 validate-input">
-                  <span class="label-input100">Thumbnail</span>
+                  <span class="label-input100">{{form.thumbnail.label}}</span>
                       <input class="input100" type="text" name="{{form.thumbnail_url.html_name}}" id="{{form.thumbnail_url.auto_id}}" placeholder="Enter a thumbnail url">
                       <span class="focus-input100"></span>
                 </div>  
@@ -34,7 +34,7 @@
             </div>
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <p class="label-input100">Type of Raffle</p>
+                    <p class="label-input100">{{form.type.label}}</p>
                     <div>
                       {{form.type}}
                     </div>
@@ -43,7 +43,7 @@
 
               <br>
 
-               <p class="label-input100" style="margin-bottom:15px;">Description:</p>
+               <p class="label-input100" style="margin-bottom:15px;">{{form.description.label}}:</p>
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ form.description }}</div>
                   <br>
                   {% for field in form %}
