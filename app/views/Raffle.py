@@ -50,7 +50,7 @@ class Raffle:
     except:
       raise PermissionDenied
     if not raffle.is_active:
-      raise PermissionDenied
+      return redirect(reverse('payRaffle'))
     return render(request, "raffle.html", {"raffle":raffle})
 
   def moreDetails(request, id):
@@ -59,7 +59,7 @@ class Raffle:
     except:
       raise PermissionDenied
     if not raffle.is_active:
-      raise PermissionDenied
+      return redirect(reverse('payRaffle'))
     return render(request, "raffleDetails.html", {"raffle":raffle})
 
   @staticmethod
@@ -115,6 +115,7 @@ class Raffle:
       
         except Exception as e:
           print(e)
+          print("No entiendo")
           raise PermissionDenied
     else:
       form = forms.Raffle()
