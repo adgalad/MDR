@@ -27,6 +27,7 @@
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <h3>{{raffle.name}}</h3>
           </div>
+          <!-- Prize address -->
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="row">
               <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
@@ -35,6 +36,18 @@
               <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 details">
                 <a class="explorer-link" href="https://test.explorer.dashninja.pl/address/{{raffle.addressPrize}}">
                     {{raffle.addressPrize}} <b>*</b>
+                </a>
+              </div>
+            </div>
+            
+            <!-- Beneficiary -->
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Owner:</b> 
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                <a class="explorer-link" href="https://test.explorer.dashninja.pl/address/{{ raffle.winnerAddress }}">
+                  {{ raffle.owner }} 
                 </a>
               </div>
             </div>
@@ -48,10 +61,22 @@
                 </a>
               </div>
             </div>
+
+            <!-- Winner -->
             {% if raffle.winnerAddress %}
             <div class="row">
               <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
                   <b>Winner:</b> 
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                <a class="explorer-link" href="https://test.explorer.dashninja.pl/address/{{ raffle.winnerAddress }}">
+                  {{ raffle.winner }} 
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Winner Address:</b> 
               </div> 
               <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
                 <a class="explorer-link" href="https://test.explorer.dashninja.pl/address/{{ raffle.winnerAddress }}">
@@ -69,6 +94,8 @@
               </div>
             </div>
             {% endif %}
+
+            <!-- Draw date -->
             <div class="row">
               <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
                 <b>Draw Date:</b> {{raffle.drawDate}}
