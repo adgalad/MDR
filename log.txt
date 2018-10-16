@@ -1,0 +1,72 @@
+Performing system checks...
+
+System check identified no issues (0 silenced).
+October 16, 2018 - 13:22:58
+Django version 1.11.2, using settings 'raffle.settings'
+Starting development server at http://0.0.0.0:80/
+Quit the server with CONTROL-C.
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getblockcount
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:23:00.755876+00:00 False
+0.1 {'Mini Raffle': 0.01, 'Raffle': 0.05, 'Mega Raffle': 0.1} Mega Raffle
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:23:00.758345+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:24:25.938343+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:24:25.938755+00:00 False
+Performing system checks...
+
+System check identified no issues (0 silenced).
+October 16, 2018 - 13:26:27
+Django version 1.11.2, using settings 'raffle.settings'
+Starting development server at http://0.0.0.0:80/
+Quit the server with CONTROL-C.
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:27:00.064484+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:27:00.064862+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:32:24.930765+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:32:24.930907+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:32:46.603975+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:32:46.604112+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:56:28.723749+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:56:28.723892+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:56:42.668266+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:56:42.668404+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:58:16.750929+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 13:58:16.751116+00:00 False
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getnewaddress
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6b968e0b1c464ba5f1c641cdffe5ce7e054db626380b55e203f3d569de4ac1d4 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6af5732af2239c8ef48c34ee820ebd06fe4c097eb3a9424b61f641a63c8068ed 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction f19de2c5989b699e6949b7912d9a4ff988ffbfcbfaef9a91f48626cb4a4751f0 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 19feb979db93350aed6de6e07f12cf43b73906a7fe813ec72e15e08acfc35a20 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 0076002b2a54531c0a6e7ba88773c2a0bbce3df4f0269767ea8cfd6246ff33f2 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6b968e0b1c464ba5f1c641cdffe5ce7e054db626380b55e203f3d569de4ac1d4 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6af5732af2239c8ef48c34ee820ebd06fe4c097eb3a9424b61f641a63c8068ed 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction f19de2c5989b699e6949b7912d9a4ff988ffbfcbfaef9a91f48626cb4a4751f0 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 19feb979db93350aed6de6e07f12cf43b73906a7fe813ec72e15e08acfc35a20 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 0076002b2a54531c0a6e7ba88773c2a0bbce3df4f0269767ea8cfd6246ff33f2 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6b968e0b1c464ba5f1c641cdffe5ce7e054db626380b55e203f3d569de4ac1d4 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6af5732af2239c8ef48c34ee820ebd06fe4c097eb3a9424b61f641a63c8068ed 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction f19de2c5989b699e6949b7912d9a4ff988ffbfcbfaef9a91f48626cb4a4751f0 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 19feb979db93350aed6de6e07f12cf43b73906a7fe813ec72e15e08acfc35a20 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 0076002b2a54531c0a6e7ba88773c2a0bbce3df4f0269767ea8cfd6246ff33f2 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6b968e0b1c464ba5f1c641cdffe5ce7e054db626380b55e203f3d569de4ac1d4 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6af5732af2239c8ef48c34ee820ebd06fe4c097eb3a9424b61f641a63c8068ed 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction f19de2c5989b699e6949b7912d9a4ff988ffbfcbfaef9a91f48626cb4a4751f0 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 19feb979db93350aed6de6e07f12cf43b73906a7fe813ec72e15e08acfc35a20 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 0076002b2a54531c0a6e7ba88773c2a0bbce3df4f0269767ea8cfd6246ff33f2 1
+2018-11-14 16:46:44.077554+00:00 2018-10-16 14:10:04.526942+00:00 False
+2018-11-14 16:46:44.077554+00:00 2018-10-16 14:10:04.527130+00:00 False
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6b968e0b1c464ba5f1c641cdffe5ce7e054db626380b55e203f3d569de4ac1d4 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6af5732af2239c8ef48c34ee820ebd06fe4c097eb3a9424b61f641a63c8068ed 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction f19de2c5989b699e6949b7912d9a4ff988ffbfcbfaef9a91f48626cb4a4751f0 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 19feb979db93350aed6de6e07f12cf43b73906a7fe813ec72e15e08acfc35a20 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 0076002b2a54531c0a6e7ba88773c2a0bbce3df4f0269767ea8cfd6246ff33f2 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6b968e0b1c464ba5f1c641cdffe5ce7e054db626380b55e203f3d569de4ac1d4 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6af5732af2239c8ef48c34ee820ebd06fe4c097eb3a9424b61f641a63c8068ed 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction f19de2c5989b699e6949b7912d9a4ff988ffbfcbfaef9a91f48626cb4a4751f0 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 19feb979db93350aed6de6e07f12cf43b73906a7fe813ec72e15e08acfc35a20 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 0076002b2a54531c0a6e7ba88773c2a0bbce3df4f0269767ea8cfd6246ff33f2 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getblockcount
+2018-10-16 14:11:07+00:00 2018-10-16 14:11:44.125354+00:00 True
+0.1 {'Mini Raffle': 0.01, 'Raffle': 0.05, 'Mega Raffle': 0.1} Mega Raffle
+2018-10-16 14:11:07+00:00 2018-10-16 14:11:44.125778+00:00 True
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6b968e0b1c464ba5f1c641cdffe5ce7e054db626380b55e203f3d569de4ac1d4 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction 6af5732af2239c8ef48c34ee820ebd06fe4c097eb3a9424b61f641a63c8068ed 1
+/home/ubuntu/dashcore-0.12.3/bin/dash-cli -rpcconnect=54.224.101.39 -rpcuser=carlos -rpcpassword=carlos -testnet getrawtransaction f19de2c5989b699e6949b7912d9a4ff988ffbfcbfaef9a91f48626cb4a4751f0 1
