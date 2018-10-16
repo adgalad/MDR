@@ -27,14 +27,32 @@ class AddPrivkey(forms.Form):
         self.fields['privkey'].widget.attrs.update({'class' : 'form-control'})
 
 
+def checkUrl(url):
+    if url == '' or url == None:
+            return '/static/img/placeholder.png'
+    else:
+        import requests
+        from PIL import Image
+        from io import StringIO, BytesIO
+        r = requests.get(url)
+        try:
+            im = Image.open(StringIO(r.content))
+        except:
+            im = None
+
+        if not im:
+            try:
+                im = Image.open(BytesIO(r.content))
+            except:
+                raise forms.ValidationError("A valid image URL is required.")
+
+        return url
 
 class Raffle(forms.ModelForm):
-    # signers = forms.ModelChoiceField(queryset=models.User.objects.filter(can_sign=True))
     class Meta:
         model = models.Raffle
         widgets = {
             'description': forms.Textarea(),
-            # 'signers': forms.Select(),
         }
         
         fields = ('name',
@@ -45,27 +63,28 @@ class Raffle(forms.ModelForm):
 
     def clean_thumbnail_url(self):
         url = self.cleaned_data['thumbnail_url']
+        return checkUrl(url)
+
+    def __init__(self, *args, **kwargs):
+        super(Raffle, self).__init__(*args, **kwargs)
+        for i in self.fields:    
+            self.fields[i].widget.attrs.update({'class' : 'form-control'})
+
+class EditRaffle(forms.ModelForm):
+    class Meta:
+        model = models.Raffle
+        widgets = {
+            'description': forms.Textarea(),
+        }
         
-        if url == '' or url == None:
-            return '/static/img/placeholder.png'
-        else:
-            import requests
-            from PIL import Image
-            from io import StringIO, BytesIO
-            r = requests.get(url)
-            try:
-                im = Image.open(StringIO(r.content))
-            except:
-                im = None
+        fields = ('name',
+                  'thumbnail_url',
+                  # 'signers',
+                  'description')
 
-            if not im:
-                try:
-                    im = Image.open(BytesIO(r.content))
-                except:
-                    raise form.ValidationError("A valid image URL is required.")
-
-            return self.cleaned_data['thumbnail_url']
-
+    def clean_thumbnail_url(self):
+        url = self.cleaned_data['thumbnail_url']
+        return checkUrl(url)
 
     def __init__(self, *args, **kwargs):
         super(Raffle, self).__init__(*args, **kwargs)
