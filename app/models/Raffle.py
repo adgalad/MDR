@@ -27,7 +27,7 @@ raffleDuration = {
 
 SIGNS_REQUIRED = 2
 
-PAYMENT_AMOUNT = 0.1 # Dash
+PAYMENT_AMOUNT = 0.01 # Dash
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
@@ -139,10 +139,10 @@ class Raffle(models.Model):
       self.MSredeemScript = data['redeemScript']
 
   def checkPayment(self):
-    if is_active:
+    if self.is_active:
       return
     
-    balance = Dash.getaddressbalance(self.MSaddress)['balance']/100000000
+    balance = Dash.getaddressbalance([self.MSaddress])['balance']/100000000
     if balance >= PAYMENT_AMOUNT:
       self.is_active = True
       self.save()
