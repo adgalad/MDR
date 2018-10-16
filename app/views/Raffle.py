@@ -128,13 +128,13 @@ class Raffle:
       raise PermissionDenied
 
     if request.method == "POST":
-      form = forms.Raffle(request.POST, instance=raffle)
+      form = forms.EditRaffle(request.POST, instance=raffle)
       if form.is_valid():
         form.save()
         return redirect(reverse('raffleDetails', kwargs={'id':id}))
       return render(request, "editRaffle.html", {'form':form})
     else:
-      form = forms.Raffle(instance=raffle)
+      form = forms.EditRaffle(instance=raffle)
       return render(request, "editRaffle.html", {'form':form})
 
   @staticmethod
