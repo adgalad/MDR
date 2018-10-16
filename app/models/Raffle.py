@@ -34,7 +34,7 @@ class Raffle(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField("Raffle was paid", default=False)
   description = RichTextField(verbose_name="Description")
-  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL (at least 350x350 pixels)", blank=True, null=True, max_length=2048)
+  thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL (square image of at least 300x300 pixels)", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
   addressProject = models.CharField(null=True, verbose_name="Beneficiary Address", max_length=100)
   prizePercentage = models.FloatField(verbose_name="Prize Percentage", default=44.44445)
