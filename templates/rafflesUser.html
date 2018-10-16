@@ -66,6 +66,12 @@
                       Pay raffle's fee
                     </a>
                   </div>
+                {% else %}
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a class="btn btn-primary" href="{% url 'editRaffle' raffle.id %}">
+                      Edit
+                    </a>
+                  </div>
                 {% endif %}
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <a class="btn btn-primary" style="margin-top: 1%" href="{% url 'raffleDetails' raffle.pk %}">Read more</a>
