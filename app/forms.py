@@ -87,7 +87,7 @@ class EditRaffle(forms.ModelForm):
         return checkUrl(url)
 
     def __init__(self, *args, **kwargs):
-        super(Raffle, self).__init__(*args, **kwargs)
+        super(EditRaffle, self).__init__(*args, **kwargs)
         for i in self.fields:    
             self.fields[i].widget.attrs.update({'class' : 'form-control'})
 
