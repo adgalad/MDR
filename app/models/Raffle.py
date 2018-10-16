@@ -139,10 +139,10 @@ class Raffle(models.Model):
       self.MSredeemScript = data['redeemScript']
 
   def checkPayment(self):
-    if is_active:
+    if self.is_active:
       return
     
-    balance = Dash.getaddressbalance(self.MSaddress)['balance']/100000000
+    balance = Dash.getaddressbalance([self.MSaddress])['balance']/100000000
     if balance >= PAYMENT_AMOUNT:
       self.is_active = True
       self.save()
