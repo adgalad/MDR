@@ -257,7 +257,6 @@ class Raffle(models.Model):
                "redeemScript": self.MSredeemScript})
     
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
-    prize -= fee
     
     newAddress = Dash.getnewaddress()
     
@@ -267,7 +266,7 @@ class Raffle(models.Model):
       }
     else:
       winnerAmount = float('%.8f'%(prize*self.prizePercentage/100))
-      projectAmount =  float('%.8f'%(prize-winnerAmount))
+      projectAmount =  float('%.8f'%(prize-winnerAmount)) - fee
       toAddress = {
         self.winnerAddress: winnerAmount,
         self.addressProject: projectAmount,
