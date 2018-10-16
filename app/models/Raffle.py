@@ -27,7 +27,7 @@ raffleDuration = {
 
 SIGNS_REQUIRED = 2
 
-PAYMENT_AMOUNT = 0.1 # Dash
+PAYMENT_AMOUNT = 0.01 # Dash
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
@@ -257,7 +257,6 @@ class Raffle(models.Model):
                "redeemScript": self.MSredeemScript})
     
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
-    prize -= fee
     
     newAddress = Dash.getnewaddress()
     
@@ -267,7 +266,7 @@ class Raffle(models.Model):
       }
     else:
       winnerAmount = float('%.8f'%(prize*self.prizePercentage/100))
-      projectAmount =  float('%.8f'%(prize-winnerAmount))
+      projectAmount =  float('%.8f'%(prize-winnerAmount)) - fee
       toAddress = {
         self.winnerAddress: winnerAmount,
         self.addressProject: projectAmount,
