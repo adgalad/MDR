@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
+from django.contrib.auth.views import PasswordResetView, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from app import views
 
 urlpatterns = [
@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^api/changePassword/$', views.User.changePassword, name="api.changePassword"),
 
     url(r'^reset/password_reset', password_reset, 
+        {'html_email_template_name': 'registration/password_reset_html_email.html'},
         name='password_reset'), 
     url(r'^password_reset_done', password_reset_done, 
         {'template_name': 'registration/password_reset_done.html'}, 

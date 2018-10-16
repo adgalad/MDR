@@ -46,7 +46,7 @@
                 <b>Draw Date:</b> {{raffle.drawDate}}
               </div> 
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                <b>Prize:</b> {{ raffle.getPrize }} tDash
+                <b>Prize:</b> {{ raffle.getPrize | floatformat:-8 }} tDash
               </div>
             </div>
 

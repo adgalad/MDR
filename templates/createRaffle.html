@@ -5,7 +5,7 @@
   <br>
   <br>
   
-  <form class="contact100-form" method="post">
+  <form class="contact100-form" method="post" id="raffle">
     
     {% csrf_token %}
     <div class="container" align="left" style="width: 80%">
@@ -61,10 +61,24 @@
                       </div>
                     {% endif %}
                   {% endfor %}
+                  <div class="col-sm-12 col-md-12 col-lg-12" align="center">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="terms" id="defaultUnchecked" onchange="valid()">
+                        <label class="custom-control-label" for="defaultUnchecked">I agree to the <a href="{% url 'terms' %}">terms</a> and <a href="{% url 'conditions' %}">conditions</a></label>
+                    </div>
+                  </div>
                   <br>
+                  <div class="col-sm-12" id="alert-term" style="display:none">
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span style="font-size:14px;"><b>Attention:</b> You must agree to terms and conditions</span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                  </div>
                   <div class="col-sm-12" align="center">
                     <div class="col-sm-6">
-                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                    <button class="btn btn-primary btn-block" type="button" onclick="btn_submit()">Submit</button>
                   </div>
           </div>
         </div>
@@ -88,7 +102,14 @@
   
 
   <script type="text/javascript">
-
+  function btn_submit() {
+    if ($('input[name=terms]').prop('checked')) {
+          document.getElementById("raffle").submit();
+        }else{
+          $('input[name=terms]').addClass('is-invalid');
+          $('#alert-term').show();
+        }
+  }
     
   </script>
 {% endblock scripts %}
