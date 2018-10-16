@@ -110,6 +110,12 @@
           $('#alert-term').show();
         }
   }
-    
+  
+ function valid(){
+        if ($('input[name=terms]').prop('checked')) {
+            $('#alert-term').hide();
+            $('input[name=terms]').removeClass('is-invalid');
+        }
+      } 
   </script>
 {% endblock scripts %}
