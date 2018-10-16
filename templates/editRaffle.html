@@ -1,0 +1,94 @@
+{% extends "form.html" %}
+{% load humanize %}
+
+{% block form %}
+  <br>
+  <br>
+  
+  <form class="contact100-form" method="post">
+    
+    {% csrf_token %}
+    <div class="container" align="left" style="width: 80%">
+      <div class="row">
+        <div class="container-contact100">
+          <div class="wrap-contact100">
+              <span class="contact100-form-title">
+                Edit Raffle
+              </span>
+              {% for message in messages %}
+                <div style="color:red"> {{ message }} </div>
+              {% endfor %}
+              <div class="wrap-input100 validate-input" data-validate="Name is required">
+                <span class="label-input100">{{form.name.label}}</span>
+                <input class="input100" type="text" name="{{form.name.html_name}}" placeholder="Enter your Raffle Name" id="{{form.name.auto_id}}" value="{{form.name.value}}">
+                <span class="focus-input100"></span>
+              </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="wrap-input100 validate-input">
+                  <span class="label-input100">{{form.thumbnail.label}}</span>
+                      <input class="input100" type="text" name="{{form.thumbnail_url.html_name}}" id="{{form.thumbnail_url.auto_id}}"  placeholder="Enter a thumbnail url" value="{{form.thumbnail.value}}" >
+                      <span class="focus-input100"></span>
+                </div>  
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <p class="label-input100">{{form.type.label}}</p>
+                    <div>
+                      {{form.type}}
+                    </div>
+                </div>
+              </div>
+
+              <br>
+
+               <p class="label-input100" style="margin-bottom:15px;">{{form.description.label}}:</p>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ form.description }}</div>
+                  <br>
+                  {% for field in form %}
+                    {% if field.errors %}
+                      <div class="col-sm-12" id="alert">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <span style="font-size:14px;" id="message">
+                           {{ field.errors }} 
+                          
+                          </span>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  <br>
+                  <div class="col-sm-12" align="center">
+                    <div class="col-sm-6">
+                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                  </div>
+          </div>
+        </div>
+      </div>
+      {% if field.errors %}
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-8"><div style="color:red"> {{ field.errors }} </div></div>
+        </div>
+      {% endif %}
+    </div>
+  </div>   
+ </form>
+
+
+{% endblock form %}
+
+{% block scripts %}
+  {{ block.super }}
+  {{ form.media }}
+  
+
+  <script type="text/javascript">
+
+    
+  </script>
+{% endblock scripts %}

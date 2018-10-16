@@ -117,6 +117,27 @@ class Raffle:
     return render(request, "createRaffle.html", {'form': form,})
 
   @staticmethod
+  @login_required(login_url='/login/')
+  def edit(request, id):
+    try:
+      raffle = models.Raffle.objects.get(pk=id)
+    except:
+      raise PermissionDenied
+
+    if raffle.owner != request.user:
+      raise PermissionDenied
+
+    if request.method == "POST":
+      form = forms.Raffle(request.POST, instance=raffle)
+      if form.is_valid():
+        form.save()
+        return redirect(reverse('raffleDetails', kwargs={'id':id}))
+      return render(request, "editRaffle.html", {'form':form})
+    else:
+      form = forms.Raffle(instance=raffle)
+      return render(request, "editRaffle.html", {'form':form})
+
+  @staticmethod
   def pay(request, id):
     try:
       raffle = models.Raffle.objects.get(pk=id)
