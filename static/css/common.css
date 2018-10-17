@@ -2,6 +2,9 @@
 .card {
   min-height: 200px;
 }
+.prize-card {
+  font-size: 1.15rem;
+}
 .explorer-link {
   color:black;
   text-decoration: none;
