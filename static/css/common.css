@@ -1,4 +1,7 @@
 
+.card {
+  min-height: 200px;
+}
 .explorer-link {
   color:black;
   text-decoration: none;
