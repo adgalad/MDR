@@ -198,7 +198,6 @@ var CanvasRenderer = function(el, options) {
 			var process = Math.min(Date.now() - startTime, options.animate.duration);
 			var currentValue = options.easing(this, process, from, to - from, options.animate.duration);
 			this.draw(currentValue);
-			console.log("Pedro: ", options)
 			options.onStep(from, to, currentValue, options.left);
 			if (process >= options.animate.duration) {
 				options.onStop(from, to);
