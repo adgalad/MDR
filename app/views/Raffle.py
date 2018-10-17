@@ -75,8 +75,8 @@ class Raffle:
   @staticmethod
   @login_required(login_url='/login/')
   def createRaffle(request):
-    if not request.user.wallet_address:
-      return redirect(reverse('addWalletAddress'))
+    # if not request.user.wallet_address:
+    #   return redirect(reverse('addWalletAddress'))
     if request.method == "POST":
       form = forms.Raffle(request.POST)
       if form.is_valid():
@@ -90,6 +90,7 @@ class Raffle:
                         thumbnail_url=form.cleaned_data['thumbnail_url'],
                         type=raffleType,
                         description=form.cleaned_data['description'],
+                        summary=form.cleaned_data['summary'],
                         ticketPrice=models.rafflePrice[raffleType],
                         drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[raffleType]),
                         owner = request.user,

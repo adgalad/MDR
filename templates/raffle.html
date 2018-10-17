@@ -14,145 +14,98 @@
 {% block content %}
  
 <div class="container content">
-    <div class="row" style="margin-left:10px;">
-        <div class="btn-group btn-breadcrumb breadcrumb-primary">
-            <div class="visible-lg-block"></div>
-            <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All Raffles</a>
-            <div class="btn btn-info" style="background-color:#9acdff !important"><b>Details</b></div>
+  <div class="row" style="margin-left:10px;">
+      <div class="btn-group btn-breadcrumb breadcrumb-primary">
+          <div class="visible-lg-block"></div>
+          <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All Raffles</a>
+          <div class="btn btn-info" style="background-color:#9acdff !important"><b>Details</b></div>
+      </div>
+  </div>
+  <div class="shadow" style=" margin:10px;">
+    <div class="card">
+      <div class="row" align="left" style=" margin:10px">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-left:30px;margin-top:20px;">
+          <h3>{{raffle.name}}</h3>
         </div>
-    </div>
-    <div class="shadow" style=" margin:10px;">
-      <div class="card">
-        <div class="row" align="left" style=" margin:10px">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-left:30px;margin-top:20px;">
-            <h3>{{raffle.name}}</h3>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 details">
+            <div class="item hovereffect" id="floatnone"><img class="img-responsive" width="240px" height="240px" src="{{raffle.thumbnail}}" style="display:inline">
+            </div>
+        </div>
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 details">
+              <b>Raffle Address:</b>
+              <a style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressPrize}}">
+                  {{raffle.addressPrize}} <b>*</b>
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+              <b>Draw Date:</b> {{raffle.drawDate}}
+            </div> 
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+              <b>Prize:</b> {{ raffle.getPrize | floatformat:-8 }} tDash
+            </div>
           </div>
 
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 details">
-              <div class="item hovereffect" id="floatnone"><img class="img-responsive" width="240px" height="240px" src="{{raffle.thumbnail}}" style="display:inline">
-              </div>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                <b>Ticket Price:</b> {{ raffle.ticketPrice | floatformat:-8 }} tDash
+          
+            </div> 
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                <b>Nro of tickets sold:</b> {{ raffle.ticketsSold }}
+            </div>
           </div>
-            <div class="row">
-              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 details">
-                <b>Raffle Address:</b>
-                <a style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressPrize}}">
-                    {{raffle.addressPrize}} <b>*</b>
-                </a>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                <b>Owner:</b> {{ raffle.owner }}
+            </div> 
+            {% if raffle.finished %}
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                  <b>Winner:</b> {{ raffle.winner }}
               </div>
+            {% endif %}
+          </div>
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12 details">
+                <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
             </div>
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                <b>Draw Date:</b> {{raffle.drawDate}}
-              </div> 
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                <b>Prize:</b> {{ raffle.getPrize | floatformat:-8 }} tDash
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                  <b>Ticket Price:</b> {{ raffle.ticketPrice | intcomma }} tDash
             
-              </div> 
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                  <b>Nro of tickets sold:</b> {{ raffle.ticketsSold }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                  <b>Owner:</b> {{ raffle.owner }}
-              </div> 
-              {% if raffle.finished %}
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                    <b>Winner:</b> {{ raffle.winner }}
-                </div>
-              {% endif %}
-            </div>
-            <div class="row">
-              <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12 details">
-                  <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
-              </div>
-              
-              {% if raffle.finished %}
-                {% if raffle.owner == request.user %}
-                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
-                    <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
-                      Terminate Raffle
-                    </a>  
-                  </div>
-                {% endif %}
-              {% else %}
+            {% if raffle.finished %}
+              {% if raffle.owner == request.user %}
                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
-                  <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url "buyTicket" raffle.id %}')">
-                      <i class="fas fa-ticket-alt"></i> Buy tickets 
+                  <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
+                    Terminate Raffle
                   </a>  
                 </div>
               {% endif %}
-                
-              </div> 
+            {% else %}
+              <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
+                <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url 'buyTicket' raffle.id %}')">
+                    <i class="fas fa-ticket-alt"></i> Buy tickets
+                </a>  
+              </div>
+            {% endif %}
               
-            </div>
+            </div> 
+            
           </div>
-        <br><hr><br>
-        <div id="description" style="padding-bottom:40px;">
-          <h2> Project description </h2>
-          {{raffle.description | safe}}
         </div>
+      <br><hr><br>
+      <div id="summary" style="padding-bottom:40px;">
+        <h2> Project summary </h2>
+        {{raffle.summary}}
+      </div>
+      <br><hr><br>
+      <div id="description" style="padding-bottom:40px;">
+        <h2> Project description </h2>
+        {{raffle.description | safe}}
       </div>
     </div>
   </div>
 </div>
-
-        <!-- <br><br>
-        <h2> Tickets Sold </h2>
-        <div align="center" style="width: 60%">
-          <table border="1" class="table" style="width: 50% !important">
-            <thead id="table">
-              <tr>
-                <th>
-                  Transaction ID
-                </th>
-                <th>
-                  User
-                </th>
-                <th>
-                  Amount
-                </th>
-                <th>
-                  Tickets
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-            {% if raffle.transactions.all %}
-              {% for tx in raffle.transactions.all %}
-                <tr>
-                  <td>
-                    <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
-                      {{ tx.address }}
-                    </a>
-                  </td>
-                  <td>
-                    {{ tx.user }}
-                  </td>
-                  <td>
-                    {{ tx.amount }}
-                  </td>
-                  <td>
-                    {{ tx.amount|div:raffle.ticketPrice}}
-                  </td>
-                </tr>
-              {% endfor %}
-            {% else %}
-            <tr>
-              <td colspan="4" align="center">
-                The raffle has no tickets sold
-              </td>
-            </tr>
-            {% endif %}
-            </tbody>
-          </table>
-        </div> -->
   
 {% endblock content %}
