@@ -56,12 +56,12 @@
                   <h5 align="left">{{raffle.name}}</h5>
                 </div>   
               </div>
-              <div class="col-xl-7 col-lg-8 col-md-7 col-sm-12 col-12" >
+              <div class="row align-items-left">
                 <!-- <div class="col-sm-1 col-xs-1"></div> -->
-                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-6">
-                  <p align="left">Ticket price: {{raffle.getPrice | floatformat:-8}} tDash</p>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-6">
+                  <p align="left">Ticket price: {{raffle.getPrice | floatformat:8}} tDash</p>
                 </div> 
-                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                   <p align="left">Created by: {{raffle.owner}}</p>
                 </div> 
               </div>
