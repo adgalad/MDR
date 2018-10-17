@@ -1,0 +1,20 @@
+.shadow {
+  -webkit-box-shadow: 2px 10px 19px -3px rgba(0,0,0,0.23);
+  -moz-box-shadow: 2px 10px 19px -3px rgba(0,0,0,0.23);
+  box-shadow: 2px 10px 19px -3px rgba(0,0,0,0.23);
+}
+
+.content {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
