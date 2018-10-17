@@ -1905,7 +1905,7 @@ if (typeof NProgress != 'undefined') {
 			var pickColor = function(percent){
                 var blue = (percent*255)/100;
                 console.log(blue, Math.round(blue),Math.round(blue).toString(16))
-                p = Math.round(blue).toString(16)
+                p = Math.round(blue*190/255).toString(16)
                 if (p.length == 1){
                     p = '0'+p
                 }

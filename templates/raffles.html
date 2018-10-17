@@ -35,7 +35,7 @@
                 <div class="col-sm-1 col-1"></div>
                 <div class="col-md-12 col-sm-5 col-5 " id="chart">
                   {% if raffle.finished %}
-                    <h5>Finished</h5>
+                    <h5 style="min-height:40px; margin-top: 50px"><b>Finished</b></h5>
                   {% else %}
                     <span class="chart" data-percent="{{raffle.getTimeLeft|mul:100|div:raffle.getDurationTimestamp}}" data-left="{{raffle.getTimeLeft}}">
                       <span class="percent">
@@ -44,7 +44,7 @@
                   {% endif %}
                 </div>
                 <div class="col-md-12 col-sm-5 col-5">
-                  <h5>Prize <b> {{raffle.getPrize | floatformat:6}} tDash</b></h5>
+                  <p class="prize-card">Prize <b> {{raffle.getPrize | floatformat:6}} tDash</b></p>
                 </div>
                 <div class="col-sm-1 col-1"></div>
               </div>
