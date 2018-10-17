@@ -46,13 +46,13 @@
                 <b>Draw Date:</b> {{raffle.drawDate}}
               </div> 
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                <b>Prize:</b> {{ raffle.getPrize | floatformat:-8 }} tDash
+                <b>Prize:</b> {{ raffle.getPrize | floatformat:6 }} tDash
               </div>
             </div>
 
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                  <b>Ticket Price:</b> {{ raffle.ticketPrice | floatformat:-8 }} tDash
+                  <b>Ticket Price:</b> {{ raffle.ticketPrice | floatformat:6 }} tDash
             
               </div> 
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
