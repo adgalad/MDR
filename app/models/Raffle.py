@@ -27,12 +27,15 @@ raffleDuration = {
 
 SIGNS_REQUIRED = 2
 
-PAYMENT_AMOUNT = 0.01 # Dash
+PAYMENT_AMOUNT = 0.1 # Dash
+
+MIN_TICKETS_SOLD = 20
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   created_at = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField("Raffle was paid", default=False)
+  summary = models.CharField(verbose_name="Summary", max_length=250)
   description = RichTextField(verbose_name="Description")
   thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL (square image of at least 300x300 pixels)", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
@@ -279,16 +282,24 @@ class Raffle(models.Model):
 
     privkey = Dash.dumpprivkey(self.MSaddress)
     sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey])
+    self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your private key</b>" ]'])
+    self.save()
 
     if not sign:
       return -1
-    
-    self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your private key</b>" ]'])
-    self.save()
-    EmailThread(subject="The raffle %s has finished"%self.name, 
-                message="Enter to your account's raffles and follow the instructions to sign and complete the multisig transaction.",
-                html_message="<html></html>",
-                recipient_list=[self.owner.email]).start()
+    if self.ticketsSold >= MIN_TICKETS_SOLD:
+      Dash.sendtoaddress(self.addressProject, str(PAYMENT_AMOUNT))
+      EmailThread(subject="The raffle %s has finished"%self.name, 
+                  message="Your raffle have finished. Now, you've to retrive the prize accumulated by your raffle and send it to the winner and to your wallet. Moreover, we have send you back the 0.1 Dash you pay as fee.",
+                  html_message="<html></html>",
+                  recipient_list=[self.owner.email]).start()
+                  
+    else:
+      EmailThread(subject="The raffle %s has finished"%self.name, 
+                  message="Your raffle have finished. Now, you've to retrive the prize accumulated by your raffle and send it to the winner and to your wallet.",
+                  html_message="<html></html>",
+                  recipient_list=[self.owner.email]).start()
+
     # transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
     return -1
 
