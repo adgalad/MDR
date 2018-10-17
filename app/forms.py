@@ -52,12 +52,12 @@ class Raffle(forms.ModelForm):
     class Meta:
         model = models.Raffle
         widgets = {
-            'description': forms.Textarea(),
+            'summary': forms.Textarea(),
         }
         
         fields = ('name',
                   'thumbnail_url',
-                  # 'signers',
+                  'summary',
                   'type',
                   'description')
 
@@ -74,12 +74,12 @@ class EditRaffle(forms.ModelForm):
     class Meta:
         model = models.Raffle
         widgets = {
-            'description': forms.Textarea(),
+            'summary': forms.Textarea(),
         }
         
         fields = ('name',
                   'thumbnail_url',
-                  # 'signers',
+                  'summary',
                   'description')
 
     def clean_thumbnail_url(self):
@@ -148,41 +148,34 @@ class AddWalletAddress(forms.ModelForm):
         validation = Dash.validateaddress(address)
 
         if models.User.objects.filter(wallet_address=address).exists():
-            print('This address is already in use. Please use a different Dash address.', models.User.objects.filter(wallet_address=address))
             raise forms.ValidationError('This address is already in use. Please use a different Dash address.')
 
         if user.message != finalMessage:
-            print("The signed message you entered is invalid.")
             raise forms.ValidationError("The signed message you entered is invalid.")
         
         if validation['isvalid']:
             if validation['isscript']:
-                print("The address can not be a script address.")
                 raise forms.ValidationError("The address can not be a script address.")
             if not validation['iswatchonly'] or not 'pubkey' in validation:
                 try:
                     Dash.importpubkey(public_key, label=user.username)
                 except:
-                    print("The public key is invalid. Please try again.")
                     raise forms.ValidationError("The public key is invalid. Please try again.")
                
                 validation = Dash.validateaddress(address)
                 if not validation['iswatchonly']:
-                    print('The public key you entered doesn\'t correspond to the address.')
                     raise forms.ValidationError('The public key you entered doesn\'t correspond to the address.')
+
                 elif not 'pubkey' in validation:
-                    print("Couldn't find public key.")  
                     raise forms.ValidationError("Couldn't find public key.")  
-                elif not (validation['pubkey'] == public_key if pubkeyExists else False):
-                    print('The public key you entered doesn\'t correspond to the address')
+                    
+                elif not (validation['pubkey'] == public_key if ('pubkey' in validation) else False):
                     raise forms.ValidationError('The public key you entered doesn\'t correspond to the address')
 
             if validation['pubkey'] != public_key:
-                print("The public key you entered is invalid.")
                 raise forms.ValidationError("The public key you entered is invalid.")
 
         else:
-            print("The address you entered is not valid.")
             raise forms.ValidationError("The address you entered is not valid.")
 
         if not Dash.verifymessage(address, signature, finalMessage):

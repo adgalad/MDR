@@ -14,25 +14,25 @@
 {% block content %}
  
 <div class="container content">
-    <div class="row" style="margin-left:10px;">
-        <div class="btn-group btn-breadcrumb breadcrumb-primary">
-            <div class="visible-lg-block"></div>
-            <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All Raffles</a>
-            <div class="btn btn-info" style="background-color:#9acdff !important"><b>Details</b></div>
+  <div class="row" style="margin-left:10px;">
+      <div class="btn-group btn-breadcrumb breadcrumb-primary">
+          <div class="visible-lg-block"></div>
+          <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All Raffles</a>
+          <div class="btn btn-info" style="background-color:#9acdff !important"><b>Details</b></div>
+      </div>
+  </div>
+  <div class="shadow" style=" margin:10px;">
+    <div class="card">
+      <div class="row" align="left" style=" margin:10px">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-left:30px;margin-top:20px;">
+          <h3>{{raffle.name}}</h3>
         </div>
-    </div>
-    <div class="shadow" style=" margin:10px;">
-      <div class="card">
-        <div class="row" align="left" style=" margin:10px">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-left:30px;margin-top:20px;">
-            <h3>{{raffle.name}}</h3>
-          </div>
-
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="row" style="width: 100%">
           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 details">
               <div class="item hovereffect" id="floatnone"><img class="img-responsive" width="240px" height="240px" src="{{raffle.thumbnail}}" style="display:inline">
               </div>
           </div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 details">
             <div class="row">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 details">
                 <b>Raffle Address:</b>
@@ -52,7 +52,7 @@
 
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
-                  <b>Ticket Price:</b> {{ raffle.ticketPrice | intcomma }} tDash
+                  <b>Ticket Price:</b> {{ raffle.ticketPrice | floatformat:-8 }} tDash
             
               </div> 
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
@@ -84,75 +84,29 @@
                 {% endif %}
               {% else %}
                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
-                  <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url "buyTicket" raffle.id %}')">
-                      <i class="fas fa-ticket-alt"></i> Buy tickets 
+                  <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url 'buyTicket' raffle.id %}')">
+                      <i class="fas fa-ticket-alt"></i> Buy tickets
                   </a>  
                 </div>
-              {% endif %}
-                
-              </div> 
-              
-            </div>
+              {% endif %}    
+            </div> 
           </div>
-        <br><hr><br>
-        <div id="description" style="padding:0px 60px 40px 80px;" align="left">
-          <h2> Project description </h2>
-          {{raffle.description | safe}}
+
         </div>
+            
+      </div>
+      <br><hr><br>
+      <div id="summary" style="padding:0px 60px 40px 80px;" align="left">
+        <h2> Project summary </h2>
+        {{raffle.summary}}
+      </div>
+      <br><hr><br>
+      <div id="description" style="padding:0px 60px 40px 80px;" align="left">
+        <h2> Project description </h2>
+        {{raffle.description | safe}}
       </div>
     </div>
   </div>
 </div>
-
-        <!-- <br><br>
-        <h2> Tickets Sold </h2>
-        <div align="center" style="width: 60%">
-          <table border="1" class="table" style="width: 50% !important">
-            <thead id="table">
-              <tr>
-                <th>
-                  Transaction ID
-                </th>
-                <th>
-                  User
-                </th>
-                <th>
-                  Amount
-                </th>
-                <th>
-                  Tickets
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-            {% if raffle.transactions.all %}
-              {% for tx in raffle.transactions.all %}
-                <tr>
-                  <td>
-                    <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
-                      {{ tx.address }}
-                    </a>
-                  </td>
-                  <td>
-                    {{ tx.user }}
-                  </td>
-                  <td>
-                    {{ tx.amount }}
-                  </td>
-                  <td>
-                    {{ tx.amount|div:raffle.ticketPrice}}
-                  </td>
-                </tr>
-              {% endfor %}
-            {% else %}
-            <tr>
-              <td colspan="4" align="center">
-                The raffle has no tickets sold
-              </td>
-            </tr>
-            {% endif %}
-            </tbody>
-          </table>
-        </div> -->
   
 {% endblock content %}
