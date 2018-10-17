@@ -36,7 +36,7 @@
 	    margin:30px;
 	    padding-bottom:40px;
 	}
-	.titulo{
+	.title{
 		text-align:center;
 		background-color:#008fe5;
 		color:white;
@@ -51,15 +51,14 @@
 <div class="body" align="center">
 	<img src="http://megadashraffle.org/static/img/logo_negro.png" class="img-responsive" width="200px">
 	<div class="content">
-		<div class="titulo">
-			Change of Password
+		<div class="title">
+			{% block title %}
+			{{raffle.name}}
+      		{% endblock title %}
 		</div>
-		<p>Hello,<b> {{ user.get_username }}</b></p>
-		<p>You requested re-establishment of password.</p>
-		<p>Click on the following link to create a new password.</p>
-		{% block reset_link %}
-		{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
-		{% endblock %}
+			{% block content %}
+			{{raffle.description | safe}}
+      		{% endblock content %}
 	</div>
 	<p><small>Copyright Megadashraffle @2018</small></p>
 </div>

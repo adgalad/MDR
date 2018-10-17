@@ -78,6 +78,10 @@ class Raffle(models.Model):
   def getPrize(self):
     return float(self.totalPrize)*self.prizePercentage/100.0
 
+  @property
+  def getCollected(self):
+    return float(self.totalPrize)*self.projectPercentage/100.0
+
 
   @property
   def getDurationTimestamp(self):
