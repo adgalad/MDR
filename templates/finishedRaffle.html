@@ -21,10 +21,16 @@
     .one-line{
       height: 80px;
     }
+
     .code {
       /*margin:5%;*/
       padding: 3%;
       background-color: #eeffcc;
+    }
+
+    @media (max-width: 767px) {
+      .one-line { width: 75% !important; }
+      .code { width: 75% !important; }
     }
   </style>
 {% endblock style %}
@@ -45,44 +51,83 @@
           Open the Debug console in the Tools menu of the your Dash QT Wallet that holds the address you used to create the raffle. If you are not sure, you can validate if the address belongs to this wallet by typing the following command and check if among the results there is a <b>"ismine":true</b>
         </li>
       </ul>
-      <div class="code one-line">
-        <pre>validateaddress {{raffle.addressProject}}</pre>
-      </div>
-      <br>
-
+<div class="input-group mb-3">
+  <div class="code one-line" style="width: 90%;">
+   <pre id="validateaddress">validateaddress {{raffle.addressProject}}</pre>
+  </div>
+  <div class="input-group-append">
+    <span class="input-group-text" style="cursor: pointer;" onclick="copy('validateaddress')"><li class="fa fa-copy fa-2x" style="color:#0062cc;margin-left:10px;"></li></span>
+  </div>
+</div>
+<br>
       <ul>
         <li>
           Next, obtain the private key of your Dash address by typing the following command.
         </li>
       </ul>
-      <div class="code one-line">
-        <pre>dumpprivkey {{raffle.addressProject}}</pre>
-      </div>
+  <div class="input-group mb-3">
+    <div class="code one-line" style="width: 90%;">
+      <pre id="dumpprivkey">dumpprivkey {{raffle.addressProject}}</pre>
+    </div>
+    <div class="input-group-append">
+      <span class="input-group-text" style="cursor: pointer;" onclick="copy('dumpprivkey')"><li class="fa fa-copy fa-2x" style="color:#0062cc;margin-left:10px;"></li></span>
+    </div>
+  </div>
       <br>
       <ul>
         <li>
           Now, you have to sign the transaction to spend the multisig address. Just copy and paste on the console, the following command and replace where it says <b>'Your private key'</b> with the private key you obtained in the last step. It will give you the hexadecimal represetation of the signed transaction.
         </li>
       </ul>
-      <div class="code">
-        <pre>{{raffle.commandSignRawTx | safe}}</pre>
+  <div class="input-group mb-3">
+      <div class="code" style="width: 90%;">
+        <pre id="commandSignRawTx">{{raffle.commandSignRawTx | safe}} </pre>
       </div>
+    <div class="input-group-append">
+      <span class="input-group-text" style="cursor: pointer;" onclick="copy('commandSignRawTx')"><li class="fa fa-copy fa-2x" style="color:#0062cc;margin-left:10px;"></li></span>
+    </div>
+  </div>
       <br>
       <ul>
         <li>
           Finally, copy and paste the following command on the console and replace the <b>Transaction Hexadecimal</b> with hexadecimal code indicated by the label <b> "hex": </b> in the last step result. It's important that your wallet is correctly synchronized with the Dash blockchain, otherwise, it may fail.
         </li>
       </ul>
-      <div class="code one-line" >
-        <pre>sendrawtransaction '<b style="color:#990000">Transaction Hexadecimal</b>' true false false
-
+  <div class="input-group mb-3">
+    <div class="code one-line" style="width: 90%;">
+        <pre id="sendrawtransaction">sendrawtransaction '<b style="color:#990000">Transaction Hexadecimal</b>' true false false
         </pre>
+    </div>
+    <div class="input-group-append">
+      <span class="input-group-text" style="cursor: pointer;" onclick="copy('sendrawtransaction')"><li class="fa fa-copy fa-2x" style="color:#0062cc;margin-left:10px;"></li></span>
+    </div>
+  </div>
       </div>
     </div>
   </div>
 </div>
-
+<input type="text" name="raffleaddress" value="{{address}}" maxlength="128" required="" id="raffleaddress" style="display: none;" class="form-control">
 
 {% endblock content %}
 
-</script>
+{% block scripts %}
+  {{ block.super }}
+  {{ form.media }}
+
+  <script type="text/javascript">
+
+  function copy(id) {
+           /* Get the text field */
+            /*var copyText = document.getElementById(id);*/
+            console.log('hola')
+            var copyText = $('#'+id+'').text()
+            const el = document.createElement('textarea');
+            el.value = copyText;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+          }
+  </script>
+{% endblock scripts %}
