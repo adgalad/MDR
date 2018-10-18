@@ -35,7 +35,7 @@ class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   created_at = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField("Raffle was paid", default=False)
-  summary = models.CharField(verbose_name="Summary (max 250 chararcters)", max_length=250)
+  summary = models.CharField(verbose_name="Summary", max_length=250)
   description = RichTextField(verbose_name="Description")
   thumbnail_url = models.CharField(verbose_name="Thumbnail Image URL (square image of at least 300x300 pixels)", blank=True, null=True, max_length=2048)
   addressPrize = models.CharField(verbose_name="Prize Address", blank=True, max_length=100)
@@ -280,7 +280,7 @@ class Raffle(models.Model):
       }
 
     transaction = Dash.createrawtransaction(outputs1, toAddress)
-    
+
     if transaction is None:
       return -1
 

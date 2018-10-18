@@ -23,6 +23,7 @@ class Dash:
     #   'address': 'asdasdasd',
     #   'redeemScript':'asdasdsdasd'
     # }
+
   
   @staticmethod
   def dumpprivkey(address):
