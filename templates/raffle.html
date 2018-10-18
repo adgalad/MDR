@@ -2,6 +2,27 @@
 {% load humanize %}
 {% load mathfilters %}
 
+{% block meta %}
+    <!-- <meta property="og:url" content="https://www.cash4home.io/"> -->
+    <meta property="og:image" content="{{raffle.thumbnail}}">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
+    <meta property="og:description" content="{{raffle.summary}}">
+    <meta property="og:title" content="{{raffle.name}}">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mega Dash Raffle">
+
+    <!-- Google + -->
+    <meta itemprop="name" content="{{raffle.name}}">
+    <meta itemprop="description" content="{{raffle.summary}}">
+    <meta itemprop="image" content="{{raffle.thumbnail}}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{raffle.name}}">
+    <meta name="twitter:description" content="{{raffle.summary}}">
+    <meta name="twitter:image" content="{{raffle.thumbnail}}">
+{% endblock meta %}
 
 {% block style %}
   {{block.super}}

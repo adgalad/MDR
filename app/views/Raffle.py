@@ -75,8 +75,8 @@ class Raffle:
   @staticmethod
   @login_required(login_url='/login/')
   def createRaffle(request):
-    # if not request.user.wallet_address:
-    #   return redirect(reverse('addWalletAddress'))
+    if not request.user.wallet_address:
+      return redirect(reverse('addWalletAddress'))
     if request.method == "POST":
       form = forms.Raffle(request.POST)
       if form.is_valid():
