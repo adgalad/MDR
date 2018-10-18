@@ -31,6 +31,7 @@ PAYMENT_AMOUNT = 0.1 # Dash
 
 MIN_TICKETS_SOLD = 20
 
+DEFAULT_DOMAIN = "http://megadashraffle.org"
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   created_at = models.DateTimeField(auto_now_add=True)
@@ -153,6 +154,13 @@ class Raffle(models.Model):
     if balance >= PAYMENT_AMOUNT:
       self.is_active = True
       self.save()
+      html_message = loader.render_to_string(
+                   'baseEmail.html',
+                   {
+                       'message': 'Now that you have paid the raffle creation fee, we\'ve published your raffle in our site. You can view the details with the following button. <br> <br> <a class="btn btn-primary" href="%s/raffle/%d">Raffle Details</a>'%( DEFAULT_DOMAIN, raffle.pk) ,
+                       'title':  'Your raffle, %s, have been published'%raffle.name,
+                   }
+               )
     elif timezone.now()-self.created_at > datetime.timedelta(days=7):
       self.delete()
 
