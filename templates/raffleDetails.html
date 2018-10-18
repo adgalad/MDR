@@ -109,25 +109,42 @@
               </div>
             </div>
 
-            <!-- Draw date -->
             <div class="row">
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
-                <b>Prize:</b> {{ raffle.getPrize | floatformat:6 }} tDash
-              </div>
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
-                <b>Draw Date:</b> {{raffle.drawDate}}
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Prize:</b>
               </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{ raffle.getPrize | floatformat:6 }} tDash
+              </div>
             </div>
 
             <div class="row">
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
-                  <b>Ticket Price:</b> {{ raffle.ticketPrice | floatformat:6 }} tDash
-            
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Draw Date:</b>
               </div> 
-              <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 details">
-                  <b>Nro of tickets sold:</b> {{ raffle.ticketsSold }}
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{raffle.drawDate}}
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Ticket Price:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{ raffle.ticketPrice | floatformat:6 }} tDash
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Nro of tickets sold:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                   {{ raffle.ticketsSold }}
+              </div>
+            </div>
+
           </div>
         </div>
         <small>(<b>*</b> any transaction sent to the prize or beneficiary address will count as donation and won't be returned by Mega Dash Raffle.)</small>
