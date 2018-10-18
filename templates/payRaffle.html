@@ -15,7 +15,7 @@
             <section>
               <div class="row" align="center">
                 <div class="col-12 mx-auto">
-                  <div class="accordion" id="accordionExample">
+                  <div>
                     <div class="container" style="z-index:-1;">
                           <h3 id="text" style="margin-bottom:15px;"><b>Raffle Fee</b></h3>
                             <p> Your raffle was created successfully. In order to publish your raffle, you have to pay a 0.1 Dash fee to the following Dash address. </p>
@@ -27,7 +27,8 @@
                               </div>
                             </div>
                             <br>
-                            <p><b>Note:</b> If the fee is not payout after 7 days, the raffle will be deleted and you will have to create a new one.</p>         
+                            <p><b>Note:</b> If the fee is not payout after 7 days, the raffle will be deleted and you will have to create a new one.</p>
+                            <a class="btn btn-primary" style="color:white !important" href="{% url 'raffleDetails' raffle.pk %}">Go Back</a>
                     </div>
                   </div>
                 </div>
