@@ -18,16 +18,17 @@
                   <div>
                     <div class="container" style="z-index:-1;">
                           <h3 id="text" style="margin-bottom:15px;"><b>Raffle Fee</b></h3>
-                          
-                        
                             <p> Your raffle was created successfully. In order to publish your raffle, you have to pay a 0.1 Dash fee to the following Dash address. </p>
-                            <div style=" border: 1px black solid; height: 40px;font-size:13px;padding-top:7px;">
-                              {{raffle.MSaddress}}
+                            <div id="fee" style="border: 1px black solid; height: 40px;font-size:13px;padding-top:7px;">
+                              <div class="row">
+                                <div class="col-9" style="margin-left: 25px;">{{raffle.MSaddress}}</div>
+                                <div class="col-2"><span class="input-group" style="cursor: pointer;" onclick="copy('fee')"><li class="fa fa-copy" style="color:#0062cc;font-size:20px;display:inline;float:right;"></li></span>
+                                </div>
+                              </div>
                             </div>
                             <br>
                             <p><b>Note:</b> If the fee is not payout after 7 days, the raffle will be deleted and you will have to create a new one.</p>
                             <a class="btn btn-primary" style="color:white !important" href="{% url 'raffleDetails' raffle.pk %}">Go Back</a>
-                        
                     </div>
                   </div>
                 </div>
@@ -39,8 +40,29 @@
   </div>
 </div>     
     
-
 {% endblock form %}
+
+{% block scripts %}
+  {{ block.super }}
+  {{ form.media }}
+
+  <script type="text/javascript">
+
+  function copy(id) {
+           /* Get the text field */
+            /*var copyText = document.getElementById(id);*/
+            console.log('hola')
+            var copyText = $('#'+id+'').text()
+            const el = document.createElement('textarea');
+            el.value = copyText;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+          }
+  </script>
+{% endblock scripts %}
     
 
 
