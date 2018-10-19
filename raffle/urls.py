@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^conditions/$', views.conditions, name="conditions"),
 
     # Raffle URLs
-    url(r'^createRaffle/$', views.Raffle.createRaffle, name="createRaffle"),
+    url(r'^raffle/create$', views.Raffle.createRaffle, name="createRaffle"),
     url(r'^myRaffles/$', views.Raffle.myRaffles, name="myRaffles"),
     url(r'^raffle/(?P<id>\w+)$', views.Raffle.details, name="raffleDetails"),
     url(r'^raffle/(?P<id>\w+)/more$', views.Raffle.moreDetails, name="raffleMoreDetails"),
@@ -46,7 +46,7 @@ urlpatterns = [
 
     url(r'^addWalletAddress/$', views.User.addWalletAddress, name="addWalletAddress"),
     url(r'^profile/$', views.User.profile, name="profile"),
-    url(r'^editProfile/$', views.User.editProfile, name="editProfile"),
+    url(r'^profile/edit$', views.User.editProfile, name="editProfile"),
     url(r'^api/users/', views.User.getUsers, name="api.users"),
     url(r'^api/changePassword/$', views.User.changePassword, name="api.changePassword"),
 
