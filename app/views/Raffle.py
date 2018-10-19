@@ -16,7 +16,7 @@ class Raffle:
   @staticmethod
   def active(request):
     count = Dash.getblockcount()
-    activeRaffles = models.Raffle.objects.filter(is_active=True).order_by('-drawDate')
+    activeRaffles = models.Raffle.objects.filter(is_active=True).order_by('-created_at')
     page = request.GET.get('page', 1)
     paginator = Paginator(activeRaffles, 10)
     try:
@@ -31,7 +31,7 @@ class Raffle:
   def myRaffles(request):
     count = Dash.getblockcount()
     user = request.user
-    activeRaffles = user.ownsRaffles.all().order_by('-drawDate')
+    activeRaffles = user.ownsRaffles.all().order_by('-created_at')
     page = request.GET.get('page', 1)
     paginator = Paginator(activeRaffles, 10)
     try:
@@ -58,6 +58,7 @@ class Raffle:
       raffle = models.Raffle.objects.get(id=id)
     except:
       raise PermissionDenied
+      
     if not raffle.is_active:
       return redirect(reverse('payRaffle', kwargs={'id':id}))
     return render(request, "raffleDetails.html", {"raffle":raffle})
