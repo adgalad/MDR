@@ -89,7 +89,7 @@ class Raffle(models.Model):
 
   @property
   def getDurationTimestamp(self):
-    return raffleDuration[self.type] * 24 * 3600
+    return raffleDuration['Mega Raffle'] * 24 * 3600
 
   @property
   def getTimeLeft(self):
