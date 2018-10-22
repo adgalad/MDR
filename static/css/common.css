@@ -618,8 +618,14 @@ header .brand .logo {
 @media (max-width: 767px) {
   .btn-breadcrumb { margin-left: 1px; margin-right: 1px;font-size:10px; width: calc(100% - 67%) !important; }
   #floatnone { float: none !important; }
-  #small{ min-width:160px !important; min-height:160px !important; font-size:14px !important; }
-  #fontsmall{ font-size:14px !important; }
+  #small{ width:160px !important; height:160px !important; font-size:12px !important; }
+  .img-banner{margin-top:80% !important; font-size:12px !important;}
+  .logo-blanco{ width:160px !important;margin-left:25px !important; }
+  .font-index{font-size:20px !important;}
+  .size-banner{min-height:250px !important;}
+ /* .owl-item{ width:160px !important; }*/
+  #fontsmall{ font-size:10px !important; }
+  #btn-more{ margin-top:0px !important; }
 }
 
 @media (max-width: 767px) {

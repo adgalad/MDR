@@ -13,10 +13,10 @@
 {% block content %}
   <section id="banner" style=" z-index:-1;">
     <div class="banner-container">
-      <img style="width: 100%; min-height: 400px;height: 100%" src="/static/img/banner.png">
+      <img class="size-banner" style="width: 100%; min-height: 400px;height: 100%" src="/static/img/banner.png">
       <div class="centered cd-intro-content mask">
-        <div style="margin-top:10%; margin-bottom: 10%">
-          <h1 data-content="Welcome to Mega Dash Raffle">
+        <div class="img-banner" style="margin-top:10%; margin-bottom: 10%">
+          <h1 data-content="Welcome to Mega Dash Raffle" class="font-index">
             <span>Welcome to <br>Mega Dash Raffle</span>
           </h1>
           <div class="action-wrapper">
@@ -34,10 +34,10 @@
       <p>These are our last active raffles</p>
       <div class="owl-carousel owl-theme">
         {% for item in raffles %}
-          <div class="item hovereffect" id="small"><h4><img class="img-responsive" id="small" style="width:270px; height:270px;" src="{{item.thumbnail}}"></h4>
-            <div class="overlay">
+          <div class="item hovereffect"><h4><img class="img-responsive" id="small" style="width:270px; height:270px;" src="{{item.thumbnail}}"></h4>
+            <div class="overlay" id="fontsmall">
               <h2 id="fontsmall">{{item.name}}</h2>
-              <a class="info" href="{% url 'raffleDetails' item.pk %}">See More</a>
+              <a class="info" id="btn-more" href="{% url 'raffleDetails' item.pk %}">See More</a>
             </div>
           </div>
         {% endfor %}

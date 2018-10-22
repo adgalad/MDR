@@ -15,7 +15,10 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import JsonResponse
 from app import models, forms
+from app.helpers import EmailThread
+from django.template import loader
 from app.dash import Dash
+
 
 class User:
 
@@ -120,7 +123,7 @@ class User:
         is_valid = False
 
       if is_valid:
-        form.save()
+        form.save() 
         messages.success(request, "Address registered sucessfully.", extra_tags="alert-success")
         return redirect(reverse('profile'))
       else:
