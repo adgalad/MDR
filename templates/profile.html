@@ -42,11 +42,11 @@
                 <div class="row">
                     <div class="col-sm-4"></div>   
                     <div class="col-sm-2" style="margin-top:20px;"><a class="btn btn-primary" style="text-decoration:none" href="#"
-                           onclick="return abrir_modal('/addWalletAddress/?modal=1')">{% if request.user.wallet_address%} Change {% else %} Add {% endif %} Wallet&nbsp;&nbsp;
+                           onclick="return abrir_modal('{% url 'addWalletAddress' %}?modal=1')">{% if request.user.wallet_address%} Change {% else %} Add {% endif %} Wallet&nbsp;&nbsp;
                           <i class="fa fa-wallet"></i></a></div> 
                     <div class="col-sm-2" style="margin-top:20px;">  
                     <a class="btn btn-primary" style="text-decoration:none" href="#"
-                           onclick="return abrir_modal('/editProfile/?modal=1')">Edit Profile&nbsp;&nbsp;
+                           onclick="return abrir_modal('{% url 'editProfile' %}?modal=1')">Edit Profile&nbsp;&nbsp;
                           <i class="fa fa-user-edit"></i>
                         </a>
                     </div>
