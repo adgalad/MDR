@@ -24,8 +24,11 @@ class Transaction(models.Model):
   def getDate(self):
 
     rawTransaction = Dash.getrawtransaction(self.address)
-    timestamp = rawTransaction['time']
-    return datetime.datetime.fromtimestamp(timestamp)
+    if 'time' in rawTransaction['time']
+      timestamp = rawTransaction['time']
+      return datetime.datetime.fromtimestamp(timestamp)
+    else:
+      return "Not confirmed Yet"
 
 
 class AddressGenerated(models.Model):
