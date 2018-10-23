@@ -176,7 +176,7 @@ class Raffle(models.Model):
 
 
   def checkAllTx(self):
-       transactions = self.transactions.all()
+    transactions = self.transactions.all()
     for addressGenerated in self.addresses.all():
       txs = Dash.getaddresstxids([addressGenerated.address])
       if txs is None:
