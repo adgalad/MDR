@@ -246,7 +246,7 @@ class Raffle(models.Model):
               address=txRaw['txid'],
               amount=amount,
               user=addressGenerated.user,
-              blockHeight=txRaw['height'],
+              blockHeight=Dash.getblockcount(),
               raffle=self,
               boughtTicket=tickets
             ).save()
@@ -259,17 +259,6 @@ class Raffle(models.Model):
         str(total)
       )
       self.totalPrize += Decimal(total)
-            # total = float(tickets*self.ticketPrice)
-            # left = total
-            # transaction = Dash.sendtoaddress(
-            #   self.addressPrize,
-            #   str((total*self.prizePercentage)/100.0)
-            # )
-
-            # left -= (total*self.prizePercentage)/100.0
-            
-
-            # left -= (total*self.projectPercentage)/100.0
 
       self.save()
 
