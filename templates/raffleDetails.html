@@ -34,7 +34,7 @@
                 <b>Raffle Address:</b>
               </div>
               <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 details">
-                <a class="explorer-link" href="https://test.explorer.dashninja.pl/address/{{raffle.addressPrize}}">
+                <a class="explorer-link" href="http://insight.test.dash.crowdnode.io/address/{{raffle.addressPrize}}">
                     {{raffle.addressPrize}} <b>*</b>
                 </a>
               </div>
@@ -54,7 +54,7 @@
                 <b>Beneficiary Address:</b>
               </div>
               <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 details">
-                <a class="explorer-link" href="https://test.explorer.dashninja.pl/address/{{raffle.addressProject}}">
+                <a class="explorer-link" href="http://insight.test.dash.crowdnode.io/address/{{raffle.addressProject}}">
                     {{raffle.addressProject}} <b>*</b>
                 </a>
               </div>
@@ -75,7 +75,7 @@
                   <b>Winner Address:</b> 
               </div> 
               <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                <a class="explorer-link" href="https://test.explorer.dashninja.pl/address/{{ raffle.winnerAddress }}">
+                <a class="explorer-link" href="http://insight.test.dash.crowdnode.io/address/{{ raffle.winnerAddress }}">
                   {{ raffle.winnerAddress }} 
                 </a>
               </div>
@@ -85,7 +85,7 @@
                   <b>Transaction:</b>
               </div> 
               <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                <a class="explorer-link" href="https://test.explorer.dashninja.pl/tx/{{ raffle.transaction }}">
+                <a class="explorer-link" href="http://insight.test.dash.crowdnode.io/tx/{{ raffle.transaction }}">
                   {{ raffle.transaction }}</a>
               </div>
             </div>
@@ -172,7 +172,7 @@
                         {% for tx in raffle.transactions.all %}
                             <div class="rowtable">
                                 <div class="cell" data-title="Transaction ID">
-                                    <a target="_blank" class="explorer-link" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
+                                    <a target="_blank" class="explorer-link" href="http://insight.test.dash.crowdnode.io/tx/{{tx.address}}">
                                     {{ tx.address }}
                                     </a>
                                 </div>
