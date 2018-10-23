@@ -59,6 +59,10 @@ class Dash:
     # return 'XaSDASDAXASFSDFWEDCSSD'
   
   @staticmethod
+  def getrawmempool(verbose='false'):
+    return Dash.call(['getrawmempool', verbose])
+    
+  @staticmethod
   def getrawtransaction(address, parsed=1):
     return Dash.call(["getrawtransaction", address, str(parsed)])
     # return {'time': 5566462526}

@@ -175,15 +175,22 @@ class Raffle(models.Model):
       self.delete()
 
   def getTransactions(self):
+    
+    txs = Dash.getrawmempool()
     transactions = self.transactions.all()
-    for addressGenerated in self.addresses.all():
-      txs = Dash.getaddresstxids([addressGenerated.address])
-      if txs is None:
-        continue
-
-      for i in txs:
+    
+    for i in txs:
         if transactions.filter(address=i).exists():
-          continue
+          txs.remove(i)
+
+    if txs == []:
+      return
+
+    
+    for addressGenerated in self.addresses.all():
+      
+
+      
 
         txRaw = Dash.getrawtransaction(i)
         if txRaw is None:
