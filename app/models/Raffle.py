@@ -174,6 +174,49 @@ class Raffle(models.Model):
     elif timezone.now()-self.created_at > datetime.timedelta(days=7):
       self.delete()
 
+
+  def checkAllTx(self):
+       transactions = self.transactions.all()
+    for addressGenerated in self.addresses.all():
+      txs = Dash.getaddresstxids([addressGenerated.address])
+      if txs is None:
+        continue
+
+      for i in txs:
+        if transactions.filter(address=i).exists():
+          continue
+
+        txRaw = Dash.getrawtransaction(i)
+        if txRaw is None:
+          continue
+
+        dt = txRaw['time']
+        if dt > self.drawDate.timestamp():
+          continue
+
+        total = 0
+        for detail in txRaw['vout']:
+          if addressGenerated.address in detail['scriptPubKey']['addresses']:
+            amount = detail['value']
+            tickets = int(round(amount/float(self.ticketPrice), 5))
+            tx = Transaction(
+              address=txRaw['txid'],
+              amount=amount,
+              user=addressGenerated.user,
+              blockHeight=txRaw['height'],
+              raffle=self,
+              boughtTicket=tickets
+            ).save()
+            total += amount
+        if total == 0.0:
+          continue
+        total = total*90/100
+        Dash.sendtoaddress(
+          self.addressPrize,
+          str(total)
+        )
+        self.totalPrize += Decimal(total)
+        self.save()
   def getTransactions(self):
     
     txs = Dash.getrawmempool()
@@ -184,7 +227,7 @@ class Raffle(models.Model):
           txs.remove(i)
 
     if txs == []:
-      return
+      self.checkAllTx()
 
     for i in txs:
       txRaw = Dash.getrawtransaction(i)
