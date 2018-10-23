@@ -230,7 +230,7 @@ class Raffle(models.Model):
 
             # left -= (total*self.projectPercentage)/100.0
 
-        self.save()
+      self.save()
 
   def addPrivKey(self, privkey):
     for i in range(1, self.signsRequired + 1):
