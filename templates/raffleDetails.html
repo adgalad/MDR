@@ -93,19 +93,19 @@
 
              <div class="row">
               <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
-                  <b>Collected:</b>
+                  <b>Total:</b>
               </div> 
               <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                {{ raffle.getCollected | floatformat:-8 }} tDash
+                {{ raffle.totalPrize | floatformat:6 }} tDash
               </div>
             </div>
 
             <div class="row">
               <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
-                  <b>Amount:</b>
+                  <b>Collected:</b>
               </div> 
               <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
-                  {{ raffle.totalPrize }} tDash
+                  {{ raffle.getCollected | floatformat:6 }} tDash
               </div>
             </div>
 
