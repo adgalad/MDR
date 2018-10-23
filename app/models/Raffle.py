@@ -163,14 +163,14 @@ class Raffle(models.Model):
       subject = 'Your raffle, %s, hase been published'%self.name
       from_email = settings.EMAIL_HOST_USER
       to_email = [from_email , user.email]
-      html_message = loader.render_to_string(
+      html_message = render_to_string(
                  'baseEmail.html',
                  {
                      'message': 'Now that you have paid the raffle creation fee, we\'ve published your raffle in our site. You can view the details with the following button. <br> <br> <a class="btn btn-primary" href="%s/raffle/%d">Raffle Details</a>'%( DEFAULT_DOMAIN, self.pk) ,
                      'title':  'Your raffle, %s, hase been published'%self.name,
                  }
              )
-      send_mail(subject,message,from_email,to_email,fail_silently=True,html_message=html_message)
+      EmailThread(subject=subject,message='Now that you have paid the raffle creation fee, we\'ve published your raffle in our site.',html_message=html_message, recipient_list=to_email)
     elif timezone.now()-self.created_at > datetime.timedelta(days=7):
       self.delete()
 
