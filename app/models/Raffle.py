@@ -218,16 +218,13 @@ class Raffle(models.Model):
         self.totalPrize += Decimal(total)
         self.save()
   def getTransactions(self):
-    
+    self.checkAllTx()
     txs = Dash.getrawmempool()
     transactions = self.transactions.all()
     
     for i in txs:
         if transactions.filter(address=i).exists():
-          txs.remove(i)
-
-    if txs == []:
-      self.checkAllTx()
+          txs.remove(i)      
 
     for i in txs:
       txRaw = Dash.getrawtransaction(i)
