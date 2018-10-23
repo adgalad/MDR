@@ -26,6 +26,9 @@ class Transaction(models.Model):
     rawTransaction = Dash.getrawtransaction(self.address)
     if 'time' in rawTransaction:
       timestamp = rawTransaction['time']
+      if 'height' in rawTransaction and blockHeight != rawTransaction['height']:
+        self.blockHeight = rawTransaction['height']
+        self.save()
       return datetime.datetime.fromtimestamp(timestamp)
     else:
       return "Not confirmed Yet"

@@ -2,6 +2,8 @@
 {% load humanize %}
 {% load mathfilters %}
 
+{% block title %} {{raffle.name}} {% endblock %}
+
 {% block meta %}
     <!-- <meta property="og:url" content="https://www.cash4home.io/"> -->
     <meta property="og:image" content="{{raffle.thumbnail}}">
