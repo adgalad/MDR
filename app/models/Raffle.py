@@ -175,7 +175,7 @@ class Raffle(models.Model):
       self.delete()
 
 
-  def checkAllTx(self):
+  def getTransactions(self):
     transactions = self.transactions.all()
     for addressGenerated in self.addresses.all():
       txs = Dash.getaddresstxids([addressGenerated.address])
@@ -217,7 +217,8 @@ class Raffle(models.Model):
         )
         self.totalPrize += Decimal(total)
         self.save()
-  def getTransactions(self):
+  
+  def checkMempool(self):
     self.checkAllTx()
     txs = Dash.getrawmempool()
     transactions = self.transactions.all()
