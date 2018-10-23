@@ -24,7 +24,7 @@ class Transaction(models.Model):
   def getDate(self):
 
     rawTransaction = Dash.getrawtransaction(self.address)
-    if 'time' in rawTransaction['time']
+    if 'time' in rawTransaction['time']:
       timestamp = rawTransaction['time']
       return datetime.datetime.fromtimestamp(timestamp)
     else:
