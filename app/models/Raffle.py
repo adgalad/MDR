@@ -207,9 +207,9 @@ class Raffle(models.Model):
               boughtTicket=tickets
             ).save()
             total += amount
-
+        if total == 0.0:
+          continue
         total = total*90/100
-        print(">>>", total)
         Dash.sendtoaddress(
           self.addressPrize,
           str(total)
