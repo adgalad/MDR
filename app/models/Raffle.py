@@ -186,21 +186,17 @@ class Raffle(models.Model):
     if txs == []:
       return
 
-    
-    for addressGenerated in self.addresses.all():
-      
-
-      
-
-        txRaw = Dash.getrawtransaction(i)
+    for i in txs:
+      txRaw = Dash.getrawtransaction(i)
         if txRaw is None:
           continue
 
-        dt = txRaw['time']
-        if dt > self.drawDate.timestamp():
-          continue
-
-        total = 0
+      dt = txRaw['time']
+      if dt > self.drawDate.timestamp():
+        continue
+      total = 0
+      for addressGenerated in self.addresses.all():
+        
         for detail in txRaw['vout']:
           if addressGenerated.address in detail['scriptPubKey']['addresses']:
             amount = detail['value']
@@ -216,12 +212,12 @@ class Raffle(models.Model):
             total += amount
         if total == 0.0:
           continue
-        total = total*90/100
-        Dash.sendtoaddress(
-          self.addressPrize,
-          str(total)
-        )
-        self.totalPrize += Decimal(total)
+      total = total*90/100
+      Dash.sendtoaddress(
+        self.addressPrize,
+        str(total)
+      )
+      self.totalPrize += Decimal(total)
             # total = float(tickets*self.ticketPrice)
             # left = total
             # transaction = Dash.sendtoaddress(
