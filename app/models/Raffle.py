@@ -209,6 +209,7 @@ class Raffle(models.Model):
             total += amount
 
         total = total*90/100
+        print(">>>", total)
         Dash.sendtoaddress(
           self.addressPrize,
           str(total)
