@@ -8,6 +8,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta_social %}
+      <meta property="og:image" content="http://megadashraffle.org/static/img/logo_blanco.png">
+      <meta property="og:image:width" content="300">
+      <meta property="og:image:height" content="300">
+      <meta property="og:description" content="Create a Dash Raffleto fund your projects.">
+      <meta property="og:title" content="Mega Dash Raffle">
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Mega Dash Raffle">
+
+      <!-- Google + -->
+      <meta itemprop="name" content="Mega Dash Raffle">
+      <meta itemprop="description" content="Create a Dash Raffleto fund your projects.">
+      <meta itemprop="image" content="http://megadashraffle.org/static/img/logo_blanco.png">
+
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:title" content="Mega Dash Raffle">
+      <meta name="twitter:description" content="Create a Dash Raffleto fund your projects.">
+      <meta name="twitter:image" content="http://megadashraffle.org/static/img/logo_blanco.png">
+    {% endblock meta_social %}
   {% endblock meta %}
   
   <title>Mega Dash Raffle | {% block title %}{% endblock %}</title>

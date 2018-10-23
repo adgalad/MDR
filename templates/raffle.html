@@ -4,7 +4,7 @@
 
 {% block title %} {{raffle.name}} {% endblock %}
 
-{% block meta %}
+{% block meta_social %}
     <!-- <meta property="og:url" content="https://www.cash4home.io/"> -->
     <meta property="og:image" content="{{raffle.thumbnail}}">
     <meta property="og:image:width" content="300">
@@ -24,7 +24,7 @@
     <meta name="twitter:title" content="{{raffle.name}}">
     <meta name="twitter:description" content="{{raffle.summary}}">
     <meta name="twitter:image" content="{{raffle.thumbnail}}">
-{% endblock meta %}
+{% endblock meta_social %}
 
 {% block style %}
   {{block.super}}
