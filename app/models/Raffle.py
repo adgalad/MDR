@@ -191,9 +191,9 @@ class Raffle(models.Model):
       if txRaw is None:
         continue
 
-      dt = txRaw['time']
-      if dt > self.drawDate.timestamp():
-        continue
+      # dt = txRaw['time']
+      # if dt > self.drawDate.timestamp():
+      #   continue
       total = 0
       for addressGenerated in self.addresses.all():
         
