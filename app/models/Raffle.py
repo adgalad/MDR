@@ -188,8 +188,8 @@ class Raffle(models.Model):
 
     for i in txs:
       txRaw = Dash.getrawtransaction(i)
-        if txRaw is None:
-          continue
+      if txRaw is None:
+        continue
 
       dt = txRaw['time']
       if dt > self.drawDate.timestamp():
