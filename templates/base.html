@@ -184,6 +184,13 @@
 <script src="/static/js/jquery.toastmessage.js"></script>
 <script src="/static/js/common.js"></script>
 
+{% if not user.is_anonymous %}
+  <script type="text/javascript">
+    $(document).ready(function(){
+      setInterval(checkNotifications, 10*1000)
+    })
+  </script>
+{% endif %}
 <script type="text/javascript">
 
   function abrir_modal(url)

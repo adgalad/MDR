@@ -53,15 +53,34 @@ function hasScrolled() {
   lastScrollTop = st;
 }
 
-function showStickySuccessToast() {        
+
+function checkNotifications(){
+  const Http = new XMLHttpRequest();
+  const url='/api/user/notifications';
+  Http.open("GET", url);
+  Http.send();
+  Http.onreadystatechange=(e)=>{
+    console.log(Http.responseText)
+    data = JSON.parse(Http.responseText)
+    notifications = data['notifications']
+    for (var i = 0; i < notifications.length; i++){
+      showStickySuccessToast(notifications[i]['message'])
+    }
+  }
+}
+
+function showStickySuccessToast(message) {
       $().toastmessage('showToast', 
-        { text     : 'Success Dialog which is sticky',            
-        sticky   : true,            
-        position : 'top-right',            
-        type     : 'success',            
-        closeText: '',            
-        close    : function () {                
-        console.log("toast is closed ...");            
+        { text     : message,
+        sticky   : true,
+        position : 'top-right',
+        type     : 'success',
+        closeText: '',
+        close    : function () {
+        console.log("toast is closed ...");
         }        
      });    
 } 
+
+
+
