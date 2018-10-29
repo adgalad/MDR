@@ -30,7 +30,7 @@ class Transaction(models.Model):
     return str((self.user, self.address))
 
   def save(self, *args, **kwargs):
-    createNotification = not self.pk:
+    createNotification = not self.pk
     super(Transaction,self).save(*args, **kwargs)
     if createNotification:
       Notification(user=self.user, transaction=self).save()
