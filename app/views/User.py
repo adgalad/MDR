@@ -145,6 +145,24 @@ class User:
   def profile(request):
     return render(request, "profile.html")
 
+  @staticmethod
+  def notifications(request):
+    if request.user.is_anonymous:
+      return JsonResponse({})      
+    if request.method == "GET":
+      notifications = [] 
+      for n in request.user.notifications.all():
+        notifications.append({
+            'message': str(n)
+          })
+        n.delete()
+
+      return JsonResponse({'notifications': notifications})
+    else:
+      raise PermissionDenied  
+
+
+  @staticmethod
   def getUsers(request):
       id_users = request.GET.get('id_users')
       options = '<option value="11" selected="selected">---------</option>'

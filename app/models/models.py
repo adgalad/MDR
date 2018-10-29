@@ -7,6 +7,15 @@ from django.db import models
 from app.dash import Dash
 from app.models.User import User
 
+class Notification(models.Model):
+  user = models.ForeignKey("User", related_name="notifications")
+  transaction = models.ForeignKey("Transaction", related_name="notifications")  
+
+  def __str__(self):
+    return "You have purchased %d %s."%(self.transaction.boughtTicket, "ticket" if self.transaction.boughtTicket == 1 else "tickets" )
+
+
+
 class Transaction(models.Model):
   address = models.CharField(max_length=100, primary_key=True)
   user   = models.ForeignKey(User, related_name="transactions")
@@ -19,6 +28,10 @@ class Transaction(models.Model):
     ordering = ['-blockHeight']
   def __str__(self):
     return str((self.user, self.address))
+
+  def save(self, *args, **kwargs):
+    super(Transaction,self).save(*args, **kwargs)
+    Notification(user=self.user, transaction=self).save()
 
   @property
   def getDate(self):
@@ -42,3 +55,14 @@ class AddressGenerated(models.Model):
 
   def __str__(self):
     return str((self.user, self.address))
+
+
+
+
+
+
+
+
+
+
+

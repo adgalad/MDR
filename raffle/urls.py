@@ -48,6 +48,7 @@ urlpatterns = [
     url(r'^profile/$', views.User.profile, name="profile"),
     url(r'^profile/edit$', views.User.editProfile, name="editProfile"),
     url(r'^api/users/', views.User.getUsers, name="api.users"),
+    url(r'^api/user/notifications', views.User.notifications, name="api.usersNotifications"),
     url(r'^api/changePassword/$', views.User.changePassword, name="api.changePassword"),
 
     url(r'^reset/password_reset', password_reset, 
