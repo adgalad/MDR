@@ -52,3 +52,16 @@ function hasScrolled() {
 
   lastScrollTop = st;
 }
+
+function showStickySuccessToast() {        
+      $().toastmessage('showToast', 
+        { text     : 'Success Dialog which is sticky',            
+        sticky   : true,            
+        position : 'top-right',            
+        type     : 'success',            
+        closeText: '',            
+        close    : function () {                
+        console.log("toast is closed ...");            
+        }        
+     });    
+} 
