@@ -60,10 +60,10 @@ function checkNotifications(){
   Http.open("GET", url);
   Http.send();
   Http.onreadystatechange=(e)=>{
-    console.log(Http.responseText)
     data = JSON.parse(Http.responseText)
     notifications = data['notifications']
     for (var i = 0; i < notifications.length; i++){
+      console.log(notifications[i]['message'])
       showStickySuccessToast(notifications[i]['message'])
     }
   }
