@@ -59,8 +59,8 @@ function checkNotifications(){
   const url='/api/user/notifications';
   Http.open("GET", url);
   Http.send();
-  Http.onreadystatechange=(e)=>{
-    if (e === undefined){
+  Http.onreadystatechange=function(){
+    if (xmlhttp.readyState==4 && xmlhttp.status==200){
       data = JSON.parse(Http.responseText)
       notifications = data['notifications']
       for (var i = 0; i < notifications.length; i++){
