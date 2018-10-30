@@ -23,17 +23,12 @@ class Transaction(models.Model):
   raffle = models.ForeignKey("Raffle", related_name="transactions")
   blockHeight = models.IntegerField(verbose_name="Block Height")
   boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
+  notified = models.Boolean(default=False)
   
   class Meta:
     ordering = ['-blockHeight']
   def __str__(self):
     return str((self.user, self.address))
-
-  def save(self, *args, **kwargs):
-    createNotification = not self.pk
-    super(Transaction,self).save(*args, **kwargs)
-    if createNotification:
-      Notification(user=self.user, transaction=self).save()
 
   @property
   def getDate(self):

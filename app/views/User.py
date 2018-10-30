@@ -151,11 +151,15 @@ class User:
       return JsonResponse({})      
     if request.method == "GET":
       notifications = [] 
-      for n in request.user.notifications.all():
+      for tx in request.user.transactions.filter(notified=False):
         notifications.append({
-            'message': str(n)
+            'message': "You have purchased %d %s."%(
+                tx.boughtTicket, 
+                "ticket" if tx.boughtTicket == 1 else "tickets" 
+              )
           })
-        n.delete()
+        tx.notified = True
+        tx.save()
 
       return JsonResponse({'notifications': notifications})
     else:
