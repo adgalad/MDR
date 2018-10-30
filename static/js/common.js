@@ -64,7 +64,7 @@ function checkNotifications(){
       data = JSON.parse(Http.responseText)
       notifications = data['notifications']
       for (var i = 0; i < notifications.length; i++){
-        console.log(notifications[i]['message'])
+        
         showStickySuccessToast(notifications[i]['message'])
       }
     }
@@ -75,11 +75,10 @@ function showStickySuccessToast(message) {
       $().toastmessage('showToast', 
         { text     : message,
         sticky   : true,
-        position : 'top-right',
+        position : 'bottom-right',
         type     : 'success',
         closeText: '',
         close    : function () {
-        console.log("toast is closed ...");
         }        
      });    
 } 
