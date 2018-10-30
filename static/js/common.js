@@ -60,11 +60,13 @@ function checkNotifications(){
   Http.open("GET", url);
   Http.send();
   Http.onreadystatechange=(e)=>{
-    data = JSON.parse(Http.responseText)
-    notifications = data['notifications']
-    for (var i = 0; i < notifications.length; i++){
-      console.log(notifications[i]['message'])
-      showStickySuccessToast(notifications[i]['message'])
+    if (e === undefined){
+      data = JSON.parse(Http.responseText)
+      notifications = data['notifications']
+      for (var i = 0; i < notifications.length; i++){
+        console.log(notifications[i]['message'])
+        showStickySuccessToast(notifications[i]['message'])
+      }
     }
   }
 }
