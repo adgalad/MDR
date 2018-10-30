@@ -9,7 +9,7 @@ django-toolbelt==0.0.1
 gunicorn==18.0
 static==1.0.2
 psycopg2==2.7.1
-requests==2.17.3
+requests==2.20.0
 olefile==0.44
 Pillow==4.1.1
 reportlab==3.4.0
