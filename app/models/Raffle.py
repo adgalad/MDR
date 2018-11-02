@@ -158,19 +158,22 @@ class Raffle(models.Model):
     if balance >= PAYMENT_AMOUNT:
       self.is_active = True
       self.save()
-      DEFAULT_DOMAIN = "http://megadashraffle.org"
       user = models.User.objects.filter(username=self.owner)
-      subject = 'Your raffle, %s, hase been published'%self.name
+      subject = 'Your raffle, %s, has been published'%self.name
       from_email = settings.EMAIL_HOST_USER
       to_email = [from_email , user.email]
       html_message = render_to_string(
                  'baseEmail.html',
                  {
                      'message': 'Now that you have paid the raffle creation fee, we\'ve published your raffle in our site. You can view the details with the following button. <br> <br> <a class="btn btn-primary" href="%s/raffle/%d">Raffle Details</a>'%( DEFAULT_DOMAIN, self.pk) ,
-                     'title':  'Your raffle, %s, hase been published'%self.name,
+                     'title':  'Your raffle, %s, has been published'%self.name,
                  }
              )
-      EmailThread(subject=subject,message='Now that you have paid the raffle creation fee, we\'ve published your raffle in our site.',html_message=html_message, recipient_list=to_email)
+      EmailThread(subject=subject,
+                  message='Now that you have paid the raffle creation fee, we\'ve published your raffle in our site.',
+                  html_message=html_message,
+                  recipient_list=to_email)
+
     elif timezone.now()-self.created_at > datetime.timedelta(days=7):
       self.delete()
 
@@ -343,17 +346,33 @@ class Raffle(models.Model):
 
     if not sign:
       return -1
+
     if self.ticketsSold >= MIN_TICKETS_SOLD:
       Dash.sendtoaddress(self.addressProject, str(PAYMENT_AMOUNT))
+
+      html_message = render_to_string(
+        'baseEmail.html',
+        {
+          'message': 'Your raffle have finished. Now, you\'ve to retrive the prize accumulated by your raffle, clicking on the link below, and send it to the winner and to your wallet. Moreover, we have sent you back the 0.1 Dash you paid as fee. <br> <br> <a class="btn btn-primary" href="%s/raffle/%d/finished">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk) ,
+          'title':  'Your raffle, %s, has ended.'%self.name,
+        }
+      )
       EmailThread(subject="The raffle %s has finished"%self.name, 
                   message="Your raffle have finished. Now, you've to retrive the prize accumulated by your raffle and send it to the winner and to your wallet. Moreover, we have send you back the 0.1 Dash you pay as fee.",
-                  html_message="<html></html>",
+                  html_message=html_message,
                   recipient_list=[self.owner.email]).start()
                   
     else:
+      html_message = render_to_string(
+        'baseEmail.html',
+        {
+          'message': 'Your raffle have finished. Now, you\'ve to retrive the prize accumulated by your raffle, clicking on the link below, and send it to the winner and to your wallet. <br> <br> <a class="btn btn-primary" href="%s/raffle/%d/finished">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk) ,
+          'title':  'Your raffle, %s, has ended.'%self.name,
+        }
+      )
       EmailThread(subject="The raffle %s has finished"%self.name, 
                   message="Your raffle have finished. Now, you've to retrive the prize accumulated by your raffle and send it to the winner and to your wallet.",
-                  html_message="<html></html>",
+                  html_message=html_message,
                   recipient_list=[self.owner.email]).start()
 
     # transaction = Dash.sendrawtransaction(sign['hex'], allowhighfees="true")
