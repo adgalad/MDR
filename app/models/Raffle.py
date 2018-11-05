@@ -36,6 +36,7 @@ PAYMENT_AMOUNT = 0.1 # Dash
 MIN_TICKETS_SOLD = 20
 
 DEFAULT_DOMAIN = "http://megadashraffle.org"
+
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   created_at = models.DateTimeField(auto_now_add=True)
@@ -70,7 +71,6 @@ class Raffle(models.Model):
   MSpubkey4 = models.CharField(verbose_name="Multisig Public Key 4", max_length=67, blank=True, null=True)
   MSpubkey5 = models.CharField(verbose_name="Multisig Public Key 5", max_length=67, blank=True, null=True)
   MSpubkey6 = models.CharField(verbose_name="Multisig Public Key 6", max_length=67, blank=True, null=True)
-
 
   MSredeemScript = models.CharField(verbose_name="Multisig Redeem Script", max_length=1024, blank=True, null=True)
   
@@ -158,7 +158,7 @@ class Raffle(models.Model):
     if balance >= PAYMENT_AMOUNT:
       self.is_active = True
       self.save()
-      user = models.User.objects.filter(username=self.owner)
+      user = User.objects.filter(username=self.owner)
       subject = 'Your raffle, %s, has been published'%self.name
       from_email = settings.EMAIL_HOST_USER
       to_email = [from_email , user.email]
