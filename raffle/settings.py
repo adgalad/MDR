@@ -141,7 +141,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'staticfiles'),
 )
-
 # Directorio de templates y de statics.
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
