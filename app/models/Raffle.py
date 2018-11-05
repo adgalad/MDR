@@ -158,7 +158,10 @@ class Raffle(models.Model):
     if balance >= PAYMENT_AMOUNT:
       self.is_active = True
       self.save()
-      user = User.objects.filter(username=self.owner)
+      try:
+        user = User.objects.get(username=self.owner)
+      except Exception as e:
+        return
       subject = 'Your raffle, %s, has been published'%self.name
       from_email = settings.EMAIL_HOST_USER
       to_email = [from_email , user.email]
