@@ -142,6 +142,7 @@ class User:
     return render(request, "addWalletAddress.html", {'form': form, 'base': base})
 
   @staticmethod
+  @login_required(login_url='/login/')
   def profile(request):
     return render(request, "profile.html")
 

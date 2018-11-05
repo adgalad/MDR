@@ -28,6 +28,7 @@ class Raffle:
     return render(request, "raffles.html", {'numbers': numbers})
 
   @staticmethod
+  @login_required(login_url='/login/')
   def myRaffles(request):
     count = Dash.getblockcount()
     user = request.user
@@ -44,6 +45,7 @@ class Raffle:
 
 
   @staticmethod
+  @login_required(login_url='/login/')
   def details(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
@@ -53,6 +55,8 @@ class Raffle:
       return redirect(reverse('payRaffle', kwargs={'id':id}))
     return render(request, "raffle.html", {"raffle":raffle})
 
+  @staticmethod
+  @login_required(login_url='/login/')
   def moreDetails(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
@@ -140,6 +144,7 @@ class Raffle:
       return render(request, "editRaffle.html", {'form':form})
 
   @staticmethod
+  @login_required(login_url='/login/')
   def pay(request, id):
     try:
       raffle = models.Raffle.objects.get(pk=id)
@@ -185,8 +190,8 @@ class Raffle:
         'raffle': raffle
       })
   
-  @login_required(login_url='/login/')
   @staticmethod
+  @login_required(login_url='/login/')
   def addPrivkey(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
