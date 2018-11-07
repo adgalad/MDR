@@ -1,4 +1,5 @@
 import json
+import re
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -34,6 +35,10 @@ def checkUrl(url):
         import requests
         from PIL import Image
         from io import StringIO, BytesIO
+        val = re.search(r"^.+://.+$", url)
+        print('pase')
+        if not val:
+            raise forms.ValidationError("A valid image URL is required.")
         r = requests.get(url)
         try:
             im = Image.open(StringIO(r.content))
