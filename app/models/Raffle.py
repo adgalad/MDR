@@ -14,7 +14,7 @@ from ckeditor.fields import RichTextField
 from app.helpers import EmailThread
 from app.dash import Dash
 from app.models.User import User
-from app.models.models import Transaction
+from app.models.models import Transaction, Notification
 
     
 rafflePrice = {
@@ -159,7 +159,7 @@ class Raffle(models.Model):
       self.is_active = True
       self.save()
       
-      models.Notification(user=self.owner, transaction=None, message="You've paid the raffle's fee.")
+      #models.Notification(user=self.owner, transaction=None, message="You've paid the raffle's fee.")
       subject = 'Your raffle, %s, has been published'%self.name
       from_email = settings.EMAIL_HOST_USER
       to_email = [self.owner.email]

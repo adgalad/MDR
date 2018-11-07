@@ -17,11 +17,13 @@ class Command(BaseCommand):
             raffles = models.Raffle.objects.filter(transaction__isnull=True, is_active=True)
             for raffle in raffles:
                 #print(raffle.name)
+                print(">", raffle)
                 raffle.getWinner()
             
             # Check payment of raffles
             raffles = models.Raffle.objects.filter(is_active=False)
             for raffle in raffles:
+                print("<", raffle)
                 raffle.checkPayment()
 
             time.sleep(self.DELAY)
