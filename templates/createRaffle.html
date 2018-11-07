@@ -20,16 +20,31 @@
               {% for message in messages %}
                 <div style="color:red"> {{ message }} </div>
               {% endfor %}
+              {% for field in form %}
+                {% if field.errors %}
+                  <div class="col-sm-12" id="alert">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <span style="font-size:14px;" id="message">
+                       {{ field.errors }} 
+                      
+                      </span>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
               <div class="wrap-input100 validate-input" data-validate="Name is required">
                 <span class="label-input100">{{form.name.label}}</span>
-                <input class="input100" type="text" name="{{form.name.html_name}}" placeholder="Enter your Raffle Name" id="{{form.name.auto_id}}">
+                <input class="input100" type="text" name="{{form.name.html_name}}" placeholder="Enter your Raffle Name" id="{{form.name.auto_id}}" value="{{form.name.value}}">
                 <span class="focus-input100"></span>
               </div>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="wrap-input100 validate-input">
                   <span class="label-input100">{{form.thumbnail_url.label}}</span>
-                      <input class="input100" type="text" name="{{form.thumbnail_url.html_name}}" id="{{form.thumbnail_url.auto_id}}" placeholder="Enter a thumbnail url">
+                      <input class="input100" type="text" name="{{form.thumbnail_url.html_name}}" id="{{form.thumbnail_url.auto_id}}" value="{{form.thumbnail_url.value}}" placeholder="Enter a thumbnail url">
                       <span class="focus-input100"></span>
                 </div>  
               </div>
@@ -53,21 +68,6 @@
               <p class="label-input100" style="margin-bottom:15px;">{{form.description.label}}:</p>
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ form.description }}</div>
                   <br>
-                  {% for field in form %}
-                    {% if field.errors %}
-                      <div class="col-sm-12" id="alert">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                          <span style="font-size:14px;" id="message">
-                           {{ field.errors }} 
-                          
-                          </span>
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                      </div>
-                    {% endif %}
-                  {% endfor %}
                   <div class="col-sm-12 col-md-12 col-lg-12" align="center">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="terms" id="defaultUnchecked" onchange="valid()">

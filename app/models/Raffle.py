@@ -14,7 +14,7 @@ from ckeditor.fields import RichTextField
 from app.helpers import EmailThread
 from app.dash import Dash
 from app.models.User import User
-from app.models.models import Transaction
+from app.models.models import Transaction, Notification
 
     
 rafflePrice = {
