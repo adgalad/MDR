@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,7 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Common Style -->
-    <link href="/static/css/common.css" rel="stylesheet">
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
       <link rel="stylesheet" href="/static/css/jquery.toastmessage.css">
       <link rel="stylesheet" href="/static/css/images/success.png">
     <link href="/static/css/accordion.css" rel="stylesheet">
@@ -187,6 +188,7 @@
 {% if not user.is_anonymous %}
   <script type="text/javascript">
     $(document).ready(function(){
+      console.log("Creando notificaciones")
       setInterval(checkNotifications, 5*1000)
     })
   </script>

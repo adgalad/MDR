@@ -93,7 +93,7 @@ class Raffle(models.Model):
 
   @property
   def getDurationTimestamp(self):
-    return raffleDuration['Mega Raffle'] * 24 * 3600
+    return raffleDuration[self.type] * 24 * 3600
 
   @property
   def getTimeLeft(self):
@@ -159,6 +159,7 @@ class Raffle(models.Model):
       self.is_active = True
       self.save()
       
+      models.Notification(user=self.owner, transaction=None, message="You've paid the raffle's fee.")
       subject = 'Your raffle, %s, has been published'%self.name
       from_email = settings.EMAIL_HOST_USER
       to_email = [self.owner.email]
@@ -172,7 +173,7 @@ class Raffle(models.Model):
       EmailThread(subject=subject,
                   message='Now that you have paid the raffle creation fee, we\'ve published your raffle in our site.',
                   html_message=html_message,
-                  recipient_list=to_email)
+                  recipient_list=to_email).start()
 
     elif timezone.now()-self.created_at > datetime.timedelta(days=7):
       self.delete()

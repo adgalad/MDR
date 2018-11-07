@@ -9,10 +9,14 @@ from app.models.User import User
 
 class Notification(models.Model):
   user = models.ForeignKey("User", related_name="notifications")
-  transaction = models.ForeignKey("Transaction", related_name="notifications")  
+  transaction = models.ForeignKey("Transaction", related_name="notifications", null=True)
+  message = models.CharField(max_length=100, primary_key=True)
 
   def __str__(self):
-    return "You have purchased %d %s."%(self.transaction.boughtTicket, "ticket" if self.transaction.boughtTicket == 1 else "tickets" )
+    if self.transaction:
+      return "You have purchased %d %s."%(self.transaction.boughtTicket, "ticket" if self.transaction.boughtTicket == 1 else "tickets" )
+    else:
+      return self.message
 
 
 
