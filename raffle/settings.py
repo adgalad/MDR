@@ -73,8 +73,16 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        # 'TEMPLATE_LOADERS': [
+        #     'django.template.loaders.filesystem.Loader',
+        #     'django.template.loaders.app_directories.Loader',
+        # ]
     },
 ]
+
+
+
+SITE_ID = 1
 
 WSGI_APPLICATION = 'raffle.wsgi.application'
 
@@ -129,13 +137,12 @@ USE_TZ = True
 #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 #STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_ROOT = '/staticfiles'
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
+    os.path.join(PROJECT_ROOT, 'staticfiles'),
 )
-
 # Directorio de templates y de statics.
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
@@ -190,8 +197,10 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'smarticket.suport@gmail.com'

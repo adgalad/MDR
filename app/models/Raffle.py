@@ -93,7 +93,7 @@ class Raffle(models.Model):
 
   @property
   def getDurationTimestamp(self):
-    return raffleDuration['Mega Raffle'] * 24 * 3600
+    return raffleDuration[self.type] * 24 * 3600
 
   @property
   def getTimeLeft(self):
@@ -162,10 +162,9 @@ class Raffle(models.Model):
         user = self.owner
       except Exception as e:
         return
-
       subject = 'Your raffle, %s, has been published'%self.name
       from_email = settings.EMAIL_HOST_USER
-      to_email = [from_email , user.email]
+      to_email = [self.owner.email]
       html_message = render_to_string(
                  'baseEmail.html',
                  {
@@ -176,7 +175,7 @@ class Raffle(models.Model):
       EmailThread(subject=subject,
                   message='Now that you have paid the raffle creation fee, we\'ve published your raffle in our site.',
                   html_message=html_message,
-                  recipient_list=to_email)
+                  recipient_list=to_email).start()
 
     elif timezone.now()-self.created_at > datetime.timedelta(days=7):
       self.delete()
