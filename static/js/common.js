@@ -59,12 +59,13 @@ function checkNotifications(){
   const url='/api/user/notifications';
   Http.open("GET", url);
   Http.send();
+  console.log("hola")
   Http.onreadystatechange=function(){
     if (Http.readyState==4 && Http.status==200){
       data = JSON.parse(Http.responseText)
       notifications = data['notifications']
+      console.log(notifications)
       for (var i = 0; i < notifications.length; i++){
-        
         showStickySuccessToast(notifications[i]['message'])
       }
     }
@@ -72,16 +73,15 @@ function checkNotifications(){
 }
 
 function showStickySuccessToast(message) {
-      $().toastmessage('showToast', 
-        { text     : message,
-        sticky   : true,
-        position : 'bottom-right',
-        type     : 'success',
-        closeText: '',
-        close    : function () {
-        }        
-     });    
+      $().toastmessage('showToast', {
+            text     : message,
+            sticky   : true,
+            position : 'top-right',
+            type     : 'success',
+            closeText: '',
+            close    : function () {
+            }
+        });  
 } 
-
 
 

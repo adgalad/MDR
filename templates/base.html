@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,15 @@
       <meta name="twitter:title" content="Mega Dash Raffle">
       <meta name="twitter:description" content="Create a Dash Raffle to fund your projects.">
       <meta name="twitter:image" content="http://megadashraffle.org/static/img/logo_blanco.png">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">
+      <meta name="application-name" content="&nbsp;"/>
+      <meta name="msapplication-TileColor" content="#FFFFFF" />
+      <meta name="msapplication-TileImage" content="mstile-144x144.png" />
+      <meta name="msapplication-square70x70logo" content="mstile-70x70.png" />
+      <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
+      <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
+      <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
     {% endblock meta_social %}
   {% endblock meta %}
   
@@ -43,10 +53,29 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Common Style -->
-    <link href="/static/css/common.css" rel="stylesheet">
-      <link rel="stylesheet" href="/static/css/jquery.toastmessage.css">
-      <link rel="stylesheet" href="/static/css/images/success.png">
-    <link href="/static/css/accordion.css" rel="stylesheet">
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/jquery.toastmessage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/images/success.png' %}">
+    <link href="{% static 'css/accordion.css' %}" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '/img/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '/img/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/img/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static '/img/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static '/img/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static '/img/favicon/apple-touch-icon-57x57.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static '/img/favicon/apple-touch-icon-114x114.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static '/img/favicon/apple-touch-icon-72x72.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static '/img/favicon/apple-touch-icon-144x144.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static '/img/favicon/apple-touch-icon-60x60.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static '/img/favicon/apple-touch-icon-120x120.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static '/img/favicon/apple-touch-icon-76x76.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static '/img/favicon/apple-touch-icon-152x152.png' %}" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-196x196.png' %}" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-16x16.png' %}" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-128.png' %}" sizes="128x128" />
+
   {% endblock style%}
 </head>
 
@@ -60,7 +89,6 @@
       <div class="row" style="width: 100%">
         <div class="col-md-4 col-sm-4 col-xs-1"> </div>
         <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
-          <!-- <img src="/static/img/1.2.png" width="60px" > -->
           <a href="{% url 'home' %}">
             <img class="logo-blanco" src="/static/img/logo_blanco.png" width="200px" style="margin-top: 10px" >
           </a>
@@ -181,12 +209,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-<script src="/static/js/jquery.toastmessage.js"></script>
-<script src="/static/js/common.js"></script>
+<script src="{% static 'js/jquery.toastmessage.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
 
 {% if not user.is_anonymous %}
   <script type="text/javascript">
     $(document).ready(function(){
+      console.log("Creando notificaciones")
       setInterval(checkNotifications, 5*1000)
     })
   </script>

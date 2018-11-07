@@ -153,6 +153,7 @@ class User:
     if request.method == "GET":
       notifications = [] 
       for tx in request.user.transactions.filter(notified=False):
+        print("Enviando Notificacion")
         notifications.append({
             'message': "You have purchased %d %s."%(
                 tx.boughtTicket, 

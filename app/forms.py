@@ -1,4 +1,5 @@
 import json
+import re
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -34,19 +35,26 @@ def checkUrl(url):
         import requests
         from PIL import Image
         from io import StringIO, BytesIO
-        r = requests.get(url)
-        try:
-            im = Image.open(StringIO(r.content))
-        except:
-            im = None
-
-        if not im:
+        print('pase', url, bool(re.search(r"^.+://.+$", url)) )
+        if re.search(r"^.+://.+$", url):
             try:
-                im = Image.open(BytesIO(r.content))
+                r = requests.get(url)
             except:
-                raise forms.ValidationError("A valid image URL is required.")
+                raise forms.ValidationError("The URL is invalid")
+            try:
+                im = Image.open(StringIO(r.content))
+            except:
+                im = None
 
-        return url
+            if not im:
+                try:
+                    im = Image.open(BytesIO(r.content))
+                except:
+                    raise forms.ValidationError("A valid image URL is required.")
+
+            return url
+        else:
+            raise forms.ValidationError("No protocol specified for the URL '%s' is not valid. You have to use a protocol like http:// or https://"%url)
 
 class Raffle(forms.ModelForm):
     class Meta:
