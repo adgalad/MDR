@@ -45,7 +45,6 @@ class Raffle:
 
 
   @staticmethod
-  @login_required(login_url='/login/')
   def details(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
@@ -56,7 +55,6 @@ class Raffle:
     return render(request, "raffle.html", {"raffle":raffle})
 
   @staticmethod
-  @login_required(login_url='/login/')
   def moreDetails(request, id):
     try:
       raffle = models.Raffle.objects.get(id=id)
