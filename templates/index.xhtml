@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %} Home {% endblock %}
 {% block home %} active {% endblock home %}
 
 {% block style %}
   {{block.super}}
-  <link rel="stylesheet" href="/static/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
-  <link rel="stylesheet" href="/static/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/static/css/animation.css"> <!-- Resource style -->
+  <link rel="stylesheet" href="{% static 'OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animation.css' %}"> <!-- Resource style -->
   <script src="/static/js/modernizr.js"></script> <!-- Modernizr -->
 {% endblock style %}
 
@@ -125,8 +126,8 @@
 
 {% block scripts %}
   {{ block.super }}
-  <script src="../static/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
-  <!-- <script src="/static/js/main.js"></script> --> <!-- Resource jQuery -->
+  <script src="..{% static 'OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+  <!-- <script src="{% static 'js/main.js' %}"></script> <!-- Resource jQuery --> -->
   <script type="text/javascript">
     $('.owl-carousel').owlCarousel({
         loop:true,

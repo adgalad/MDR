@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block style %}
   {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="/static/css/select2.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
-  <link rel="stylesheet" type="text/css" href="/static/css/form.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/select2.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
 {% endblock style %}
 
 {%load humanize %}
@@ -17,5 +18,5 @@
 
 {% block scripts %}
   {{ block.super }}
-  <script src="/static/js/form.js"></script>
+  <script src="{% static/js/form.js"></script>
 {% endblock scripts %}
