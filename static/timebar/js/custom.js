@@ -1936,10 +1936,15 @@ if (typeof NProgress != 'undefined') {
                             str = "Finished"
                         } else if (left > 3600*24){
                             left = parseInt(left / (24*3600))
-                            str = String(left) + " days"
-                        } else {
+                            str = String(left) + " days left"
+                        } else if (left > 3600) {
                             left = parseInt(left / (3600))
-                            str = String(left) + " hours"
+                            str = String(left) + " hours left"
+                        } else if (left > 60){
+                            left = parseInt(left / (60))
+                            str = String(left) + " minutes left"
+                        } else{
+                            str = String(left) + "About to finish"
                         }
                         $(this.el).find('.percent').text(str);
 

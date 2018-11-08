@@ -324,7 +324,7 @@ header .brand .logo {
 .percent {
     line-height: 110px;
     z-index: 2;
-    font-size: 18px
+    font-size: 15px
 }
 
 /*.percent:after {
