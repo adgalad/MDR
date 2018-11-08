@@ -27,7 +27,7 @@ class Transaction(models.Model):
   raffle = models.ForeignKey("Raffle", related_name="transactions")
   blockHeight = models.IntegerField(verbose_name="Block Height")
   boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
-  notified = models.BooleanField(verbose_name="Was notified")
+  notified = models.BooleanField(verbose_name="Was notified", default=True)
   
   class Meta:
     ordering = ['-blockHeight']
