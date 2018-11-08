@@ -31,6 +31,7 @@ class Transaction(models.Model):
   
   class Meta:
     ordering = ['-blockHeight']
+    
   def __str__(self):
     return str((self.user, self.address))
 
