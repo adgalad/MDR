@@ -205,6 +205,7 @@ class Raffle(models.Model):
             tickets = int(round(amount/float(self.ticketPrice), 5))
             if Transaction.object.filter(pk=txRaw['txid']).exists():
               continue
+            print("Aqui 1", Transaction.object.filter(pk=txRaw['txid']).exists())
             Transaction(
               address=txRaw['txid'],
               amount=amount,
@@ -251,7 +252,8 @@ class Raffle(models.Model):
             tickets = int(round(amount/float(self.ticketPrice), 5))
             if Transaction.object.filter(pk=txRaw['txid']).exists():
               continue
-            tx = Transaction(
+            print("Aqui 2", Transaction.object.filter(pk=txRaw['txid']).exists())
+            Transaction(
               address=txRaw['txid'],
               amount=amount,
               user=addressGenerated.user,
