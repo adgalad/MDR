@@ -40,7 +40,7 @@ def checkUrl(url):
             try:
                 r = requests.get(url)
             except:
-                raise forms.ValidationError("The URL is invalid")
+                raise forms.ValidationError("The URL is invalid.")
             try:
                 im = Image.open(StringIO(r.content))
             except:
