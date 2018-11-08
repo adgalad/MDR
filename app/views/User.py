@@ -155,15 +155,16 @@ class User:
       print(request.user.transactions.filter(notified=False))
       for tx in request.user.transactions.filter(notified=False):
         print("Enviando Notificacion", tx, tx.notified)
+        tx.notified = True
+        tx.save()
         notifications.append({
             'message': "You have purchased %d %s."%(
                 tx.boughtTicket, 
                 "ticket" if tx.boughtTicket == 1 else "tickets" 
               )
           })
-        tx.notified = True
+        
         print("cree notificacion", tx.notified)
-        tx.save()
         print("Lo guardo")
 
 
