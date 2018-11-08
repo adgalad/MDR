@@ -149,7 +149,8 @@ class User:
   @staticmethod
   def notifications(request):
     if request.user.is_anonymous:
-      return JsonResponse({})      
+      return JsonResponse({})  
+    print(request.user.username)    
     if request.method == "GET":
       notifications = [] 
       print(request.user.transactions.filter(notified=False))
