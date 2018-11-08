@@ -149,13 +149,11 @@ class User:
   @staticmethod
   def notifications(request):
     if request.user.is_anonymous:
-      return JsonResponse({})  
-    print(request.user.username)    
+      return JsonResponse({})
+    print(request.user.username)
     if request.method == "GET":
-      notifications = [] 
-      print(request.user.transactions.filter(notified=False))
+      notifications = []
       for tx in request.user.transactions.filter(notified=False):
-        print("Enviando Notificacion", tx, tx.notified)
         tx.notified = True
         tx.save()
         notifications.append({
@@ -164,10 +162,6 @@ class User:
                 "ticket" if tx.boughtTicket == 1 else "tickets" 
               )
           })
-        
-        print("cree notificacion", tx.notified)
-        print("Lo guardo")
-
 
       return JsonResponse({'notifications': notifications})
     else:
