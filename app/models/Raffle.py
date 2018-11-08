@@ -203,9 +203,9 @@ class Raffle(models.Model):
           if addressGenerated.address in detail['scriptPubKey']['addresses']:
             amount = detail['value']
             tickets = int(round(amount/float(self.ticketPrice), 5))
-            if Transaction.object.filter(pk=txRaw['txid']).exists():
+            if Transaction.objects.filter(pk=txRaw['txid']).exists():
               continue
-            print("Aqui 1", Transaction.object.filter(pk=txRaw['txid']).exists())
+            print("Aqui 1", Transactions.object.filter(pk=txRaw['txid']).exists())
             Transaction(
               address=txRaw['txid'],
               amount=amount,
@@ -250,9 +250,9 @@ class Raffle(models.Model):
           if addressGenerated.address in detail['scriptPubKey']['addresses']:
             amount = detail['value']
             tickets = int(round(amount/float(self.ticketPrice), 5))
-            if Transaction.object.filter(pk=txRaw['txid']).exists():
+            if Transaction.objects.filter(pk=txRaw['txid']).exists():
               continue
-            print("Aqui 2", Transaction.object.filter(pk=txRaw['txid']).exists())
+            print("Aqui 2", Transaction.objects.filter(pk=txRaw['txid']).exists())
             Transaction(
               address=txRaw['txid'],
               amount=amount,
