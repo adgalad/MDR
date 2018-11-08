@@ -150,7 +150,6 @@ class User:
   def notifications(request):
     if request.user.is_anonymous:
       return JsonResponse({})
-    print(request.user.username)
     if request.method == "GET":
       notifications = []
       for tx in request.user.transactions.filter(notified=False):

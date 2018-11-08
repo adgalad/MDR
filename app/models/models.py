@@ -33,14 +33,10 @@ class Transaction(models.Model):
     ordering = ['-blockHeight']
 
   def __init__(self, *args, **kwargs):
-
     super(Transaction, self).__init__(*args, **kwargs)
-    print("Creo %s", self.pk)
 
   def save(self, *args, **kwargs):
-
     super(Transaction, self).save(*args, **kwargs)
-    print("Resalve %s", self.pk)
 
   def __str__(self):
     return str((self.user, self.address))

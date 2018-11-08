@@ -43,7 +43,6 @@ function hasScrolled() {
     // $('.logo-img').append('<img src="/static/img/logo_blanco.png">')
   } else {
     // Scroll Up
-    console.log(st, $(window).height(), $(document).height(), st <= 10)
     if (st <= 50) {
       $('header').removeClass('header-up').addClass('header-down');
       // $('.logo-img').empty()
@@ -173,12 +172,10 @@ function checkNotifications(){
   const url='/api/user/notifications';
   Http.open("GET", url);
   Http.send();
-  console.log("hola")
   Http.onreadystatechange=function(){
     if (Http.readyState==4 && Http.status==200){
       data = JSON.parse(Http.responseText)
       notifications = data['notifications']
-      console.log(notifications)
       for (var i = 0; i < notifications.length; i++){
         showStickySuccessToast(notifications[i]['message'])
       }
