@@ -203,13 +203,16 @@ class Raffle(models.Model):
           if addressGenerated.address in detail['scriptPubKey']['addresses']:
             amount = detail['value']
             tickets = int(round(amount/float(self.ticketPrice), 5))
+            if Transaction.object.filter(pk=txRaw['txid']).exists():
+              continue
             tx = Transaction(
               address=txRaw['txid'],
               amount=amount,
               user=addressGenerated.user,
               blockHeight=txRaw['height'],
               raffle=self,
-              boughtTicket=tickets
+              boughtTicket=tickets,
+              notified=False,
             ).save()
             total += amount
         if total == 0.0:
@@ -246,13 +249,16 @@ class Raffle(models.Model):
           if addressGenerated.address in detail['scriptPubKey']['addresses']:
             amount = detail['value']
             tickets = int(round(amount/float(self.ticketPrice), 5))
+            if Transaction.object.filter(pk=txRaw['txid']).exists():
+              continue
             tx = Transaction(
               address=txRaw['txid'],
               amount=amount,
               user=addressGenerated.user,
               blockHeight=Dash.getblockcount(),
               raffle=self,
-              boughtTicket=tickets
+              boughtTicket=tickets,
+              notified=False
             ).save()
             total += amount
       if total == 0.0:
