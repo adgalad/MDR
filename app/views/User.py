@@ -152,6 +152,7 @@ class User:
       return JsonResponse({})      
     if request.method == "GET":
       notifications = [] 
+      print(request.user.transactions.filter(notified=False))
       for tx in request.user.transactions.filter(notified=False):
         print("Enviando Notificacion", tx)
         notifications.append({
@@ -164,7 +165,7 @@ class User:
         print("cree notificacion", tx.notified)
         tx.save()
         print("Lo guardo")
-        
+
 
       return JsonResponse({'notifications': notifications})
     else:
