@@ -68,6 +68,11 @@ class Dash:
     # return {'time': 5566462526}
 
   @staticmethod
+  def gettransaction(address):
+    return Dash.call(["gettransaction", address])
+    # return {'time': 5566462526}
+
+  @staticmethod
   def importpubkey(pubkey, label='', rescan='false'):
     return Dash.call(["importpubkey", '%s'%pubkey, '"%s"'%label, rescan])
   

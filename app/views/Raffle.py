@@ -72,8 +72,10 @@ class Raffle:
       raffle = models.Raffle.objects.get(pk=id)
     except Exception as e:
       raise PermissionDenied
+
     if raffle.owner != request.user and not request.user.is_superuser:
       raise PermissionDenied
+      
     if not raffle.finished:
       raise PermissionDenied
     return render(request, "finishedRaffle.html", {"raffle":raffle})
@@ -191,24 +193,24 @@ class Raffle:
         'raffle': raffle
       })
   
-  @staticmethod
-  @login_required(login_url='/login/')
-  def addPrivkey(request, id):
-    try:
-      raffle = models.Raffle.objects.get(id=id)
-    except:
-      raise PermissionDenied
+  # @staticmethod
+  # @login_required(login_url='/login/')
+  # def addPrivkey(request, id):
+  #   try:
+  #     raffle = models.Raffle.objects.get(id=id)
+  #   except:
+  #     raise PermissionDenied
 
-    # if not (raffle.finished and request.user in raffle.signers.all()):
-    if True:
-      raise PermissionDenied
-    msg = ""
-    if request.method == "POST":
-      form = forms.AddPrivkey(request.POST)
-      if form.is_valid():
-        msg = raffle.addPrivKey(form.cleaned_data['privkey'])
-        raffle.save()
-    else:
-      form = forms.AddPrivkey()
+  #   # if not (raffle.finished and request.user in raffle.signers.all()):
+  #   if True:
+  #     raise PermissionDenied
+  #   msg = ""
+  #   if request.method == "POST":
+  #     form = forms.AddPrivkey(request.POST)
+  #     if form.is_valid():
+  #       msg = raffle.addPrivKey(form.cleaned_data['privkey'])
+  #       raffle.save()
+  #   else:
+  #     form = forms.AddPrivkey()
 
-    return render(request, "form.html", {'form': form, "msg":msg}) 
+  #   return render(request, "form.html", {'form': form, "msg":msg}) 
