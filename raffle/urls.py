@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^buyTicket/(?P<id>\w+)$', views.Raffle.buyTicket, name="buyTicket"),
     url(r'^addPrivkey/(?P<id>\w+)$', views.Raffle.addPrivkey, name="addPrivkey"), 
 
-    url(r'^login/$', views.User.login, name="login"),
+    url(r'^login/', views.User.login, name="login"),
     url(r'^signup/$', views.User.signup, name="signup"),
     url(r'^logout/$', views.User.logout, name="logout"),
 
