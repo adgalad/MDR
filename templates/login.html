@@ -29,6 +29,11 @@
                            <div class="accordion" id="accordionExample">
                                 <form method="post" action="{%url 'login' %}">
                                             {% csrf_token %}
+                                    {% if request.GET.next %}
+                                      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                                    {% else %}
+                                      <input type="hidden" name="next" value="{% url 'profile' %}" />
+                                    {% endif %}
                                     <div class="container" style="z-index:-1;">
                                         <h3 id="text" style="margin-bottom:25px;">Login</h3>
                                         <div class="omb_login">

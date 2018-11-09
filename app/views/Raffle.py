@@ -68,7 +68,10 @@ class Raffle:
   @staticmethod
   @login_required(login_url='/login/')
   def finished(request,id):
-    raffle = models.Raffle.objects.get(pk=id)
+    try:
+      raffle = models.Raffle.objects.get(pk=id)
+    except Exception as e:
+      raise PermissionDenied
     if raffle.owner != request.user and not request.user.is_superuser:
       raise PermissionDenied
     if not raffle.finished:
