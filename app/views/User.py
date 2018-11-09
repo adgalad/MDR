@@ -32,7 +32,7 @@ class User:
         user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)
-          return redirect(request.GET.get('next',reverse('home')))
+          return redirect(request.POST.get('next',reverse('home')))
         else:
           messages.error(request, "Bad username or password.")
           
