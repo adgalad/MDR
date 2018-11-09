@@ -13,7 +13,7 @@ class Dash:
   
   @staticmethod
   def createrawtransaction(output, addressAmount):
-    return Dash.call(["createrawtransaction",json.dumps(output), json.dumps(float('%.8f'%addressAmount))])
+    return Dash.call(["createrawtransaction",json.dumps(output), json.dumps(addressAmount)])
   
   @staticmethod  
   def createmultisig(signsRequired, pubkeys):
