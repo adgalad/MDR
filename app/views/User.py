@@ -24,6 +24,11 @@ class User:
 
   @staticmethod
   def login(request):
+    if request.GET.get('modal') == '1':
+      base = 'modalForm.html'
+    else:
+      base = 'form.html'
+
     if request.method == "POST":
       form = forms.Login(request.POST)
       if form.is_valid():
@@ -32,17 +37,15 @@ class User:
         user = authenticate(username=username, password=password)
         if user is not None:
           login_auth(request, user)
+          messages.error(request, request.GET.get('next',reverse('home')))
+          return render(request, "login.html", {'form': form, 'base':base})    
           return redirect(request.GET.get('next',reverse('home')))
         else:
           messages.error(request, "Bad username or password.")
           
     else:
       form = forms.Login()
-   
-    if request.GET.get('modal') == '1':
-      base = 'modalForm.html'
-    else:
-      base = 'form.html'
+
     return render(request, "login.html", {'form': form, 'base':base})    
 
   @staticmethod
