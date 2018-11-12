@@ -61,7 +61,7 @@ class Raffle(models.Model):
   type = models.CharField(null=True, blank=True, choices=type_choice, max_length=16, default='Mini Raffle', verbose_name="Type of Raffle")
   blockHeight = models.IntegerField(verbose_name="Block Height", default=0)
   isMultisig = models.BooleanField(default=True, verbose_name="Multisign Prize address")
-
+  feeWasSendback = models.BooleanField(default=False)
   # signsRequired = models.IntegerField(blank=True, default=3, verbose_name="Signs Required", validators=[MaxValueValidator(6), MinValueValidator(1)])
   
   MSaddress = models.CharField(null=True, verbose_name="Generated address for MS", max_length=100)
@@ -300,7 +300,7 @@ class Raffle(models.Model):
     if txs is None:
       return -1
 
-    fee = 0.002
+    fee = 0.02
     scriptPubKey = None
     vout = 0
     txData = []
@@ -358,8 +358,10 @@ class Raffle(models.Model):
     if not sign:
       return -1
 
-    if self.ticketsSold >= MIN_TICKETS_SOLD:
+    if self.ticketsSold >= MIN_TICKETS_SOLD and not self.feeWasSendback:
       Dash.sendtoaddress(self.addressProject, str(PAYMENT_AMOUNT))
+      self.feeWasSendback = True
+      self.save()
 
       html_message = render_to_string(
         'baseEmail.html',
