@@ -28,3 +28,6 @@ def terms(request):
 
 def conditions(request):
     return render(request, 'conditions.html')
+
+def error_500(request):
+    return render(request, '500.html')
