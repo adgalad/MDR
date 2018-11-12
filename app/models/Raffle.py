@@ -239,7 +239,7 @@ class Raffle(models.Model):
       txRaw = Dash.getrawtransaction(i)
       tx = Dash.gettransaction(i)
 
-      if txRaw is None:
+      if txRaw is None or tx is None or not 'fee' in tx:
         continue
 
       # dt = txRaw['time']
