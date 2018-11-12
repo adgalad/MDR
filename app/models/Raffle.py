@@ -237,9 +237,9 @@ class Raffle(models.Model):
 
     for i in txs:
       txRaw = Dash.getrawtransaction(i)
-      tx = Dash.gettransaction(i)
+      # tx = Dash.gettransaction(i)
 
-      if txRaw is None or tx is None or not 'fee' in tx:
+      if txRaw is None: #or tx is None or not 'fee' in tx:
         continue
 
       # dt = txRaw['time']
@@ -266,7 +266,7 @@ class Raffle(models.Model):
             total += amount
       if total == 0.0:
         continue
-      total = (total-tx['fee'])*90/100
+      total = (total)*90/100
       Dash.sendtoaddress(
         self.addressPrize,
         str(total)
