@@ -249,7 +249,7 @@ class Raffle(models.Model):
       for addressGenerated in self.addresses.all():
         
         for detail in txRaw['vout']:
-          if addressGenerated.address in detail['scriptPubKey']['addresses']:
+          if 'scriptPubKey' in detail and 'addresses' in detail['scriptPubKey'] and addressGenerated.address in detail['scriptPubKey']['addresses']:
             amount = detail['value']
             tickets = int(round(amount/float(self.ticketPrice), 5))
             if Transaction.objects.filter(pk=txRaw['txid']).exists():
