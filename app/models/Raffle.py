@@ -300,7 +300,7 @@ class Raffle(models.Model):
     if txs is None:
       return -1
 
-    fee = 0.02
+    fee = 0.002
     scriptPubKey = None
     vout = 0
     txData = []
@@ -325,8 +325,8 @@ class Raffle(models.Model):
 
     sortedTx = sorted(txData, key=lambda tx: -tx['time']) 
 
-    outputs1 = [{"txid": tx['txid'], "vout": tx['vout']}  for tx in sortedTx]
-    outputs2 = [{"txid": tx['txid'], "vout": tx['vout'],"scriptPubKey": tx['scriptPubKey'], "redeemScript": self.MSredeemScript} for tx in sortedTx]
+    outputs1 = [{"txid": tx['txid'], "vout": tx['vout']}  for tx in sortedTx[0:10]]
+    outputs2 = [{"txid": tx['txid'], "vout": tx['vout'],"scriptPubKey": tx['scriptPubKey'], "redeemScript": self.MSredeemScript} for tx in sortedTx[0:10]]
 
     
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
