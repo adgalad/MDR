@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^help/$', views.help, name="help"),
     url(r'^terms/$', views.terms, name="terms"),
     url(r'^conditions/$', views.conditions, name="conditions"),
+    url(r'^500/$', views.error_500, name="500"),
 
     # Raffle URLs
     url(r'^raffle/create$', views.Raffle.createRaffle, name="createRaffle"),
