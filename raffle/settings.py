@@ -27,11 +27,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-RPC_USER=os.environ.get('RPC_USER', "")
-RPC_PASSWORD=os.environ.get('RPC_PASSWORD', "")
-RPC_SERVER=os.environ.get('RPC_SERVER', "")
-RPC_PORT=os.environ.get('RPC_PORT', "")
-DASH_CLI=os.environ.get('DASH_CLI', "dash-cli")
+RPC_USER = os.environ.get('RPC_USER', "")
+RPC_PASSWORD = os.environ.get('RPC_PASSWORD', "")
+RPC_SERVER = os.environ.get('RPC_SERVER', "")
+RPC_PORT = os.environ.get('RPC_PORT', "")
+DASH_CLI = os.environ.get('DASH_CLI', "dash-cli")
+
+NAME_DB = os.environ['NAME_DB']
+USER_DB = os.environ['USER_DB']
+PASSWORD_DB = os.environ['PASSWORD_DB']
+
+
 
 # Application definition
 
@@ -90,11 +96,22 @@ WSGI_APPLICATION = 'raffle.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+       'NAME': NAME_DB,                                   # Or path to database file if using sqlite3.
+       'USER': USER_DB,                                          # Not used with sqlite3.
+       'PASSWORD': PASSWORD_DB,                                  # Not used with sqlite3.
+       'HOST': 'mdrdb.cver9xz8t4qq.us-east-1.rds.amazonaws.com', # Set to empty string for localhost. Not used with sqlite3.
+       'PORT': '5432',                                           # Set to empty string for default. Not used with sqlite3.
+   }
 }
 
 
@@ -209,3 +226,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Mega Dash Raffle'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
