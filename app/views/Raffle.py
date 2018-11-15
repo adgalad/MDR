@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.utils import timezone
 from app import models, forms
+from app.views.views import handler400, handler403, handler404
 from app.dash import Dash
 
 class Raffle:
@@ -49,7 +50,7 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
-      raise PermissionDenied
+      return handler403(request)
     if not raffle.is_active:
       return redirect(reverse('payRaffle', kwargs={'id':id}))
     return render(request, "raffle.html", {"raffle":raffle})
@@ -59,7 +60,7 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
-      raise PermissionDenied
+      return handler403(request)
       
     if not raffle.is_active:
       return redirect(reverse('payRaffle', kwargs={'id':id}))
@@ -71,13 +72,13 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(pk=id)
     except Exception as e:
-      raise PermissionDenied
+      return handler403(request)
 
     if raffle.owner != request.user and not request.user.is_superuser:
-      raise PermissionDenied
+      return handler403(request)
       
     if not raffle.finished:
-      raise PermissionDenied
+      return handler403(request)
     return render(request, "finishedRaffle.html", {"raffle":raffle})
 
   @staticmethod
@@ -119,7 +120,7 @@ class Raffle:
         except Exception as e:
           print(e)
           print("No entiendo")
-          raise PermissionDenied
+          return handler403(request)
     else:
       form = forms.Raffle()
 
@@ -131,10 +132,10 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(pk=id)
     except:
-      raise PermissionDenied
+      return handler403(request)
 
     if raffle.owner != request.user:
-      raise PermissionDenied
+      return handler403(request)
 
     if request.method == "POST":
       form = forms.EditRaffle(request.POST, instance=raffle)
@@ -152,10 +153,10 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(pk=id)
     except:
-      raise PermissionDenied
+      return handler403(request)
 
     if raffle.owner != request.user and not request.user.is_superuser:
-      raise PermissionDenied
+      return handler403(request)
     if request.GET.get('modal') == '1':
       base = 'modalForm.html'
     else:
@@ -177,7 +178,7 @@ class Raffle:
         user = request.user if not request.user.is_anonymous else models.User.objects.get(username="Anonymous")
       except Exception as e:
         #print("Missing Anonymous user")
-        raise PermissionDenied
+        return handler403(request)
       addressGenerated = models.AddressGenerated.objects.filter(user=user, raffle=raffle)
       if addressGenerated.exists():
         address = addressGenerated[0].address.replace("\n", "")
@@ -199,11 +200,11 @@ class Raffle:
   #   try:
   #     raffle = models.Raffle.objects.get(id=id)
   #   except:
-  #     raise PermissionDenied
+  #     return handler403(request)
 
   #   # if not (raffle.finished and request.user in raffle.signers.all()):
   #   if True:
-  #     raise PermissionDenied
+  #     return handler403(request)
   #   msg = ""
   #   if request.method == "POST":
   #     form = forms.AddPrivkey(request.POST)
