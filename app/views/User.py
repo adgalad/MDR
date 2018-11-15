@@ -15,6 +15,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import JsonResponse
 from app import models, forms
+from app.views.views import handler400, handler403, handler404
 from app.helpers import EmailThread
 from django.template import loader
 from app.dash import Dash
@@ -77,7 +78,7 @@ class User:
         messages.error(request, "Couldn't change the password. Please, try again.", extra_tags="alert-danger")
         return redirect(reverse('profile'))
     else:
-      raise PermissionDenied
+      return handler403(request)
 
   @staticmethod
   def logout(request):
@@ -164,7 +165,7 @@ class User:
 
       return JsonResponse({'notifications': notifications})
     else:
-      raise PermissionDenied  
+      return handler403(request)  
 
 
   @staticmethod
