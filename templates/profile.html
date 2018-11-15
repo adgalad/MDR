@@ -43,19 +43,23 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-3"></div>   
-                    <div class="col-sm-2" style="margin-top:20px;"><a class="btn btn-primary" style="text-decoration:none" href="#"
-                           onclick="return abrir_modal('{% url 'addWalletAddress' %}?modal=1')">{% if request.user.wallet_address%} Change {% else %} Add {% endif %} Wallet&nbsp;&nbsp;
-                          <i class="fa fa-wallet"></i></a></div> 
+                    <div class="col-sm-2" style="margin-top:20px;">
+                        <a class="btn btn-primary" style="text-decoration:none" href="#"
+                           onclick="return abrir_modal('{% url 'addWalletAddress' %}?modal=1')">
+                                <i class="fa fa-wallet"></i> &nbsp; {% if request.user.wallet_address%} Change {% else %} Add {% endif %} Wallet
+                          
+                        </a>
+                    </div> 
                     <div class="col-sm-2" style="margin-top:20px;padding:0px 100px 6px 30px">  
                         <a class="btn btn-primary" style="text-decoration:none" href="#"
-                               onclick="return abrir_modal('{% url 'editProfile' %}?modal=1')">Edit Profile&nbsp;&nbsp;
-                              <i class="fa fa-user-edit"></i>
+                               onclick="return abrir_modal('{% url 'editProfile' %}?modal=1')">
+                              <i class="fa fa-user-edit"></i> &nbsp; Edit Profile
                         </a>   
                     </div>
 
                     <div class="col-sm-2" style="margin-top:20px;">
-                        <a class="btn btn-primary" style="text-decoration:none" href="{% url 'myRaffles' %}">My Raffle&nbsp;&nbsp;
-                              <i class="fa fa-book"></i>
+                        <a class="btn btn-primary" style="text-decoration:none" href="{% url 'myRaffles' %}">
+                              <i class="fa fa-book"></i> &nbsp; My Raffles
                         </a>
                     </div>
                     <div class="col-sm-3"></div>
