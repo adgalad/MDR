@@ -219,10 +219,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'smarticket.suport@gmail.com'
-EMAIL_HOST_PASSWORD = 'asd123asd'
-EMAIL_PORT = 587
+EMAIL_HOST = 'plus.smtp.mail.yahoo.com'
+EMAIL_HOST_USER = 'post.office@megadashraffle.org'
+EMAIL_HOST_PASSWORD = 'MDR.correo1'
+EMAIL_PORT = 465
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Mega Dash Raffle'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
