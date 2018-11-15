@@ -31,21 +31,21 @@ def conditions(request):
 
 def handler400(request):
    title = "400"
-   message = "La acción que esta intentando realizar esta prohibida. Las razones de esto pueden ser que la acción es invalida o que está intentando acceder a un recurso al cual no tiene permiso."
+   message = "Bad request. Try again."
    response = render(request, 'error_handling/httpError.html', {"title":title, "message":message})
    response.status_code = 400
    return response
 
 def handler403(request):
    title = "403"
-   message = "Your client does not have permission to get URL from this server."
+   message = "Your don't have permission to see what you requested."
    response = render(request, '403.html', {"title":title, "message":message})
    response.status_code = 403
    return response
 
 def handler404(request):
    title = "404"
-   message = "La acción que esta intentando realizar esta prohibida. Las razones de esto pueden ser que la acción es invalida o que está intentando acceder a un recurso al cual no tiene permiso."
+   message = "We couldn't find what you were looking for."
    response = render(request, 'error_handling/httpError.html', {"title":title, "message":message})
    response.status_code = 404
    return response
