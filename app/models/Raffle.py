@@ -236,7 +236,6 @@ class Raffle(models.Model):
           txs.remove(i)      
 
     for i in txs:
-      pint(i)
       txRaw = Dash.getrawtransaction(i)
       # tx = Dash.gettransaction(i)
 
