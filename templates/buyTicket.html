@@ -42,12 +42,10 @@
                                 </div>
                             </div>
                                 <div class="col-sm-12">
-                                    {% if request.user.is_anonymous %}
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="terms" id="defaultUnchecked" onchange="valid()">
                                         <label class="custom-control-label" for="defaultUnchecked">I agree to the <a href="{% url 'terms' %}">terms</a> and <a href="{% url 'conditions' %}">conditions</a></label>
                                     </div>
-                                    {% endif %}
                                 </div>
                             </div>
                             <br>
@@ -59,9 +57,7 @@
                                       <button class="btn btn-primary btn-block" 
                                               type="button" 
                                               id="continue" 
-                                              {% if request.user.is_anonymous %}
-                                                onclick="btn_submit()"
-                                              {% endif %}>
+                                              onclick="btn_submit()"
                                           Continue
                                       </button>
                                   </div>
@@ -141,14 +137,12 @@
                 }
         }
 
-        {% if request.user.is_anonymous %}
-          function valid(){
-            if ($('input[name=terms]').prop('checked')) {
-                $('#alert').hide();
-                $('input[name=terms]').removeClass('is-invalid');
-            }
+        function valid(){
+          if ($('input[name=terms]').prop('checked')) {
+              $('#alert').hide();
+              $('input[name=terms]').removeClass('is-invalid');
           }
-        {% endif %}
+        }
 
         function requestQR(){
           
