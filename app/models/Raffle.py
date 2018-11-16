@@ -236,6 +236,7 @@ class Raffle(models.Model):
           txs.remove(i)      
 
     for i in txs:
+      pint(i)
       txRaw = Dash.getrawtransaction(i)
       # tx = Dash.gettransaction(i)
 
@@ -304,6 +305,7 @@ class Raffle(models.Model):
     scriptPubKey = None
     vout = 0
     txData = []
+    print(">>>>", txs)
     for tx in txs:
       rawTx = Dash.getrawtransaction(tx)
       if rawTx is None:
