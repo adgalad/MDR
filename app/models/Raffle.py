@@ -351,27 +351,19 @@ class Raffle(models.Model):
       return -1
 
     #privkey = Dash.dumpprivkey(self.MSaddress)
-    privkey1 = Dash.dumpprivkey(self.MSpubkey1)
-    privkey2 = Dash.dumpprivkey(self.MSpubkey2)
-    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey1, privkey2])
+    privkey1 = Dash.dumpprivkey(self.MSpubkey1) #quitar
+    privkey2 = Dash.dumpprivkey(self.MSpubkey2) #quitar
+    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey1, privkey2]) #quitar
     
     if not sign:
-      print("No sign")
       return -1
-    else:
-      print("Si sign")
 
     self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your_private_key</b>" ]'])
 
-    tx = Dash.sendrawtransaction(sign['hex'], True, False, False)
+    tx = Dash.sendrawtransaction(sign['hex'], True, False, False) ### quitar
     if tx is not None:
       self.transaction = tx
-      print("Lo logro")
       self.save()
-    else:
-      print("No lo logro")
-
-    
 
     if self.ticketsSold >= MIN_TICKETS_SOLD and not self.feeWasSendback:
       Dash.sendtoaddress(self.addressProject, str(PAYMENT_AMOUNT))
