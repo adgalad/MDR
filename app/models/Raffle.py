@@ -301,7 +301,7 @@ class Raffle(models.Model):
     if txs is None:
       return -1
 
-    fee = 0.002
+    fee = 0.02
     scriptPubKey = None
     vout = 0
     txData = []
@@ -320,7 +320,6 @@ class Raffle(models.Model):
       txData.append({
         "txid": tx,
         "vout": vout,
-        "time": rawTx['time'],
         "scriptPubKey": scriptPubKey
       })
 
