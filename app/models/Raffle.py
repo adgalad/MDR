@@ -325,8 +325,8 @@ class Raffle(models.Model):
 
     # sortedTx = sorted(txData, key=lambda tx: -tx['time']) 
 
-    outputs1 = [{"txid": tx['txid'], "vout": tx['vout']}  for tx in (txData[0:10] + txData[-10:])]
-    outputs2 = [{"txid": tx['txid'], "vout": tx['vout'],"scriptPubKey": tx['scriptPubKey'], "redeemScript": self.MSredeemScript} for tx in (txData[0:10] + txData[-10:])]
+    outputs1 = [{"txid": tx['txid'], "vout": tx['vout']}  for tx in (txData)]
+    outputs2 = [{"txid": tx['txid'], "vout": tx['vout'],"scriptPubKey": tx['scriptPubKey'], "redeemScript": self.MSredeemScript} for tx in (txData[0:10])]
 
     
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
