@@ -106,8 +106,8 @@ class Raffle:
                         drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[raffleType]),
                         owner = request.user,
                         addressProject=request.user.wallet_address,
-                        MSpubkey1=address, #pubkey
-                        MSpubkey2=address2, #pubkey2
+                        MSpubkey1=address, #pubkey,
+                        MSpubkey2=address2, #pubkey2, #(Quitar)
                         MSaddress=address
                       )
             

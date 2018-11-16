@@ -356,13 +356,20 @@ class Raffle(models.Model):
     sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey1, privkey2])
     
     if not sign:
+      print("No sign")
       return -1
+    else:
+      print("Si sign")
 
     self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your_private_key</b>" ]'])
+
     tx = Dash.sendrawtransaction("'%s'"%sign['hex'], True, False, False)
     if tx is not None:
       self.transaction = tx
+      print("Lo logro")
       self.save()
+    else:
+      print("No lo logro")
 
     
 
