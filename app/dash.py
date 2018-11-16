@@ -78,7 +78,7 @@ class Dash:
   
   @staticmethod
   def sendrawtransaction(hexadecimalValue, allowhighfees=False, instantsend=False, bypasslimits=False):
-    return Dash.call(["sendrawtransaction",hexadecimalValue, allowhighfees, instantsend, bypasslimits])  
+    return Dash.call(["sendrawtransaction",hexadecimalValue, json.dumps(allowhighfees), json.dumps(instantsend), json.dumps(bypasslimits)])  
   
   @staticmethod  
   def sendtoaddress(address, amount):
