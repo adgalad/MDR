@@ -352,14 +352,21 @@ class Raffle(models.Model):
 
     privkey = Dash.dumpprivkey(self.MSaddress)
     sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey])
-    self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your_private_key</b>" ]'])
-    self.save()
-
+    
     if not sign:
       return -1
 
+    self.commandSignRawTx = ' '.join(['signrawtransaction', "'%s'"%sign['hex'], "'%s'"%json.dumps(outputs2), "'%s'"%'[ "<b style="color:#990000">Your_private_key</b>" ]'])
+    tx = Dash.sendrawtransaction("'%s'"%sign['hex'], True, False, False)
+    if tx is not None:
+      self.transaction = tx
+      self.save()
+
+    
+
     if self.ticketsSold >= MIN_TICKETS_SOLD and not self.feeWasSendback:
       Dash.sendtoaddress(self.addressProject, str(PAYMENT_AMOUNT))
+
       self.feeWasSendback = True
       self.save()
 
