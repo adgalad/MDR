@@ -94,7 +94,7 @@ class Raffle:
           address = Dash.getnewaddress()
           address2 = Dash.getnewaddress() # quitar
           pubkey = Dash.validateaddress(address)['pubkey']
-          pubkey2 = Dash.validateaddress(address1)['pubkey'] # quitar
+          pubkey2 = Dash.validateaddress(address2)['pubkey'] # quitar
           if request.user.wallet_address:
             raffle = models.Raffle.objects.create(
                         name=form.cleaned_data['name'],
