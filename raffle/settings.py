@@ -225,6 +225,6 @@ EMAIL_HOST_PASSWORD = 'MDR.correo1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-FROM_EMAIL = 'Mega Dash Raffle'
+DEFAULT_FROM_EMAIL = 'Mega Dash Raffle'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
