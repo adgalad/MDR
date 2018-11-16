@@ -350,8 +350,10 @@ class Raffle(models.Model):
     if transaction is None:
       return -1
 
-    privkey = Dash.dumpprivkey(self.MSaddress)
-    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey])
+    #privkey = Dash.dumpprivkey(self.MSaddress)
+    privkey1 = Dash.dumpprivkey(self.MSpubkey1)
+    privkey2 = Dash.dumpprivkey(self.MSpubkey2)
+    sign = Dash.signrawtransaction(transaction.replace('\n',''), outputs2, [privkey1, privkey2])
     
     if not sign:
       return -1

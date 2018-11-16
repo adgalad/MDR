@@ -92,7 +92,9 @@ class Raffle:
         try:
           raffleType = form.cleaned_data['type']
           address = Dash.getnewaddress()
+          address2 = Dash.getnewaddress() # quitar
           pubkey = Dash.validateaddress(address)['pubkey']
+          pubkey2 = Dash.validateaddress(address1)['pubkey'] # quitar
           if request.user.wallet_address:
             raffle = models.Raffle.objects.create(
                         name=form.cleaned_data['name'],
@@ -104,8 +106,8 @@ class Raffle:
                         drawDate=timezone.now() + datetime.timedelta(days=models.raffleDuration[raffleType]),
                         owner = request.user,
                         addressProject=request.user.wallet_address,
-                        MSpubkey1=pubkey,
-                        #MSpubkey2=request.user.public_key,
+                        MSpubkey1=address, #pubkey
+                        MSpubkey2=address2, #pubkey2
                         MSaddress=address
                       )
             
