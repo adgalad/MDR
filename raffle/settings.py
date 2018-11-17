@@ -225,6 +225,6 @@ EMAIL_HOST_PASSWORD = 'vnceibiroucnvkeo'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = 'Mega Dash Raffle'
+DEFAULT_FROM_EMAIL = 'post.office@megadashraffle.org'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

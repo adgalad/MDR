@@ -12,9 +12,7 @@ from django.utils import timezone
 from app import models, forms
 from app.dash import Dash
 
-
 def index(request):
-  #print(DASH_CLI, RPC_SERVER, RPC_PORT, RPC_USER, RPC_PASSWORD, DEFAULT_FROM_EMAIL)
   tx = models.Transaction.objects.all()[:15]
   raffles = models.Raffle.objects.filter(drawDate__gt=timezone.now()).exclude(is_active=False)[:10]
   return render(request, "index.xhtml", {"raffles":raffles,"transactions":tx})

@@ -35,7 +35,6 @@ def checkUrl(url):
         import requests
         from PIL import Image
         from io import StringIO, BytesIO
-        print('pase', url, bool(re.search(r"^.+://.+$", url)) )
         if re.search(r"^.+://.+$", url):
             try:
                 r = requests.get(url)

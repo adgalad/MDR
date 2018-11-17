@@ -100,7 +100,7 @@ class Dash:
   @staticmethod
   def call(args):
     try:
-      print(' '.join(Dash.command + args))
+      #print(' '.join(Dash.command + args))
       data = check_output(Dash.command + args)
       try:
         data = json.loads(data.decode("utf-8"))

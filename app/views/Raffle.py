@@ -123,7 +123,7 @@ class Raffle:
           print("No entiendo")
           return handler403(request)
     else:
-      form = forms.Raffle()
+      form = forms.Raffle(initial={'name':'', 'thumbnail_url':''})
 
     return render(request, "createRaffle.html", {'form': form,})
 

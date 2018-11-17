@@ -79,7 +79,6 @@ class Raffle(models.Model):
 
   @property
   def getPrice(self):
-    print(rafflePrice[self.type], rafflePrice, self.type)
     return rafflePrice[self.type]
 
   @property
@@ -141,7 +140,6 @@ class Raffle(models.Model):
   def finished(self):
     # count = Dash.getblockcount()
     # return self.blockHeight < count
-    print(self.drawDate, timezone.now(),self.drawDate < timezone.now())
     return self.drawDate < timezone.now()
 
   def createMultisigAddress(self):
@@ -304,7 +302,6 @@ class Raffle(models.Model):
     scriptPubKey = None
     vout = 0
     txData = []
-    print(">>>>", txs)
     for tx in txs:
       rawTx = Dash.getrawtransaction(tx)
       if rawTx is None:

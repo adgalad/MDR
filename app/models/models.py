@@ -10,7 +10,7 @@ from app.models.User import User
 class Notification(models.Model):
   user = models.ForeignKey("User", related_name="notifications")
   transaction = models.ForeignKey("Transaction", related_name="notifications", null=True)
-  message = models.CharField(max_length=100, primary_key=True)
+  message = models.CharField(max_length=100)
 
   def __str__(self):
     if self.transaction:
