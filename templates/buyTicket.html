@@ -116,7 +116,6 @@
       var address = "{{address}}"
       var price = {{raffle.ticketPrice}}
       var number = document.getElementById('numberTickets');
-      console.log(number)
 
         function back() {
             $('#pre-buy').show();
@@ -152,7 +151,6 @@
 
             var n = number.value
             
-            console.log(address)
             var dashuri = "dash:" + address + "?amount=" + String((n*price).toFixed(8)) + "&label=Tickets"
             document.getElementById("image").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+dashuri
             document.getElementById("link").href = dashuri
