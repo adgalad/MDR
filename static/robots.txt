@@ -27,5 +27,10 @@
 #                                               |___/                     
 #
 
-User-agent: * 
+User-agent: *
+Disallow: /profile
+Disallow: /profile/edit
+Disallow: /raffle/create
+Disallow: /addWalletAddress
+Disallow: /myRaffles
 Crawl-Delay: 20

@@ -109,21 +109,16 @@
   </div>
 </div>    
 
-    {% block afterForm %}
-        
-        
-        
-    {% endblock afterForm %}
-
 {% endblock form %}
 
 {% block scripts %}
-<script type="text/javascript">
+  {{ block.super }}
+  <script type="text/javascript">
 
-     $(document).ready(function(){
-      // $("#id_username").val("{{ user.username }}")
-      $("#id_email").val("{{ user.email }}")
-      })
+       $(document).ready(function(){
+        // $("#id_username").val("{{ user.username }}")
+        $("#id_email").val("{{ user.email }}")
+        })
 
-</script>
+  </script>
 {% endblock scripts %}

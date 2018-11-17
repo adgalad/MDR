@@ -12,7 +12,7 @@
     
 
     <!-- Custom Theme Style -->
-    <!-- <link href="/static/build/css/custom.min.css" rel="stylesheet"> -->
+    <!-- <link href="{% static 'build/css/custom.min.css" rel="stylesheet"> -->
 
 {% endblock style %}
 
@@ -96,7 +96,7 @@
     <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}"></a>
   {% endif %}
   <div class="loading" style="display: none;">
-    <img src="/static/img/anima.gif" width="150px" height="150px">
+    <img src="{% static 'img/anima.gif' %}" width="150px" height="150px">
   </div>
 </div>
  
@@ -107,13 +107,13 @@
   {{block.super}}
 
     <!-- Bootstrap -->
-    <script src="/static/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <!-- easy-pie-chart -->
-    <script src="/static/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.js"></script>
+    <script src="{% static 'vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.js' %}"></script>
     <!-- Custom Theme Scripts -->
-    <script src="/static/timebar/js/custom.js"></script>
-    <script src="/static/js/jquery.waypoints.min.js"></script>
-    <script src="/static/js/infinite.min.js"></script>
+    <script src="{% static 'timebar/js/custom.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
 
    <script>
     var infinite = new Waypoint.Infinite({
