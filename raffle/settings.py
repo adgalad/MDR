@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!%=i5-c^7^&ss*0cuhd@zrrx&!p*crg(d-$elo^^vm=i4b7b(c'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,6 +35,8 @@ DASH_CLI = os.environ.get('DASH_CLI', "dash-cli")
 
 NAME_DB = os.environ['NAME_DB']
 USER_DB = os.environ['USER_DB']
+HOST_DB = os.environ['HOST_DB']
+PORT_DB = os.environ['PORT_DB']
 PASSWORD_DB = os.environ['PASSWORD_DB']
 
 
@@ -109,8 +111,8 @@ DATABASES = {
        'NAME': NAME_DB,                                   # Or path to database file if using sqlite3.
        'USER': USER_DB,                                          # Not used with sqlite3.
        'PASSWORD': PASSWORD_DB,                                  # Not used with sqlite3.
-       'HOST': 'mdrdb.cver9xz8t4qq.us-east-1.rds.amazonaws.com', # Set to empty string for localhost. Not used with sqlite3.
-       'PORT': '5432',                                           # Set to empty string for default. Not used with sqlite3.
+       'HOST': HOST_DB, # Set to empty string for localhost. Not used with sqlite3.
+       'PORT': PORT_DB,                                           # Set to empty string for default. Not used with sqlite3.
    }
 }
 
@@ -124,17 +126,25 @@ AUTH_PASSWORD_VALIDATORS = [
     # {
     #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
     # {
     #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
+
+EMAIL_HOST = 'smtp.mail.yahoo.com'
+EMAIL_HOST_USER = 'post.office@megadashraffle.org'
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = 'post.office@megadashraffle.org'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -219,12 +229,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 
-EMAIL_HOST = 'smtp.mail.yahoo.com'
-EMAIL_HOST_USER = 'post.office@megadashraffle.org'
-EMAIL_HOST_PASSWORD = 'vnceibiroucnvkeo'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = 'post.office@megadashraffle.org'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

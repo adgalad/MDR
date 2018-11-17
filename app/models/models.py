@@ -7,18 +7,6 @@ from django.db import models
 from app.dash import Dash
 from app.models.User import User
 
-class Notification(models.Model):
-  user = models.ForeignKey("User", related_name="notifications")
-  transaction = models.ForeignKey("Transaction", related_name="notifications", null=True)
-  message = models.CharField(max_length=100)
-
-  def __str__(self):
-    if self.transaction:
-      return "You have purchased %d %s."%(self.transaction.boughtTicket, "ticket" if self.transaction.boughtTicket == 1 else "tickets" )
-    else:
-      return self.message
-
-
 
 class Transaction(models.Model):
   address = models.CharField(max_length=100, primary_key=True)

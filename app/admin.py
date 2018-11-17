@@ -90,10 +90,8 @@ class Raffle(admin.ModelAdmin):
     pass
 class AddressGenerated(admin.ModelAdmin):
     pass
-class Notification(admin.ModelAdmin):
-    pass
+
 
 admin.site.register(models.Transaction, Transaction)
 admin.site.register(models.Raffle, Raffle)
 admin.site.register(models.AddressGenerated, AddressGenerated)
-admin.site.register(models.Notification, Notification)
