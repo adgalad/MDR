@@ -57,11 +57,11 @@ class User:
         return redirect(reverse('profile'))
     else:
       form = forms.EditProfile(instance=request.user)
-      passwordForm = PasswordChangeForm(user=request.user)
     if request.GET.get('modal') == '1':
       base = 'modalForm.html'
     else:
       base = 'form.html'
+    passwordForm = PasswordChangeForm(user=request.user)
     return render(request, "editProfile.html", {'form': form, 'passwordForm':passwordForm,'base':base})
 
   @staticmethod

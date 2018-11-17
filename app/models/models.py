@@ -16,6 +16,7 @@ class Transaction(models.Model):
   blockHeight = models.IntegerField(verbose_name="Block Height")
   boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
   notified = models.BooleanField(verbose_name="Was notified", default=True)
+  date = models.DateTimeField(verbose_name="Datetime", null=True)
   
   class Meta:
     ordering = ['-blockHeight']
@@ -31,17 +32,21 @@ class Transaction(models.Model):
 
   @property
   def getDate(self):
-
-    rawTransaction = Dash.getrawtransaction(self.address)
-    if 'time' in rawTransaction:
-      timestamp = rawTransaction['time']
-      if 'height' in rawTransaction and self.blockHeight != rawTransaction['height']:
-        self.blockHeight = rawTransaction['height']
-        self.save()
-      return datetime.datetime.fromtimestamp(timestamp)
+    if not self.date:
+      rawTransaction = Dash.getrawtransaction(self.address)
+      if not rawTransaction:
+        return "-"
+      if  'time' in rawTransaction:
+        timestamp = rawTransaction['time']
+        if 'height' in rawTransaction and self.blockHeight != rawTransaction['height']:
+          self.blockHeight = rawTransaction['height']
+          self.date = datetime.datetime.fromtimestamp(timestamp)
+          self.save()
+        return datetime.datetime.fromtimestamp(timestamp)
+      else:
+        return "Not confirmed Yet"
     else:
-      return "Not confirmed Yet"
-
+      return self.date
 
 class AddressGenerated(models.Model):
   user    = models.ForeignKey(User)
@@ -51,14 +56,3 @@ class AddressGenerated(models.Model):
 
   def __str__(self):
     return str((self.user, self.address))
-
-
-
-
-
-
-
-
-
-
-
