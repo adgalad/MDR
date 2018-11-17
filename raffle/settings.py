@@ -25,6 +25,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Redirect to HTTPS
+SECURE_SSL_REDIRECT = True
+
 ALLOWED_HOSTS = ['*']
 
 RPC_USER = os.environ.get('RPC_USER', "")
