@@ -29,7 +29,7 @@ def conditions(request):
 def handler400(request):
    title = "400"
    message = "Bad request. Try again."
-   response = render(request, 'error_handling/httpError.html', {"title":title, "message":message})
+   response = render(request, 'error.html', {"title":title, "message":message})
    response.status_code = 400
    return response
 
@@ -43,6 +43,6 @@ def handler403(request):
 def handler404(request):
    title = "404"
    message = "We couldn't find what you were looking for."
-   response = render(request, 'error_handling/httpError.html', {"title":title, "message":message})
+   response = render(request, 'error.html', {"title":title, "message":message})
    response.status_code = 404
    return response
