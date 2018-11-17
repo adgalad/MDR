@@ -78,7 +78,7 @@ class User:
         messages.error(request, "Couldn't change the password. Please, try again.", extra_tags="alert-danger")
         return redirect(reverse('profile'))
     else:
-      return handler403(request)
+      return handler400(request)
 
   @staticmethod
   def logout(request):
@@ -165,7 +165,7 @@ class User:
 
       return JsonResponse({'notifications': notifications})
     else:
-      return handler403(request)  
+      return handler400(request)  
 
 
   @staticmethod

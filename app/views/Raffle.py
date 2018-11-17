@@ -50,7 +50,8 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
-      return handler403(request)
+      return handler404(request)
+
     if not raffle.is_active:
       return redirect(reverse('payRaffle', kwargs={'id':id}))
     return render(request, "raffle.html", {"raffle":raffle})
@@ -60,7 +61,7 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(id=id)
     except:
-      return handler403(request)
+      return handler404(request)
       
     if not raffle.is_active:
       return redirect(reverse('payRaffle', kwargs={'id':id}))
@@ -72,7 +73,7 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(pk=id)
     except Exception as e:
-      return handler403(request)
+      return handler404(request)
 
     if raffle.owner != request.user and not request.user.is_superuser:
       return handler403(request)
@@ -121,7 +122,7 @@ class Raffle:
         except Exception as e:
           print(e)
           print("No entiendo")
-          return handler403(request)
+          return handler400(request)
     else:
       form = forms.Raffle(initial={'name':'', 'thumbnail_url':''})
 
@@ -133,7 +134,7 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(pk=id)
     except:
-      return handler403(request)
+      return handler404(request)
 
     if raffle.owner != request.user:
       return handler403(request)
@@ -154,7 +155,7 @@ class Raffle:
     try:
       raffle = models.Raffle.objects.get(pk=id)
     except:
-      return handler403(request)
+      return handler404(request)
 
     if raffle.owner != request.user and not request.user.is_superuser:
       return handler403(request)
