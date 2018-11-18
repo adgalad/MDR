@@ -81,126 +81,126 @@
 
 
 <body>
-<div id="popup" class="modal modal-top fade" role="dialog"></div>
-<div id="container" style="">
-<header>
-  <div class="brand bg-dark" style="z-index: 1000;">
-    <span class="logo">
-      <div class="row" style="width: 100%">
-        <div class="col-md-4 col-sm-4 col-xs-1"> </div>
-        <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
-          <a href="{% url 'home' %}">
-            <img class="logo-blanco" src="{% static '/img/logo_blanco.png' %}" width="200px" style="margin-top: 10px" >
-          </a>
-        </div>
-        <div class="col-md-4 col-sm-4 col-xs-1"> </div>
-      </div>
-      
-    </span>
-  </div>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" style="width: 50% !important">
-      <ul class="navbar-nav mr-auto">
-          <li class="nav-item {%block home%} {% endblock home%}">
-              <a class="nav-link" href="{% url 'home' %}">
-                <i class="fa fa-home"></i>
-                Home
+  <div id="popup" class="modal modal-top fade" role="dialog"></div>
+  <div id="container" style="">
+    <header>
+      <div class="brand bg-dark" style="z-index: 1000;">
+        <span class="logo">
+          <div class="row" style="width: 100%">
+            <div class="col-md-4 col-sm-4 col-xs-1"> </div>
+            <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
+              <a href="{% url 'home' %}">
+                <img class="logo-blanco" src="{% static '/img/logo_blanco.png' %}" width="200px" style="margin-top: 10px" >
               </a>
-          </li>
-          <li class="nav-item {%block search%} {% endblock search%}">
-              <a class="nav-link" href="{% url 'raffles'%}">
-                Browse Raffles
-              </a>
-          </li>
-          <!-- <li class="nav-item">
-              <a class="nav-link" href="#">
-                Contact us
-              </a>
-          </li> -->
-      </ul>
-    </div>
-      
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="width: 50% !important">
-      <ul class="navbar-nav ml-auto">
-          {% if user.is_authenticated %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Hello,  <b>{{ user.username }} </b>
-                </a>
-                <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="{% url 'profile' %}">
-                    <i class="fa fa-user"></i>&nbsp; My Profile
-                  </a>
-                  <a class="dropdown-item" href="{% url 'myRaffles' %}">
-                    <i class="fa fa-book"></i>&nbsp; My Raffles
-                  </a>
-                  <a class="dropdown-item" href="{% url 'logout' %}">
-                    <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
-                  </a>
-                </div>
-            </li>
-            &nbsp;&nbsp;
-          {% else %}
-          <li class="nav-item {%block login%} {% endblock login%}">
-                  <a class="nav-link" href="#" onclick="return abrir_modal('/login/?modal=1')">
-                    <i class="fa fa-user"></i>
-                    Log In
-                  </a>
-              </li>
-              <li class="nav-item {%block signup%} {% endblock signup%}">
-                  <a class="nav-link" href="#" onclick="return abrir_modal('/signup/?modal=1')">
-                    Sign Up
-                  </a>
-              </li>
-          {% endif %}
-          <li class="nav-item">
-              <a class="nav-link {%block rules%} {% endblock rules%}" href="#"
-                 onclick="return abrir_modal('{% url 'help' %}')">
-                <i class="fa fa-question-circle"></i>
-                Rules/Help
-              </a>
-          </li>
-      </ul>
-    </div>
-  </nav>
-</header>
-
-  <div id="body" align="center" style="margin-top: 80px;">
-      {% block content %}
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-1"> </div>
+          </div>
           
-      {% endblock content %}
-  </div>
+        </span>
+      </div>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" style="width: 50% !important">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item {%block home%} {% endblock home%}">
+                  <a class="nav-link" href="{% url 'home' %}">
+                    <i class="fa fa-home"></i>
+                    Home
+                  </a>
+              </li>
+              <li class="nav-item {%block search%} {% endblock search%}">
+                  <a class="nav-link" href="{% url 'raffles'%}">
+                    Browse Raffles
+                  </a>
+              </li>
+              <!-- <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    Contact us
+                  </a>
+              </li> -->
+          </ul>
+        </div>
+          
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="width: 50% !important">
+          <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Hello,  <b>{{ user.username }} </b>
+                    </a>
+                    <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="{% url 'profile' %}">
+                        <i class="fa fa-user"></i>&nbsp; My Profile
+                      </a>
+                      <a class="dropdown-item" href="{% url 'myRaffles' %}">
+                        <i class="fa fa-book"></i>&nbsp; My Raffles
+                      </a>
+                      <a class="dropdown-item" href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
+                      </a>
+                    </div>
+                </li>
+                &nbsp;&nbsp;
+              {% else %}
+              <li class="nav-item {%block login%} {% endblock login%}">
+                      <a class="nav-link" href="#" onclick="return abrir_modal('/login/?modal=1')">
+                        <i class="fa fa-user"></i>
+                        Log In
+                      </a>
+                  </li>
+                  <li class="nav-item {%block signup%} {% endblock signup%}">
+                      <a class="nav-link" href="#" onclick="return abrir_modal('/signup/?modal=1')">
+                        Sign Up
+                      </a>
+                  </li>
+              {% endif %}
+              <li class="nav-item">
+                  <a class="nav-link {%block rules%} {% endblock rules%}" href="#"
+                     onclick="return abrir_modal('{% url 'help' %}')">
+                    <i class="fa fa-question-circle"></i>
+                    Rules/Help
+                  </a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
 
-
-<footer class="footer bg-dark">
-
-    <div class="container">
-    <ul class="foote_bottom_ul_amrc" align='center'>
-      <li>
-        <a class="blue-link" href="{% url 'home'%}">Home</a>
-      </li>
-      <li>
-        <a class="blue-link" href="{% url 'raffles'%}">Search Raffles</a>
-      </li>
-      <li>
-        <a class="blue-link" href="{% url 'terms' %}">Terms</a>
-      </li>
-      <li>
-        <a class="blue-link" href="{% url 'conditions' %}">Conditions</a>
-      </li>
-      <li>
-        <a class="blue-link" href="#" onclick="return abrir_modal('{% url 'help' %}')">Help</a>
-      </li>
-    </ul>
-    <!--foote_bottom_ul_amrc ends here-->
-    <p class="text-center">Copyright © 2018 Mega Dash Raffle </p>
-    <!--social_footer_ul ends here-->
+    <div id="body" align="center" style="padding-bottom:110px; overflow: auto">
+        {% block content %}
+            
+        {% endblock content %}
     </div>
-</footer>
-</div>
+
+
+    <footer class="footer bg-dark">
+
+        <div class="container">
+        <ul class="foote_bottom_ul_amrc" align='center'>
+          <li>
+            <a class="blue-link" href="{% url 'home'%}">Home</a>
+          </li>
+          <li>
+            <a class="blue-link" href="{% url 'raffles'%}">Search Raffles</a>
+          </li>
+          <li>
+            <a class="blue-link" href="{% url 'terms' %}">Terms</a>
+          </li>
+          <li>
+            <a class="blue-link" href="{% url 'conditions' %}">Conditions</a>
+          </li>
+          <li>
+            <a class="blue-link" href="#" onclick="return abrir_modal('{% url 'help' %}')">Help</a>
+          </li>
+        </ul>
+        <!--foote_bottom_ul_amrc ends here-->
+        <p class="text-center">Copyright © 2018 Mega Dash Raffle </p>
+        <!--social_footer_ul ends here-->
+        </div>
+    </footer>
+  </div>
 </body>
 
 {% block scripts %}
