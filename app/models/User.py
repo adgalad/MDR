@@ -56,8 +56,8 @@ class User(AbstractBaseUser, PermissionsMixin):
   created_at   = models.DateTimeField(auto_now_add=True)
   updated_at   = models.DateTimeField(auto_now=True)
   wallet_address = models.CharField(null=True, unique=True, max_length=64, verbose_name='Dash Address')
-  public_key = models.CharField(null=True, unique=True, max_length=128, verbose_name='Public Key')
-  signature = models.CharField(null=True, unique=True, max_length=128, verbose_name='Signature')
+  public_key = models.CharField(null=True, blank=True, unique=True, max_length=128, verbose_name='Public Key')
+  signature = models.CharField(null=True, blank=True, unique=True, max_length=128, verbose_name='Signature')
   message = models.CharField(null=True, unique=True, max_length=128, verbose_name='Message')
   final_message = models.CharField(null=True, unique=True, max_length=128, verbose_name='Message')
 
