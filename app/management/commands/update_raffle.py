@@ -22,7 +22,7 @@ class Command(BaseCommand):
     def writePidFile(self):
         pid = str(os.getpid())
         f = open(pidfile, 'w')
-        f.write(pid)
+        f.write(pid+"\n")
         f.close()
 
 
