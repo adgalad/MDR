@@ -227,8 +227,11 @@ class Raffle(models.Model):
   def checkPendingTx(self):
     transactions = self.transactions.filter(sent=False)
     total = 0.0
+
     for tx in transactions:
-      total += tx.amount
+      data = Dash.getrawtransaction(tx.address)
+      if data is not None and 'height' in data:
+        total += tx.amount
     
     if total > 0.0:
       for tx in transactions:
