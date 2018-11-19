@@ -154,7 +154,7 @@
             var dashuri = "dash:" + address + "?amount=" + String((n*price).toFixed(8)) + "&label=Tickets"
             document.getElementById("image").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+dashuri
             document.getElementById("link").href = dashuri
-            document.getElementById("address").innerHTML = 'Or send ' + String((n*price).toFixed(3)) + ' tDash to the following address: {{address}}'
+            document.getElementById("address").innerHTML = 'Or send ' + String((n*price).toFixed(3)) + ' Dash to the following address: {{address}}'
             $span = $('<span />').addClass('d-inline-block').attr({'data-toggle':"tooltip", 'title':'Copy address','tabindex':'0', 'data-placement':"right"});
             $li = $('<li />').addClass('fa fa-copy').attr({'onclick':'copy()', 'style':'color: #0062cc;cursor: pointer;margin-left:10px;'});
             $('#address').append( $span );
