@@ -211,6 +211,7 @@ class Raffle(models.Model):
               raffle=self,
               boughtTicket=tickets,
               notified=False,
+              sent=True,
             ).save()
             total += amount
         if total == 0.0:
@@ -223,8 +224,27 @@ class Raffle(models.Model):
         self.totalPrize += Decimal(total)
         self.save()
   
+  def checkPendingTx(self):
+    transactions = self.transactions.filter(sent=False)
+    total = 0.0
+    for tx in transactions:
+      total += tx.amount
+    
+    if total > 0.0:
+      for tx in transactions:
+        tx.sent = True
+        tx.save()
+      total = (total)*90/100
+      Dash.sendtoaddress(
+        self.addressPrize,
+        str(total)
+      )
+      self.totalPrize += Decimal(total)
+      self.save()
+
   def getTransactions(self):
     self.checkAllTx()
+    self.checkPendingTx()
     txs = Dash.getrawmempool()
     transactions = self.transactions.all()
     
@@ -258,19 +278,10 @@ class Raffle(models.Model):
               blockHeight=Dash.getblockcount(),
               raffle=self,
               boughtTicket=tickets,
-              notified=False
+              notified=False,
+              sent=False
             ).save()
-            total += amount
-      if total == 0.0:
-        continue
-      total = (total)*90/100
-      Dash.sendtoaddress(
-        self.addressPrize,
-        str(total)
-      )
-      self.totalPrize += Decimal(total)
-
-      self.save()
+      
 
   def addPrivKey(self, privkey):
     for i in range(1, self.signsRequired + 1):
@@ -301,6 +312,13 @@ class Raffle(models.Model):
     scriptPubKey = None
     vout = 0
     txData = []
+    prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
+    if prize < self.totalPrize:
+      EmailThread(subject="The raffle %s has finished"%self.name, 
+                  message="Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner.",
+                  html_message="No se reenviaron todas las transacciones.",
+                  recipient_list=["carlos.25896@gmail.com"]).start()
+      return -1
     for tx in txs:
       rawTx = Dash.getrawtransaction(tx)
       if rawTx is None:
@@ -325,7 +343,7 @@ class Raffle(models.Model):
     outputs2 = [{"txid": tx['txid'], "vout": tx['vout'],"scriptPubKey": tx['scriptPubKey'], "redeemScript": self.MSredeemScript} for tx in (txData[0:10])]
 
     
-    prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
+    
     
     newAddress = Dash.getnewaddress()
     

@@ -17,7 +17,7 @@ class Transaction(models.Model):
   boughtTicket = models.IntegerField(verbose_name="Bought Tickets")
   notified = models.BooleanField(verbose_name="Was notified", default=True)
   date = models.DateTimeField(verbose_name="Datetime", null=True)
-  
+  sent = models.BooleanField(verbose_name="Sent", default=False)
   class Meta:
     ordering = ['-blockHeight']
 
