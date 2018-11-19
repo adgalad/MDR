@@ -370,7 +370,7 @@ class Raffle(models.Model):
       html_message = render_to_string(
         'baseEmail.html',
         {
-          'message': 'Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner. Moreover, we have sent you back the 0.1 Dash you paid as fee.<br> To see the details of your raffle, click on the following link.<br> <br> <a class="btn btn-primary" href="%s/raffle/%d/more">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk) ,
+          'message': 'Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner. Moreover, we have sent you back the 0.1 Dash you paid as fee.<br> To see the details of your raffle, click on the following link.<br> <br> <a class="btn btn-primary" href="%s/raffle/%d/more">See details</a>'%( DEFAULT_DOMAIN, self.pk) ,
           'title':  'Your raffle, %s, has ended.'%self.name,
         }
       )
@@ -383,7 +383,7 @@ class Raffle(models.Model):
       html_message = render_to_string(
         'baseEmail.html',
         {
-          'message': 'Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner.<br> To see the details of your raffle, click on the following link.<br><br> <a class="btn btn-primary" href="%s/raffle/%d/more">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk),
+          'message': 'Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner.<br> To see the details of your raffle, click on the following link.<br><br> <a class="btn btn-primary" href="%s/raffle/%d/more">See details</a>'%( DEFAULT_DOMAIN, self.pk),
           'title':  'Your raffle, %s, has ended.'%self.name,
         }
       )
