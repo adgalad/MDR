@@ -231,7 +231,7 @@ class Raffle(models.Model):
     for tx in transactions:
       data = Dash.getrawtransaction(tx.address)
       if data is not None and 'height' in data:
-        total += tx.amount
+        total += float(tx.amount)
     
     if total > 0.0:
       for tx in transactions:
@@ -316,6 +316,7 @@ class Raffle(models.Model):
     vout = 0
     txData = []
     prize = Dash.getaddressbalance([self.addressPrize])['balance']/100000000
+
     if prize < self.totalPrize:
       EmailThread(subject="The raffle %s has finished"%self.name, 
                   message="Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner.",
