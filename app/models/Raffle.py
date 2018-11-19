@@ -370,12 +370,12 @@ class Raffle(models.Model):
       html_message = render_to_string(
         'baseEmail.html',
         {
-          'message': 'Your raffle has finished. Now, you\'ve to retrive the prize accumulated by your raffle, clicking on the link below, and send it to the winner and to your wallet. Moreover, we have sent you back the 0.1 Dash you paid as fee. <br> <br> <a class="btn btn-primary" href="%s/raffle/%d/finished">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk) ,
+          'message': 'Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner. Moreover, we have sent you back the 0.1 Dash you paid as fee.<br> To see the details of your raffle, click on the following link.<br> <br> <a class="btn btn-primary" href="%s/raffle/%d/more">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk) ,
           'title':  'Your raffle, %s, has ended.'%self.name,
         }
       )
       EmailThread(subject="The raffle %s has finished"%self.name, 
-                  message="Your raffle has finished. Now, you've to retrive the prize accumulated by your raffle and send it to the winner and to your wallet. Moreover, we have send you back the 0.1 Dash you pay as fee.",
+                  message="Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner. Moreover, we have sent you back the 0.1 Dash you paid as fee.",
                   html_message=html_message,
                   recipient_list=[self.owner.email]).start()
                   
@@ -383,12 +383,12 @@ class Raffle(models.Model):
       html_message = render_to_string(
         'baseEmail.html',
         {
-          'message': 'Your raffle has finished. Now, you\'ve to retrive the prize accumulated by your raffle, clicking on the link below, and send it to the winner and to your wallet. <br> <br> <a class="btn btn-primary" href="%s/raffle/%d/finished">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk) ,
+          'message': 'Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner.<br> To see the details of your raffle, click on the following link.<br><br> <a class="btn btn-primary" href="%s/raffle/%d/more">Withdraw funds</a>'%( DEFAULT_DOMAIN, self.pk),
           'title':  'Your raffle, %s, has ended.'%self.name,
         }
       )
       EmailThread(subject="The raffle %s has finished"%self.name, 
-                  message="Your raffle has finished. Now, you've to retrive the prize accumulated by your raffle and send it to the winner and to your wallet.",
+                  message="Your raffle has finished and we are sending the funds collected by it to your wallet and to the winner.",
                   html_message=html_message,
                   recipient_list=[self.owner.email]).start()
 
