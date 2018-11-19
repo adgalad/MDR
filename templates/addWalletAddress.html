@@ -1,4 +1,4 @@
-{% extends base %}
+{% extends base %}  
 {% load staticfiles %}
 
 {% block title %} Add Wallet Address {% endblock %}
@@ -61,6 +61,17 @@
                                           </div> 
                                           
                                         </div>
+
+                                        <div class="row" style="margin-bottom:15px;margin-top:15px;">
+                                          <div class="col-md-1">
+                                          </div>
+                                          <div class="col-md-7" style=" border: 1px black solid; height: 40px;font-size:13px;padding-top:7px;">
+                                            Raffle Confirm Wallet 2018-11-19 15:39:27.691410
+                                          </div>
+                                          <div class="col-md-4" align="left">
+                                            <button onclick="copy()" class="btn btn-primary">Copy verification message</button>
+                                          </div>
+                                        </div>
                                         <div class="col-md-12 inst">
                                           - Take your 
                                           <div class="tooltipaba">
@@ -89,17 +100,6 @@
                                            followed by the address at the "Debug Console" in the Tools menu.
                                         </div>
                                       </div>
-                                  </div>
-                                  
-                                  <div class="row">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-6" style=" border: 1px black solid; height: 40px;font-size:13px;padding-top:7px;">
-                                      {{ form.final_message.value }}
-                                    </div>
-                                    <div class="col-md-4" align="left">
-                                      <button onclick="copy()" class="btn btn-primary">Copy verification message</button>
-                                    </div>
                                   </div>
                                   <br>
                                 <form method="post" action="{%url 'addWalletAddress' %}" style="padding:10px 0px 0px 0px;">
