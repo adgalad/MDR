@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 # Redirect to HTTPS
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['*']
 
