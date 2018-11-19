@@ -8,8 +8,8 @@ class Dash:
         (["-rpcconnect="+RPC_SERVER] if RPC_SERVER else []) +
         (["-rpcport="+RPC_PORT] if RPC_PORT else []) +
         (["-rpcuser="+RPC_USER] if RPC_USER else []) +
-        (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else []) +
-         ["-testnet"])
+        (["-rpcpassword="+RPC_PASSWORD] if RPC_PASSWORD else [])) #+
+         #["-testnet"])
   
   @staticmethod
   def createrawtransaction(output, addressAmount):
