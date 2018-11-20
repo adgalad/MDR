@@ -52,7 +52,7 @@ class Raffle:
     except:
       return handler404(request)
 
-    if not raffle.is_active:
+    if not raffle.is_active and not raffle.owner == request.user:
       return redirect(reverse('payRaffle', kwargs={'id':id}))
     return render(request, "raffle.html", {"raffle":raffle})
 
