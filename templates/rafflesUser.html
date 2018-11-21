@@ -58,11 +58,13 @@
                     </a>
                   </div>
                 {% endif %}
-                <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;margin-bottom:5px;">
-                    <a class="btn btn-primary" href="{% url 'editRaffle' raffle.id %}" style="padding:5px 53px 5px 53px;">
-                      Edit
-                    </a>
-                </div>
+                {% if not raffle.finished %}
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;margin-bottom:5px;">
+                      <a class="btn btn-primary" href="{% url 'editRaffle' raffle.id %}" style="padding:5px 53px 5px 53px;">
+                        Edit
+                      </a>
+                  </div>
+                {% endif %}
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <a class="btn btn-primary" style="margin-top: 1%;padding:5px 25px 5px 25px;" href="{% url 'raffleDetails' raffle.pk %}">Read more</a>
                 </div>  
