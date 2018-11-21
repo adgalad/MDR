@@ -115,7 +115,7 @@ class Raffle:
             # raffle.signers.add(form.cleaned_data['signers'])
             raffle.createMultisigAddress()
             raffle.save()
-            return redirect(raffle)
+            return redirect(reverse("payRaffle", kwargs={'id':raffle.id}))
           else:
             messages.error(request, "Couldn't create multisig address.")
 
