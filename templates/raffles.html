@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load mathfilters %}
+
+{% block title %} Browse Raffles {% endblock %}
+
+{% block search %} active {% endblock search %}
+
+{% block style %}
+  {{block.super}}
+  
+    
+
+    <!-- Custom Theme Style -->
+    <!-- <link href="{% static 'build/css/custom.min.css" rel="stylesheet"> -->
+
+{% endblock style %}
+
+
+
+{% block content %}
+ 
+<div class="container content">
+    <div class="row" style="margin-left:10px;">
+        <div class="btn-group btn-breadcrumb breadcrumb-primary">
+            <div class="visible-lg-block"></div>
+            <div class="btn btn-primary"><b>All Raffles</b></div>
+        </div>
+    </div>
+  <div class="infinite-container">
+    {% for raffle in numbers %}
+      <div class="shadow infinite-item" style=" margin:10px;">
+        <div class="card">
+          <div class="row" style="margin-left:4%; margin-right:4%; margin-top: 1%; margin-bottom: 1%">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12">
+              <div class="row  align-items-center h-100">
+                <div class="col-sm-1 col-1"></div>
+                <div class="col-md-12 col-sm-5 col-5 " id="chart">
+                  {% if raffle.finished %}
+                    <h5 style="min-height:40px; margin-top: 50px"><b>Finished</b></h5>
+                  {% else %}
+                    <span class="chart" data-percent="{{raffle.getTimeLeft|mul:100|div:raffle.getDurationTimestamp}}" data-left="{{raffle.getTimeLeft}}">
+                      <span class="percent">
+                      </span>
+                    </span>
+                  {% endif %}
+                </div>
+                <div class="col-md-12 col-sm-5 col-5">
+                  <p class="prize-card">Prize <b> {{raffle.getPrize | floatformat:6}} Dash</b></p>
+                </div>
+                <div class="col-sm-1 col-1"></div>
+              </div>
+            </div>
+            <div class="col-xl-7 col-lg-8 col-md-7 col-sm-12 col-12" >
+              <div class="row align-items-left">
+                <!-- <div class="col-sm-1 col-xs-1"></div> -->
+                <div class="col-md-12 col-sm-12 col-12">
+                  <h5 align="left">{{raffle.name}}</h5>
+                </div>   
+              </div>
+              <div class="row align-items-left">
+                <!-- <div class="col-sm-1 col-xs-1"></div> -->
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-6">
+                  <p align="left">Ticket price: {{raffle.getPrice | floatformat:6}} Dash</p>
+                </div> 
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <p align="left">Created by: {{raffle.owner}}</p>
+                </div> 
+              </div>
+ 
+              <p align="left">{{raffle.summary | truncatechars:250}} </p>
+            </div>
+            <div class="offset-xl-0 col-xl-1 offset-lg- col-lg-8 offset-md-5 col-md-7 col-sm-12 col-12">
+              <div class="row  align-items-center h-100" style="width: 100%">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <a class="btn btn-primary" style="margin-top: 1%;padding:6px 30px 6px 30px;" href="{% url 'raffleDetails' raffle.pk %}">Read more</a>
+                  {% if not raffle.finished %}
+                    <button class="btn btn-success btn-raffle shadow" style="margin-top: 5px" 
+                               onclick="return abrir_modal('{% url "buyTicket" raffle.pk %}')">
+                      <i class="fas fa-ticket-alt"></i> Buy Tickets
+                    </button>
+                  {% endif %}
+                </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+     <div class="row" style="margin-top:100px; margin-bottom:178px;">
+      <div class="offset-md-5"><h4>No active raffles<h4></div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if numbers.has_next %}
+    <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}"></a>
+  {% endif %}
+  <div class="loading" style="display: none;">
+    <img src="{% static 'img/anima.gif' %}" width="150px" height="150px">
+  </div>
+</div>
+ 
+{% endblock content %}
+
+
+{% block scripts %}
+  {{block.super}}
+
+    <!-- Bootstrap -->
+    <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- easy-pie-chart -->
+    <script src="{% static 'vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.js' %}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{% static 'timebar/js/custom.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
+
+   <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+        $(document).ready(init_EasyPieChart())
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+        $(document).ready(init_EasyPieChart())
+      }
+    });
+  </script>
+
+{% endblock scripts %}

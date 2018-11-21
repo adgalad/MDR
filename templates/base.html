@@ -1,64 +1,236 @@
 {% load humanize %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
-    {% block meta %}
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <!-- Meta, title, CSS, favicons, etc. -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% endblock meta %}
-    
-    <title>Mega Dash Raffle | {% block title %}{% endblock %}</title>
-    
-    {% block style %}
-      <!-- Bootstrap -->
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
-            rel="stylesheet" 
-            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
-            crossorigin="anonymous">
-      <!-- Common Style -->
-      <link href="/static/css/common.css" rel="stylesheet">
-    {% endblock style%}
+  {% block meta %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta_social %}
+      <meta property="og:image" content="http://megadashraffle.org/static/img/logo.jpeg">
+      <meta property="og:image:width" content="565">
+      <meta property="og:image:height" content="382">
+      <meta property="og:description" content="Create a Dash Raffle to fund your projects.">
+      <meta property="og:title" content="Mega Dash Raffle">
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Mega Dash Raffle">
+
+      <!-- Google + -->
+      <meta itemprop="name" content="Mega Dash Raffle">
+      <meta itemprop="description" content="Create a Dash Raffle to fund your projects.">
+      <meta itemprop="image" content="http://megadashraffle.org/static/img/logo_blanco.png">
+
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:title" content="Mega Dash Raffle">
+      <meta name="twitter:description" content="Create a Dash Raffle to fund your projects.">
+      <meta name="twitter:image" content="http://megadashraffle.org/static/img/logo_blanco.png">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">
+      <meta name="application-name" content="&nbsp;"/>
+      <meta name="msapplication-TileColor" content="#FFFFFF" />
+      <meta name="msapplication-TileImage" content="mstile-144x144.png" />
+      <meta name="msapplication-square70x70logo" content="mstile-70x70.png" />
+      <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
+      <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
+      <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
+    {% endblock meta_social %}
+  {% endblock meta %}
+  
+  <title>Mega Dash Raffle | {% block title %}{% endblock %}</title>
+  
+  {% block style %}
+    <!-- Bootstrap -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800i" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Common Style -->
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/jquery.toastmessage.css' %}">
+    <!-- <link rel="icon" type="image/png" href="{% static 'css/images/success.png' %}"> -->
+    <link href="{% static 'css/accordion.css' %}" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '/img/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '/img/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/img/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static '/img/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static '/img/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static '/img/favicon/apple-touch-icon-57x57.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static '/img/favicon/apple-touch-icon-114x114.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static '/img/favicon/apple-touch-icon-72x72.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static '/img/favicon/apple-touch-icon-144x144.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static '/img/favicon/apple-touch-icon-60x60.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static '/img/favicon/apple-touch-icon-120x120.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static '/img/favicon/apple-touch-icon-76x76.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static '/img/favicon/apple-touch-icon-152x152.png' %}" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-196x196.png' %}" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-16x16.png' %}" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{% static '/img/favicon/favicon-128.png' %}" sizes="128x128" />
+
+  {% endblock style%}
 </head>
 
-  
 
 <body>
-    <div class="header">
-      <div class="row" style="margin-bottom: 30px;">
-        <div class="col-md-4"> 
-        </div>
-        <div class="col-md-4"> 
-          <div align="center"> 
-            <img src="/static/img/logo.jpeg" style="width: 200px;">
+  <div id="popup" class="modal modal-top fade" role="dialog"></div>
+  <div id="container" style="">
+    <header>
+      <div class="brand bg-dark" style="z-index: 1000;">
+        <span class="logo">
+          <div class="row" style="width: 100%">
+            <div class="col-md-4 col-sm-4 col-xs-1"> </div>
+            <div class="col-md-4 col-sm-4 col-xs-10" style="text-align: center;">
+              <a href="{% url 'home' %}">
+                <img class="logo-blanco" src="{% static '/img/logo_blanco.png' %}" width="200px" style="margin-top: 10px" >
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-1"> </div>
           </div>
-        </div>
-        <div class="col-md-4"> 
-          <div align="right" style="margin: 30px;"> 
-            {% if request.user.is_authenticated %}
-                <a class="btn btn-primary" href='{% url "profile" %}'> Profile</a>
-
-                <a class="btn btn-primary" href='{% url "logout" %}'> Logout </a>
-            {% else %}
-                <a class="btn btn-primary" href='{% url "login"  %}'> Login </a>
-
-                <a class="btn btn-primary" href='{% url "signup" %}'> Sign Up </a>
-            {% endif %}
-        </div>
-        </div>
+          
+        </span>
       </div>
-    </div>
-    <div align="center">
-        {% block content %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" style="width: 50% !important">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item {%block home%} {% endblock home%}">
+                  <a class="nav-link" href="{% url 'home' %}">
+                    <i class="fa fa-home"></i>
+                    Home
+                  </a>
+              </li>
+              <li class="nav-item {%block search%} {% endblock search%}">
+                  <a class="nav-link" href="{% url 'raffles'%}">
+                    Browse Raffles
+                  </a>
+              </li>
+              <!-- <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    Contact us
+                  </a>
+              </li> -->
+          </ul>
+        </div>
+          
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="width: 50% !important">
+          <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Hello,  <b>{{ user.username }} </b>
+                    </a>
+                    <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="{% url 'profile' %}">
+                        <i class="fa fa-user"></i>&nbsp; My Profile
+                      </a>
+                      <a class="dropdown-item" href="{% url 'myRaffles' %}">
+                        <i class="fa fa-book"></i>&nbsp; My Raffles
+                      </a>
+                      <a class="dropdown-item" href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
+                      </a>
+                    </div>
+                </li>
+                &nbsp;&nbsp;
+              {% else %}
+              <li class="nav-item {%block login%} {% endblock login%}">
+                      <a class="nav-link" href="#" onclick="return abrir_modal('/login/?modal=1')">
+                        <i class="fa fa-user"></i>
+                        Log In
+                      </a>
+                  </li>
+                  <li class="nav-item {%block signup%} {% endblock signup%}">
+                      <a class="nav-link" href="#" onclick="return abrir_modal('/signup/?modal=1')">
+                        Sign Up
+                      </a>
+                  </li>
+              {% endif %}
+              <li class="nav-item">
+                  <a class="nav-link {%block rules%} {% endblock rules%}" href="#"
+                     onclick="return abrir_modal('{% url 'help' %}')">
+                    <i class="fa fa-question-circle"></i>
+                    Rules/Help
+                  </a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
 
+    <div id="body" align="center" style="padding-bottom:110px; overflow: auto; margin-top: 80px;">
+        {% block content %}
+            
         {% endblock content %}
     </div>
+
+
+    <footer class="footer bg-dark">
+
+        <div class="container">
+        <ul class="foote_bottom_ul_amrc" align='center'>
+          <li>
+            <a class="blue-link" href="{% url 'home'%}">Home</a>
+          </li>
+          <li>
+            <a class="blue-link" href="{% url 'raffles'%}">Search Raffles</a>
+          </li>
+          <li>
+            <a class="blue-link" href="{% url 'terms' %}">Terms</a>
+          </li>
+          <li>
+            <a class="blue-link" href="{% url 'conditions' %}">Conditions</a>
+          </li>
+          <li>
+            <a class="blue-link" href="#" onclick="return abrir_modal('{% url 'help' %}')">Help</a>
+          </li>
+        </ul>
+        <!--foote_bottom_ul_amrc ends here-->
+        <p class="text-center">Copyright © 2018 Mega Dash Raffle </p>
+        <!--social_footer_ul ends here-->
+        </div>
+    </footer>
+  </div>
 </body>
+
 {% block scripts %}
-    <script src="/static/js/common.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+<script src="{% static 'js/jquery.toastmessage.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+
+{% if not user.is_anonymous %}
+  <script type="text/javascript">
+    $(document).ready(function(){
+      setInterval(checkNotifications, 5*1000)
+    })
+  </script>
+{% endif %}
+<script type="text/javascript">
+
+  function abrir_modal(url)
+    {
+      $('#popup').load(url, function(){
+        $(this).modal('show');
+      });
+      return false;
+    } 
+</script>
 {% endblock scripts %}
+
+
 </html>
+

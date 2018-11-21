@@ -2,134 +2,134 @@
 {% load humanize %}
 {% load mathfilters %}
 
+{% block title %} {{raffle.name}} {% endblock %}
+
+{% block meta_social %}
+    <!-- <meta property="og:url" content="https://www.cash4home.io/"> -->
+    <meta property="og:image" content="{{raffle.thumbnail}}">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
+    <meta property="og:description" content="{{raffle.summary}}">
+    <meta property="og:title" content="{{raffle.name}}">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mega Dash Raffle">
+
+    <!-- Google + -->
+    <meta itemprop="name" content="{{raffle.name}}">
+    <meta itemprop="description" content="{{raffle.summary}}">
+    <meta itemprop="image" content="{{raffle.thumbnail}}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{raffle.name}}">
+    <meta name="twitter:description" content="{{raffle.summary}}">
+    <meta name="twitter:image" content="{{raffle.thumbnail}}">
+{% endblock meta_social %}
+
+{% block style %}
+  {{block.super}}
+  <style type="text/css">
+    .details {
+      margin-top: 2%;
+    }
+  </style>
+{% endblock style %}
 {% block content %}
-    <a href="/"><button class="btn btn-secundary"> < Back</button></a><br><br>
-    <div align="left" style="width: 60%">
-        <h3>{{raffle.name}}</h3>
-        {% if raffle.isMultisigned %}
-        <div class="row">
-            <div class="col-md-4"><b>Prize Address:</b></div>
-            <div class="col-md-8">
-                <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressPrize}}">
-                    {{raffle.addressPrize}}
-                </a> ({{raffle.prizePercentage}}%) <b>*</b>
-            </div>
+ 
+<div class="container content">
+  <div class="row" style="margin-left:10px;">
+      <div class="btn-group btn-breadcrumb breadcrumb-primary">
+          <div class="visible-lg-block"></div>
+          <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All Raffles</a>
+          <div class="btn btn-info" style="background-color:#9acdff !important"><b>Details</b></div>
+      </div>
+  </div>
+  <div class="shadow" style=" margin:10px;">
+    <div class="card">
+      <div class="row" align="left" style=" margin:10px">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-left:30px;margin-top:20px;">
+          <h3>{{raffle.name}}</h3>
         </div>
-        {% endif %}
-        <div class="row">
-            <div class="col-md-4"><b>Beneficiary Address:</b></div> 
-            <div class="col-md-8">
-                <a style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.addressProject}}">
-                    {{raffle.addressProject}}
-                </a> ({{raffle.projectPercentage}}%) <b>*</b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"><b>Block Height:</b></div>
-            <div class="col-md-8">{{raffle.blockHeight}}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"><b>Approx Time:</b></div>
-            <div class="col-md-8">{{date}} UTC (May vary)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"><b>Ticket Price:</b></div>
-            <div class="col-md-8">{{ raffle.ticketPrice | intcomma }} tDash</div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"><b>Nro of tickets:</b></div>
-            <div class="col-md-8">{{ raffle.ticketsSold }}</div>
-        </div>
-        {% if not raffle.transaction %}
-        <div class="row">
-            <div class="col-md-4"><b>Prize:</b></div>
-            <div class="col-md-8">{{ prize }} tDash (updated after the transaction is confirmed) </div> 
-        </div>
-        {% endif %}
-        {% if raffle.finished %}
-            {% if raffle.winner %}
+        <div class="row" style="width: 100%">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 details">
+              <div class="item hovereffect" id="floatnone"><img class="img-responsive" width="240px" height="240px" src="{{raffle.thumbnail}}" style="display:inline">
+              </div>
+          </div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 details">
             <div class="row">
-                <div class="col-md-4"><b>Winner:</b></div> 
-                <div class="col-md-8">
-                    {{ raffle.winner }}
-                </div>
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                <b>Raffle Address:</b>
+                <a style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="http://insight.dash.crowdnode.io/address/{{raffle.addressPrize}}">
+                    {{raffle.addressPrize}} <b>*</b>
+                </a>
+              </div>
             </div>
-            {% endif %}
-            {% if raffle.winnerAddress %}
             <div class="row">
-                <div class="col-md-4"><b>Winner Addr:</b></div> 
-                <div class="col-md-8">
-                    <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/address/{{raffle.winnerAddress}}">
-                            {{ raffle.winnerAddress }}
-                    </a>
-                </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                <b>Draw Date:</b> {{raffle.drawDate}}
+              </div> 
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                <b>Prize:</b> {{ raffle.getPrize | floatformat:6 }} Dash
+              </div>
             </div>
-            {% endif %}
-            {% if raffle.transaction %}
-                <div class="row">
-                    <div class="col-md-4"><b>Transaction:</b></div> 
-                    <div class="col-md-8">
-                        <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{raffle.transaction}}">
-                            {{ raffle.transaction }}
-                        </a>
-                    </div>
+
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                  <b>Ticket Price:</b> {{ raffle.ticketPrice | floatformat:6 }} Dash
+            
+              </div> 
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                  <b>Nro of tickets sold:</b> {{ raffle.ticketsSold }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                  <b>Owner:</b> {{ raffle.owner }}
+              </div> 
+              {% if raffle.finished %}
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 details">
+                    <b>Winner:</b> {{ raffle.winner }}
                 </div>
-            {% elif raffle.isMultisig %}
-                <div class="row">
-                    <div class="col-md-4"><b>Signs:</b></div> 
-                    <div class="col-md-8">
-                        {{ raffle.getPrivkey | length }} out of {{raffle.signsRequired}}
-                    </div>
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12 details">
+                  <a href="{% url 'raffleMoreDetails' raffle.pk %}" class="btn btn-primary">See more details</a>
+              </div>
+              
+              {% if raffle.finished and not raffle.transaction %}
+                {% if raffle.owner == request.user %}
+                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
+                    <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
+                      Withdraw funds
+                    </a>  
+                  </div>
+                {% endif %}
+              {% else %}
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 details">
+                  <a class="btn btn-primary" href="#" onclick="return abrir_modal('{% url 'buyTicket' raffle.id %}')">
+                      <i class="fas fa-ticket-alt"></i> Buy tickets
+                  </a>  
                 </div>
-            {% endif %}
-        {% endif %}
-        <small>* Tokens sent to the prize address or the beneficiary address will count as donations and won't be returned.</small>
+              {% endif %}    
+            </div> 
+          </div>
+
+        </div>
+            
+      </div>
+      <br><hr><br>
+      <div id="summary" style="padding:0px 60px 40px 80px;" align="left">
+        <h2> Project summary </h2>
+        {{raffle.summary}}
+      </div>
+      <br><hr><br>
+      <div id="description" style="padding:0px 60px 40px 80px;" align="left">
+        <h2> Project description </h2>
+        {{raffle.description | safe}}
+      </div>
     </div>
-    <br>
-    {% if not raffle.finished %}
-        <a class="btn btn-primary" href="{% url 'buyTicket' raffle.id %}">Buy Ticket</a>
-    {% elif request.user in raffle.signers.all and not raffle.transaction %}
-        <a class="btn btn-primary" href="{% url 'addPrivkey' raffle.id %}">Sign Transaction</a>
-    {% endif %}
-    <br><br>
-    <div align="left" style="width: 60%">
-        <table border="1" class="table" style="width: 50% !important">
-            <thead>
-                <tr>
-                    <th>
-                        Transaction ID
-                    </th>
-                    <th>
-                        User
-                    </th>
-                    <th>
-                        Amount
-                    </th>
-                    <th>
-                        Tickets
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for tx in raffle.transactions.all %}
-                    <tr>
-                        <td>
-                            <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="https://test.explorer.dashninja.pl/tx/{{tx.address}}">
-                                {{ tx.address }}
-                            </a>
-                        </td>
-                        <td>
-                            {{ tx.user }}
-                        </td>
-                        <td>
-                            {{ tx.amount }}
-                        </td>
-                        <td>
-                            {{ tx.amount|div:raffle.ticketPrice}}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  </div>
+</div>
+  
 {% endblock content %}

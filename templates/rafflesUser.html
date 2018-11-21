@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load mathfilters %}
+
+{% block title %} My Raffles {% endblock %}
+
+{% block search %} active {% endblock search %}
+{% load staticfiles %}
+
+{% block content %}
+ 
+<div class="container content">
+    <div class="row" style="margin-left:10px;">
+        <div class="offset-md-5">
+          <a class="btn btn-primary" style="margin-top: 1%" href="{% url 'createRaffle' %}"><i class="fas fa-plus"></i>&nbsp;Create Raffle</a>
+        </div>
+    </div>
+  <div class="infinite-container">
+    {% for raffle in numbers %}
+      <div class="shadow infinite-item" style=" margin:10px;">
+        <div class="card">
+          <div class="row" style="margin-left:4%; margin-right:4%; margin-top: 1%; margin-bottom: 1%">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12">
+              <div class="row  align-items-center h-100">
+                <div class="col-sm-1 col-1"></div>
+                <div class="col-md-12 col-sm-5 col-5">
+                  <h5>Jackpot <b>  {{raffle.getPrize | floatformat:6}} Dash</b></h5>
+                </div>
+                <div class="col-sm-1 col-1"></div>
+              </div>
+            </div>
+            <div class="col-xl-7 col-lg-8 col-md-7 col-sm-12 col-12" >
+              <div class="row align-items-center">
+                <!-- <div class="col-sm-1 col-xs-1"></div> -->
+                <div class="col-md-6 col-sm-12 col-12">
+                  <h5>{{raffle.name}}</h5>
+                </div>  
+                <div class="col-md-6 col-sm-12 col-12">
+                  <p>Ticket sold: {{raffle.ticketsSold}} </p>
+                </div>  
+                <!-- <div class="col-sm-1 col-xs-1"></div> -->
+              </div>
+              
+              <p align="left">{{raffle.summary | truncatechars:250}} </p>
+            </div>
+            <div class="offset-xl-0 col-xl-1 offset-lg- col-lg-8 offset-md-5 col-md-7 col-sm-12 col-12">
+              <div class="row  align-items-center h-100" style="width: 100%">
+                {% if raffle.finished and not raffle.transaction %}
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a class="btn btn-primary" href="{% url 'finishedRaffle' raffle.id %}">
+                      Withdraw funds
+                    </a>
+                  </div>
+                {% elif not raffle.is_active %}
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a class="btn btn-primary" href="{% url 'payRaffle' raffle.id %}">
+                      Pay raffle's fee
+                    </a>
+                  </div>
+                {% endif %}
+                <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;margin-bottom:5px;">
+                    <a class="btn btn-primary" href="{% url 'editRaffle' raffle.id %}" style="padding:5px 53px 5px 53px;">
+                      Edit
+                    </a>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <a class="btn btn-primary" style="margin-top: 1%;padding:5px 25px 5px 25px;" href="{% url 'raffleDetails' raffle.pk %}">Read more</a>
+                </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+    <div class="row" style="margin-top:100px; margin-bottom:178px;">
+      <div class="offset-md-5"><h4>No active raffles<h4></div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if numbers.has_next %}
+    <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}"></a>
+  {% endif %}
+  <div class="loading" style="display: none;">
+    <img src="{% static 'img/anima.gif' %}" width="200px" height="150px">
+  </div>
+</div>
+ 
+{% endblock content %}
+
+
+{% block scripts %}
+  {{block.super}}
+
+    <!-- Bootstrap -->
+    <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- easy-pie-chart -->
+    <script src="{% static 'vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.js' %}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{% static 'timebar/js/custom.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
+
+   <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+        $(document).ready(init_EasyPieChart())
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+        $(document).ready(init_EasyPieChart())
+      }
+    });
+  </script>
+
+{% endblock scripts %}

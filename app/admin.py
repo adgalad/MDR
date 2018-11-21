@@ -28,7 +28,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'is_staff', 'is_active', )
+        fields = ('username', 'is_staff', 'is_active', )
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -59,13 +59,13 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'username', 'is_superuser', 'is_staff', 'is_active', 'created_at', 'updated_at', 'last_login')
+    list_display = ('username',  'is_superuser', 'is_staff', 'is_active', 'created_at', 'updated_at', 'last_login')
     # list_filter = ('email',)
 
     readonly_fields=('created_at', 'updated_at',)
     fieldsets = (
-        (None                , {'fields': ('email', 'username', 'password')}),
-        (('Permissions')    , {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        (None                , {'fields': ('username','email', 'wallet_address', 'password')}),
+        (('Permissions')    , {'fields': ('is_active', 'is_staff', 'is_superuser', 'can_sign', 'groups', 'user_permissions')}),
         (('Important dates'), {'fields': ('last_login', 'created_at', 'updated_at')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -73,13 +73,12 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'username', 'password1', 'password2')}
+            'fields': ('username', 'password1', 'password2')}
         ),
     )
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('username',)
+    ordering = ('username',)
     # filter_horizontal = ()
-
 
 admin.site.register(User, UserAdmin)
 
@@ -87,14 +86,12 @@ admin.site.register(User, UserAdmin)
 
 class Transaction(admin.ModelAdmin):
     pass
-class RaffleSigner(admin.ModelAdmin):
-    pass
 class Raffle(admin.ModelAdmin):
     pass
 class AddressGenerated(admin.ModelAdmin):
     pass
 
+
 admin.site.register(models.Transaction, Transaction)
-admin.site.register(models.RaffleSigner, RaffleSigner)
 admin.site.register(models.Raffle, Raffle)
 admin.site.register(models.AddressGenerated, AddressGenerated)

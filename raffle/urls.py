@@ -15,19 +15,31 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth.views import PasswordResetView, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from app import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^$', views.index, name="index"),
+    url(r'^$', views.index, name="home"),
+    url(r'^help/$', views.help, name="help"),
+    url(r'^terms/$', views.terms, name="terms"),
+    url(r'^conditions/$', views.conditions, name="conditions"),
+    url(r'^403/$', views.handler403, name="403"),
 
     # Raffle URLs
-    url(r'^createRaffle/$', views.Raffle.createRaffle, name="createRaffle"),
+    url(r'^raffle/create$', views.Raffle.createRaffle, name="createRaffle"),
+    url(r'^myRaffles/$', views.Raffle.myRaffles, name="myRaffles"),
     url(r'^raffle/(?P<id>\w+)$', views.Raffle.details, name="raffleDetails"),
+    url(r'^raffle/(?P<id>\w+)/more$', views.Raffle.moreDetails, name="raffleMoreDetails"),
+    url(r'^raffles/$', views.Raffle.active, name="raffles"),
+    url(r'^raffle/(?P<id>\w+)/finished$', views.Raffle.finished, name="finishedRaffle"),
+    url(r'^raffle/(?P<id>\w+)/payment$', views.Raffle.pay, name="payRaffle"),
+    url(r'^raffle/(?P<id>\w+)/edit$', views.Raffle.edit, name="editRaffle"),
+    # url(r'^raffles/old$', views.Raffle.old, name="rafflesOld"),
     url(r'^buyTicket/(?P<id>\w+)$', views.Raffle.buyTicket, name="buyTicket"),
-    url(r'^addPrivkey/(?P<id>\w+)$', views.Raffle.addPrivkey, name="addPrivkey"),
+    # url(r'^addPrivkey/(?P<id>\w+)$', views.Raffle.addPrivkey, name="addPrivkey"), 
 
     url(r'^login/$', views.User.login, name="login"),
     url(r'^signup/$', views.User.signup, name="signup"),
@@ -35,4 +47,23 @@ urlpatterns = [
 
     url(r'^addWalletAddress/$', views.User.addWalletAddress, name="addWalletAddress"),
     url(r'^profile/$', views.User.profile, name="profile"),
-]
+    url(r'^profile/edit$', views.User.editProfile, name="editProfile"),
+    url(r'^api/users/', views.User.getUsers, name="api.users"),
+    url(r'^api/user/notifications', views.User.notifications, name="api.usersNotifications"),
+    url(r'^api/changePassword/$', views.User.changePassword, name="api.changePassword"),
+
+    url(r'^reset/password_reset', password_reset, 
+        {'html_email_template_name': 'registration/password_reset_html_email.html'},
+        name='password_reset'), 
+    url(r'^password_reset_done', password_reset_done, 
+        {'template_name': 'registration/password_reset_done.html'}, 
+        name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', password_reset_confirm, 
+        {'template_name': 'registration/password_reset_confirm.html'},
+        name='password_reset_confirm'
+        ),
+    url(r'^reset/done', password_reset_complete, {'template_name': 'registration/password_reset_complete.html'},
+        name='password_reset_complete'),
+
+
+] + staticfiles_urlpatterns()

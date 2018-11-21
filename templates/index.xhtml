@@ -1,77 +1,161 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
+{% block title %} Home {% endblock %}
+{% block home %} active {% endblock home %}
+
+{% block style %}
+  {{block.super}}
+  <link rel="stylesheet" href="{% static 'OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animation.css' %}"> <!-- Resource style -->
+  <script src="/static/js/modernizr.js"></script> <!-- Modernizr -->
+{% endblock style %}
 
 {% block content %}
-    <div class="container" align="left">
-        <p>Welcome to Mega Dash Raffle</p>
-
-        <p>We invite you to play our raffle in benefit of Dash community projects. Your participation will help beneficiaries, by using the 50% of the tickets price to fund their proposals. The other 40% and 10% go to the winner jackpot and to the maintenance and improvement of the platform, respectively. (These percentages may vary between raffles).</p>
-
-        <p>Monthly, there will be many mini raffles (0.01 tDash per ticket), raffles (0.05 tDash per ticket) and a Mega Dash Raffle (0.1 tDash per ticket). These prices may vary as well.</p>
-
-        <p>Play now!</p>
-    
-        <h2> Active Raffles </h2>
-        <table border="1" class="table" style="width: 100% !important">
-            <thead>
-                <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        Raffle Description
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for raffle in raffles %}
-                    {% if not raffle.finished %}
-                        <tr>
-                            <td>
-                                    {{raffle.pk}}
-                            </td>
-                            <td>
-                                <a href="{% url 'raffleDetails' raffle.id %}">
-                                    {{raffle.name}}
-                                </a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h2> Previous Raffles </h2>
-        <table border="1" class="table" style="width: 100% !important">
-            <thead>
-                <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        Raffle Description
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for raffle in raffles %}
-                    {% if raffle.finished %}
-                        <tr>
-                            <td>
-                                    {{raffle.pk}}
-                            </td>
-                            <td>
-                                <a href="{% url 'raffleDetails' raffle.id %}">
-                                    {{raffle.name}}
-                                </a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-        <br><br>
-        <!-- <a href="createRaffle/" class="btn btn-primary"> Create raffle </a><br><br> -->
+  <section id="banner" style=" z-index:-1">
+    <div class="banner-container">
+      <img class="size-banner" style="width: 100%; min-height: 400px;height: 100%" src="/static/img/banner.png">
+      <div class="centered cd-intro-content mask">
+        <div class="img-banner" style="margin-top:10%; margin-bottom: 10%">
+          <h1 data-content="Welcome to Mega Dash Raffle" class="font-index">
+            <span>Welcome to <br>Mega Dash Raffle</span>
+          </h1>
+          <h3 data-content="Welcome to Mega Dash Raffle" class="font-index" style="color: red; background-color: rgba(40, 40, 40, 0.83)">
+            Migrating to the mainnet.<br>Don't buy tickets.
+          </h3>
+          <div class="action-wrapper">
+            <p>
+              <a href="{% url 'raffles' %}" class="btn btn-success cd-btn main-action">Go to Raffles</a>
+            </p>
+             <p style="margin-left:10px;">
+              <a href="{% url 'createRaffle' %}" class="btn btn-primary cd-btn main-action">Create Raffle</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+  <section id="featured" >
+    <div class="container" align="left">
+      <h2 > Last Active Raffles </h2>
+      <p>These are our last active raffles</p>
+      <div class="owl-carousel owl-theme">
+        {% for item in raffles %}
+          <div class="item hovereffect"><h4><img class="img-responsive" id="small" style="width:270px; height:270px;" src="{{item.thumbnail}}"></h4>
+            <div class="overlay" id="fontsmall">
+              <h2 id="fontsmall">{{item.name}}</h2>
+              <a class="info" id="btn-more" href="{% url 'raffleDetails' item.pk %}">See More</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4"></div>
+          <div class="col-md-4" align="center">
+            <a href="{% url 'raffles' %}" class="btn btn-primary">See all raffles</a>
+          </div>
+        <div class="col-md-4"></div> 
+      </div>
+      <br>
+
+    </div>
+  </section>
+  <section class="bg" style="z-index: -1">
+    <div class="container" align="left">
+      <br>
+      <h2> Last transactions </h2>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100" style="width: 100% !important">
+                        <div class="table">
+
+                            <div class="rowtable header">
+                                <div class="cell" style="width:15%">
+                                    Transaction ID
+                                </div>
+                                <div class="cell" style="width:35%">
+                                    Raffle
+                                </div>
+                                <div class="cell" style="width:15%">
+                                    Amount
+                                </div>
+                                <div class="cell" style="width:5%">
+                                    Tickets
+                                </div>
+                                <div class="cell" style="width:20%">
+                                    Transaction date
+                                </div>
+                            </div>
+                        {% for tx in transactions %}
+                            <div class="rowtable">
+                                <div class="cell" data-title="Full Name">
+                                    <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="http://insight.dash.crowdnode.io/tx/{{tx.address}}">
+                                    {{ tx.address | truncatechars:30 }}
+                                    </a>
+                                </div>
+                                <div class="cell" data-title="Age">
+                                    <a target="_blank" style="color:black; text-decoration: none; border-bottom: 1px dotted black;" href="{% url 'raffleDetails' tx.raffle.id %}">
+                                    {{ tx.raffle }}
+                                    </a>
+                                </div>
+                                <div class="cell" data-title="Job Title">
+                                    {{ tx.amount }}
+                                </div>
+                                <div class="cell" data-title="Location">
+                                    {{ tx.boughtTicket }}
+                                </div>
+                                <div class="cell">
+                                    {{ tx.getDate }}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="rowtable" style="display:contents !important;">
+                                    No transactions
+                            </div>
+                        {% endfor %}
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+      <br><br>
+      <!-- <a href="createRaffle/" class="btn btn-primary"> Create raffle </a><br><br> -->
+    </div>
+  </section>
+ 
 {% endblock content %}
 
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="..{% static 'OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+  <!-- <script src="{% static 'js/main.js' %}"></script> -->
+  <script type="text/javascript">
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        dots:false,
+        margin:10,
+        responsiveClass:true,
+        autoplay:true,
+        autoplayTimeout:7000,
+        autoplaySpeed:3000,
+        autoplayHoverPause:true,
+        responsive:{
+            0:{
+                items:2,
+            },
+            600:{
+                items:3,
+            },
+            1000:{
+                items:4,
+            }
+        }
+      })
+
+  </script>
+{% endblock scripts %}

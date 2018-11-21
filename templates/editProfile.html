@@ -1,0 +1,125 @@
+{% extends base %}
+{%load humanize %}
+{% load staticfiles %}
+
+{% block title %} Edit Profile {% endblock %}
+
+{% block form %}
+    {% if msg %}
+        {{msg}}
+    {% endif %}
+    
+    {% block beforeForm %}
+        
+    {% endblock beforeForm %}
+<br>
+
+
+<div class="modal-dialog modal-md" {% if request.GET.modal == '1'%} style="z-index:1500;" {% endif %}>
+  <div class="modal-content {% if request.GET.modal != '1'%} shadow modal-margin {%endif%} ">
+    <div class="modal-body">
+    {% if request.GET.modal == '1'%}
+        <button type="button" class="close" data-dismiss="modal">x</button>
+    {% endif %}
+       <div class="container-fluid bg-gray" id="accordion-style-1">
+         <div class="container">
+            <section>
+              <div class="row" align="center">
+                <div class="col-12 mx-auto">
+                  <div class="accordion" id="accordionExample">
+                    <div class="container" style="z-index:-1;">
+                      
+
+                      <h3 id="text" style="margin-bottom:25px;">Edit Profile</h3>
+                      <div class="omb_login">
+                        <form method="post" action="{% url 'editProfile' %}">
+                          <div class="col-xs-12 col-sm-12"> 
+                            {% for field in form %} 
+                            <div class="wrap-input100 validate-input">
+                              <input class="input100 has-val" type="text" name="{{field.html_name}}" required="" id="{{field.auto_id}}">
+                              <span class="focus-input100" data-placeholder="{{field.label}}"></span>
+                            </div>
+                            {% endfor %}
+                            
+                            
+                            {% csrf_token %}
+                            {% for field in form %} 
+                                {% if field.errors %} 
+                                <div class="alert-form alert-warning alert-dismissible fade show" role="alert">
+                                  <span>{{ field.errors }}</span>
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="col-sm-6">
+                                  <button class="btn btn-primary btn-block" type="submit" id="botton">Change email</button>
+                              </div>
+                          </div> 
+                        </form>    
+                      </div>
+
+                      <br><hr><br>
+                      <h3 id="text" style="margin-bottom:25px;">Change Password</h3>
+                      <div class="omb_login">
+                        <form method="post" action="{%url 'api.changePassword' %}">
+                          <div class="col-xs-12 col-sm-12"> 
+                            {% for field in passwordForm %} 
+                            <div class="wrap-input100 validate-input">
+                              <input class="input100 has-val" type="password" name="{{field.html_name}}" required="" id="{{field.auto_id}}">
+                              <span class="focus-input100" data-placeholder="{{field.label}}"></span>
+                            </div>
+                            {% endfor %}
+                            
+                            
+                            {% csrf_token %}
+                            {% for field in passwordForm %} 
+                                {% if field.errors %} 
+                                <div class="alert-form alert-warning alert-dismissible fade show" role="alert">
+                                  <span>{{ field.errors }}</span>
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="col-sm-8">
+                                  <button class="btn btn-primary btn-block" type="submit" id="botton">Change password</button>
+                              </div>
+                          </div>
+                        </form>     
+                      </div>
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>    
+
+{% endblock form %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script type="text/javascript">
+
+       $(document).ready(function(){
+        // $("#id_username").val("{{ user.username }}")
+        $("#id_email").val("{{ user.email }}")
+        })
+
+  </script>
+{% endblock scripts %}

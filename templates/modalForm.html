@@ -1,0 +1,47 @@
+
+{% block style %}
+{% load staticfiles %}
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800i" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+        crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <!-- Common Style -->
+  <link href="{% static 'css/common.css' %}" rel="stylesheet">
+  <link href="{% static 'css/accordion.css' %}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/select2.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+{% endblock style %}
+
+{%load humanize %}
+
+{%block form%}
+
+{%endblock form%}
+
+{% block scripts %}
+  <script src="{% static 'js/jquery.toastmessage.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  <script src="{% static 'js/common.js' %}"></script>
+  <script src="{% static 'js/form.js' %}"></script>
+  
+
+  <script type="text/javascript">
+
+    function abrir_modal(url)
+      {
+        $('#popup').load(url, function()
+        {
+          $(this).modal('show');
+        });
+        return false;
+      }
+  </script>
+{% endblock scripts %}

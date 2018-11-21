@@ -1,0 +1,89 @@
+{% extends base %}
+{% load staticfiles %}
+
+{% block title %} Login {% endblock %}
+
+{%load humanize %}
+
+{% block form %}
+    {% if msg %}
+        {{msg}}
+    {% endif %}
+<br>
+    {% block beforeForm %}
+        
+        
+        
+    {% endblock beforeForm %}
+
+<div class="modal-dialog modal-md">
+  <div class="modal-content {% if request.GET.modal != '1'%} modal-margin shadow {%endif%}">
+    <div class="modal-body">
+    {% if request.GET.modal == '1'%}
+        <button type="button" class="close" data-dismiss="modal">x</button>
+    {% endif %}
+       <div class="container-fluid bg-gray" id="accordion-style-1">
+           <div class="container">
+                <section>
+                   <div class="row" align="center">
+                        <div class="col-12 mx-auto">
+                           <div class="accordion" id="accordionExample">
+                                <form method="post" action="{%url 'login' %}">
+                                            {% csrf_token %}
+                                    {% if request.GET.next %}
+                                      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                                    {% else %}
+                                      <input type="hidden" name="next" value="{% url 'profile' %}" />
+                                    {% endif %}
+                                    <div class="container" style="z-index:-1;">
+                                        <h3 id="text" style="margin-bottom:25px;">Login</h3>
+                                        <div class="omb_login">
+                                              <div class="wrap-input100 validate-input">
+                                                <input class="input100" type="text" name="username" required="" id="id_username">
+                                                <span class="focus-input100" data-placeholder="Username"></span>
+                                              </div>  
+                                               <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                                  <span class="btn-show-pass">
+                                                    <i class="fa fa-eye"></i>
+                                                  </span>
+                                                  <input class="input100" type="password" name="password" required="" id="id_password">
+                                                  <span class="focus-input100" data-placeholder="Password"></span>
+                                               </div>      
+                                              {% for message in messages %}
+                                              <div class="alert-form alert-warning alert-dismissible fade show" role="alert" style="margin-top:-15px;">
+                                                {{ message }} 
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              {% endfor %}
+
+                                            <div class="col-xs-12 col-sm-12" style="margin-top:-20px;">
+                                                <p class="omb_forgotPwd">
+                                                    <a href="{% url 'password_reset' %}">Forgot password?</a>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-9">
+                                                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="botton">Login</button>
+                                                </div>
+                                            </div>     
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>    
+
+    {% block afterForm %}
+        
+        
+        
+    {% endblock afterForm %}
+{% endblock form %}

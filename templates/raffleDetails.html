@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block title %} More Details {% endblock %}
+
+{% block style %}
+  {{block.super}}
+  <style type="text/css">
+    .details {
+      margin-top: 2%;
+    }
+  </style>
+{% endblock style %}
+{% block content %}
+ <div class="container content">
+    <div class="row" style="margin-left:10px;">
+        <div class="btn-group btn-breadcrumb breadcrumb-primary">
+            <div class="visible-lg-block"></div>
+            <a href="/raffles/" class="btn btn-primary visible-lg-block visible-md-block">All Raffles</a>
+            <a href="{% url 'raffleDetails' raffle.pk %}" class="btn btn-primary visible-lg-block visible-md-block">Details</a>
+            <div class="btn btn-info" style="background-color:#9acdff !important"><b>More Details</b></div>
+        </div>
+    </div>
+    <div class="shadow" style=" margin:10px;">
+      <div class="card" style="min-width: 446px !important;">
+        <div class="row" align="left" style=" margin:30px">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <h3>{{raffle.name}}</h3>
+          </div>
+          <!-- Prize address -->
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                <b>Raffle Address:</b>
+              </div>
+              <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                <a class="explorer-link" href="http://insight.dash.crowdnode.io/address/{{raffle.addressPrize}}">
+                    {{raffle.addressPrize}} <b>*</b>
+                </a>
+              </div>
+            </div>
+
+            <!-- Beneficiary -->
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Owner:</b> 
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{ raffle.owner }} 
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                <b>Beneficiary Address:</b>
+              </div>
+              <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                <a class="explorer-link" href="http://insight.dash.crowdnode.io/address/{{raffle.addressProject}}">
+                    {{raffle.addressProject}} <b>*</b>
+                </a>
+              </div>
+            </div>
+
+            <!-- Winner -->
+            {% if raffle.winnerAddress %}
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Winner:</b> 
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{ raffle.winner }} 
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Winner Address:</b> 
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                <a class="explorer-link" href="http://insight.dash.crowdnode.io/address/{{ raffle.winnerAddress }}">
+                  {{ raffle.winnerAddress }} 
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Transaction:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                <a class="explorer-link" href="http://insight.dash.crowdnode.io/tx/{{ raffle.transaction }}">
+                  {{ raffle.transaction }}</a>
+              </div>
+            </div>
+            {% endif %}
+
+             <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Total:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                {{ raffle.totalPrize | floatformat:6 }} Dash
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Collected:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{ raffle.getCollected | floatformat:6 }} Dash
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Prize:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{ raffle.getPrize | floatformat:6 }} Dash
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Draw Date:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{raffle.drawDate}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Ticket Price:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                  {{ raffle.ticketPrice | floatformat:6 }} Dash
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 details">
+                  <b>Nro of tickets sold:</b>
+              </div> 
+              <div class="col-xl-9 col-lg-2 col-md-3 col-sm-12 col-12 details">
+                   {{ raffle.ticketsSold }}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <small>(<b>*</b> any transaction sent to the prize or beneficiary address will count as donation and won't be returned by Mega Dash Raffle.)</small>
+        <br><hr><br>
+        <h2> Tickets Sold </h2>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100" style="width: 100% !important">
+                        <div class="table">
+
+                            <div class="rowtable header">
+                                <div class="cell" style="width:10%">
+                                    Transaction ID
+                                </div>
+                                <div class="cell" style="width:15%">
+                                    Amount
+                                </div>
+                                <div class="cell" style="width:10%">
+                                    Tickets
+                                </div>
+                                <div class="cell" style="width:20%">
+                                    Transaction date
+                                </div>
+                            </div>
+                        {% for tx in raffle.transactions.all %}
+                            <div class="rowtable">
+                                <div class="cell" data-title="Transaction ID">
+                                    <a target="_blank" class="explorer-link" href="http://insight.dash.crowdnode.io/tx/{{tx.address}}">
+                                    {{ tx.address }}
+                                    </a>
+                                </div>
+                                <div class="cell" data-title="Amount">
+                                    {{ tx.amount }}
+                                </div>
+                                <div class="cell" data-title="Tickets">
+                                    {{ tx.amount|div:raffle.ticketPrice}}
+                                </div>
+                                <div class="cell" data-title="Date">
+                                    {{ tx.getDate }}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="rowtable" style="display:contents !important;">
+                                    No transactions
+                            </div>
+                        {% endfor %}
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
+  
+{% endblock content %}
