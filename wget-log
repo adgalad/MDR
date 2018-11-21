@@ -1,6 +1,0 @@
---2018-07-26 14:14:33--  https://www.google.com/search?q=myip
-Resolving www.google.com (www.google.com)... 172.217.3.68
-Connecting to www.google.com (www.google.com)|172.217.3.68|:443... connected.
-HTTP request sent, awaiting response... 403 Forbidden
-2018-07-26 14:14:34 ERROR 403: Forbidden.
-
