@@ -80,18 +80,21 @@ section{
 }
 
 @media (min-width: 576px) {
-  .modal-dialog {
-    min-width: 650px;
+  .videoHelp {
+    width:500px;
+    height:auto;
   }
 }
 @media (min-width: 992px) {
-  .modal-dialog {
-    min-width: 650px;
+  .videoHelp {
+    width:600px;
+    height:auto;
   }
 }
 @media (min-width: 1200px) {
-  .modal-dialog {
-     min-width: 650px;
+  .videoHelp {
+     width:600px;
+     height:auto;
   }
 }
 
