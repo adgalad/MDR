@@ -80,21 +80,25 @@ section{
 }
 
 @media (min-width: 576px) {
-  .videoHelp {
+  #videoHelp {
     width:500px;
     height:auto;
   }
 }
 @media (min-width: 992px) {
-  .videoHelp {
+  #videoHelp {
     width:600px;
     height:auto;
   }
 }
 @media (min-width: 1200px) {
-  .videoHelp {
+  #videoHelp {
      width:600px;
      height:auto;
   }
 }
 
+
+
+
+<iframe 
