@@ -79,7 +79,7 @@ section{
   }
 }
 
-@media (min-width: 650px) {
+@media (min-width: 576px) {
   .modal-dialog {
     min-width: 650px;
   }
