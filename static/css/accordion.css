@@ -68,11 +68,11 @@ section{
     width: 750px;
   }
 }*/
-@media (min-width: 992px) {
+/*@media (min-width: 992px) {
   .fullscreen-modal .modal-dialog {
     width: 970px;
   }
-}
+}*/
 @media (min-width: 1200px) {
   .fullscreen-modal .modal-dialog {
      width: 1170px;
