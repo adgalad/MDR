@@ -146,13 +146,25 @@
         autoplayHoverPause:true,
         responsive:{
             0:{
-                items:2,
+                items: {% if transactions   | length > 1 %} 2 
+                       {% elif transactions | length > 0 %} 1 
+                       {% else %} 2
+                       {% endif %},
             },
             600:{
-                items:3,
+                items: {% if transactions | length > 2 %} 3 
+                       {% elif transactions | length > 1 %} 2 
+                       {% elif transactions | length > 0 %} 1 
+                       {% else %} 3
+                       {% endif %},
             },
             1000:{
-                items:4,
+                items: {% if transactions   | length > 3 %} 4 
+                       {% elif transactions | length > 2 %} 3 
+                       {% elif transactions | length > 1 %} 2 
+                       {% elif transactions | length > 0 %} 1 
+                       {% else %} 4
+                       {% endif %},
             }
         }
       })
