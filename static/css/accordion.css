@@ -80,31 +80,21 @@ section{
 }
 
 
-@media (max-width: 500px) {
+
+
+@media (max-width: 620px) {
   #videoHelp {
-    width:450px;
+    width:400px;
     height:225px;
   }
 }
+@media (min-width: 620px) {
+  #videoHelp {
+    width:560px;
+    height:315px;
+  }
+}
 
-@media (max-width: 576px) {
-  #videoHelp {
-    width:500px;
-    height:250px;
-  }
-}
-@media (max-width: 992px) {
-  #videoHelp {
-    width:600px;
-    height:300px;
-  }
-}
-@media (max-width: 1200px) {
-  #videoHelp {
-     width:600px;
-     height:300px;
-  }
-}
 
 
 
