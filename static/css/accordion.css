@@ -79,22 +79,30 @@ section{
   }
 }
 
+
+@media (min-width: 505px) {
+  #videoHelp {
+    width:450px;
+    height:225px;
+  }
+}
+
 @media (min-width: 576px) {
   #videoHelp {
     width:500px;
-    height:auto;
+    height:250px;
   }
 }
 @media (min-width: 992px) {
   #videoHelp {
     width:600px;
-    height:auto;
+    height:300px;
   }
 }
 @media (min-width: 1200px) {
   #videoHelp {
      width:600px;
-     height:auto;
+     height:300px;
   }
 }
 
