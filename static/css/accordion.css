@@ -88,10 +88,16 @@ section{
     height:225px;
   }
 }
-@media (min-width: 620px) {
+@media (max-width: 900px) {
   #videoHelp {
     width:560px;
     height:315px;
+  }
+}
+@media (min-width: 900px) {
+  #videoHelp {
+    width:800px;
+    height:450;
   }
 }
 
