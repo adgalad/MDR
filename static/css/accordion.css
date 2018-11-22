@@ -88,7 +88,7 @@ section{
     height:225px;
   }
 }
-@media only screen and (max-width: 900px) {
+@media only screen and (min-width: 620px) {
   #videoHelp {
     width:560px;
     height:315px;
@@ -97,7 +97,7 @@ section{
 @media only screen and (min-width: 900px) {
   #videoHelp {
     width:800px;
-    height:450;
+    height:450px;
   }
 }
 
