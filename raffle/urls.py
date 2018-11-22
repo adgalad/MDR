@@ -67,3 +67,9 @@ urlpatterns = [
 
 
 ] + staticfiles_urlpatterns()
+
+
+handler404 = 'app.views.views.handler404'
+handler500 = 'app.views.views.handler500'
+handler403 = 'app.views.views.handler403'
+handler400 = 'app.views.views.handler400'
