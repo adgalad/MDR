@@ -36,7 +36,7 @@ def handler400(request):
 def handler403(request):
    title = "403"
    message = "Your don't have permission to see what you requested."
-   response = render(request, '403.html', {"title":title, "message":message})
+   response = render(request, 'error.html', {"title":title, "message":message})
    response.status_code = 403
    return response
 
