@@ -80,26 +80,26 @@ section{
 }
 
 
-@media (min-width: 505px) {
+@media (max-width: 500px) {
   #videoHelp {
     width:450px;
     height:225px;
   }
 }
 
-@media (min-width: 576px) {
+@media (max-width: 576px) {
   #videoHelp {
     width:500px;
     height:250px;
   }
 }
-@media (min-width: 992px) {
+@media (max-width: 992px) {
   #videoHelp {
     width:600px;
     height:300px;
   }
 }
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
   #videoHelp {
      width:600px;
      height:300px;
