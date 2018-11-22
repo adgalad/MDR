@@ -82,19 +82,19 @@ section{
 
 
 
-@media only screen and (max-width: 620px) {
+@media only screen and (max-width: 900px) {
   #videoHelp {
     width:400px;
     height:225px;
   }
 }
-@media only screen and (min-width: 620px) {
+@media only screen and (min-width: 900px) {
   #videoHelp {
     width:560px;
     height:315px;
   }
 }
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1200px) {
   #videoHelp {
     width:800px;
     height:450px;
