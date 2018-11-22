@@ -136,7 +136,7 @@
   <!-- <script src="{% static 'js/main.js' %}"></script> -->
   <script type="text/javascript">
     $('.owl-carousel').owlCarousel({
-        loop:true,
+        loop:false,
         dots:false,
         margin:10,
         responsiveClass:true,
@@ -146,25 +146,13 @@
         autoplayHoverPause:true,
         responsive:{
             0:{
-                items: {% if transactions   | length > 1 %} 2 
-                       {% elif transactions | length > 0 %} 1 
-                       {% else %} 2
-                       {% endif %},
+                items:2,
             },
             600:{
-                items: {% if transactions | length > 2 %} 3 
-                       {% elif transactions | length > 1 %} 2 
-                       {% elif transactions | length > 0 %} 1 
-                       {% else %} 3
-                       {% endif %},
+                items:3,
             },
             1000:{
-                items: {% if transactions   | length > 3 %} 4 
-                       {% elif transactions | length > 2 %} 3 
-                       {% elif transactions | length > 1 %} 2 
-                       {% elif transactions | length > 0 %} 1 
-                       {% else %} 4
-                       {% endif %},
+                items:4,
             }
         }
       })
