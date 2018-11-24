@@ -25,7 +25,7 @@ from django.contrib.sitemaps.views import sitemap
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^sitemap\.xml$', sitemap, {'raffles': Site_Raffle}, name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'raffles': Site_Raffle()} }, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^$', views.index, name="home"),
     url(r'^help/$', views.help, name="help"),
     url(r'^terms/$', views.terms, name="terms"),

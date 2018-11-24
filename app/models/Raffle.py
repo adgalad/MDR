@@ -39,8 +39,8 @@ DEFAULT_DOMAIN = "https://www.megadashraffle.org"
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
-  created_at = models.DateTimeField(auto_now_add=True)
-  lastmod = models.DateTimeField(auto_now_add=True)
+  created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+  lastmod = models.DateTimeField(auto_now_add=True, verbose_name="Last modification")
   is_active = models.BooleanField("Raffle was paid", default=False)
   summary = models.CharField(verbose_name="Summary", max_length=250)
   description = RichTextField(verbose_name="Description")
