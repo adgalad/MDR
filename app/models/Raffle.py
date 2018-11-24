@@ -35,11 +35,12 @@ PAYMENT_AMOUNT = 0.1 # Dash
 
 MIN_TICKETS_SOLD = 20
 
-DEFAULT_DOMAIN = "http://megadashraffle.org"
+DEFAULT_DOMAIN = "https://www.megadashraffle.org"
 
 class Raffle(models.Model):
   name = models.CharField(verbose_name="Raffle Name", max_length=100, unique=True)
   created_at = models.DateTimeField(auto_now_add=True)
+  lastmod = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField("Raffle was paid", default=False)
   summary = models.CharField(verbose_name="Summary", max_length=250)
   description = RichTextField(verbose_name="Description")
@@ -75,6 +76,10 @@ class Raffle(models.Model):
   MSredeemScript = models.CharField(verbose_name="Multisig Redeem Script", max_length=1024, blank=True, null=True)
   
   commandSignRawTx = models.CharField(verbose_name="Command to sign raw transaction", max_length=1024*100, null=True, blank=True) # 100 kb
+
+  def save(self, *args, **kwargs):
+    self.lastmod = timezone.now()
+    super(Raffle,self).save(*args, **kwargs)
 
 
   @property
