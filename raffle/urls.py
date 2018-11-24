@@ -24,6 +24,9 @@ from django.contrib.sitemaps.views import sitemap
 
 
 urlpatterns = [
+
+    url(r'^google82f411ec14405269.html$', views.google_verification),
+
     url(r'^admin/', admin.site.urls),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'raffles': Site_Raffle()} }, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^$', views.index, name="home"),
