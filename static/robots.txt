@@ -33,4 +33,5 @@ Disallow: /profile/edit
 Disallow: /raffle/create
 Disallow: /addWalletAddress
 Disallow: /myRaffles
+Sitemap: https://www.megadashraffle.org/sitemap.xml
 Crawl-Delay: 20
