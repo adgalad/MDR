@@ -1,5 +1,5 @@
 from django.contrib.sitemaps import Sitemap
-import app.models 
+from app import models
 
 class Raffle(Sitemap):
     changefreq = "daily"
