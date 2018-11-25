@@ -18,17 +18,18 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import PasswordResetView, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from app import views
-from app.sitemap import Raffle as Site_Raffle
+import app.sitemap as  Sitemaps
 from django.contrib.sitemaps.views import sitemap
 
 
+sitemaps = {
+    'raffles': Sitemaps.Raffle(),
+    'static':  Sitemaps.Statics()
+}
 
 urlpatterns = [
-
-    url(r'^google82f411ec14405269.html$', views.google_verification),
-
     url(r'^admin/', admin.site.urls),
-    url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'raffles': Site_Raffle()} }, name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^$', views.index, name="home"),
     url(r'^help/$', views.help, name="help"),
     url(r'^terms/$', views.terms, name="terms"),

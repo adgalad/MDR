@@ -52,7 +52,3 @@ def handler500(request):
    response = render(request, '500.html')
    response.status_code = 500
    return response
-
-
-def google_verification(request):
-  return render(request, 'google82f411ec14405269.html')
