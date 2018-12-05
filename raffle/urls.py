@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^$', views.index, name="home"),
     url(r'^help/$', views.help, name="help"),
     url(r'^terms/$', views.terms, name="terms"),
-    url(r'^conditions/$', views.conditions, name="conditions"),
+    url(r'^code/$', views.conditions, name="codeOfConduct"),
     url(r'^403/$', views.handler403, name="403"),
 
     # Raffle URLs
